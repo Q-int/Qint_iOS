@@ -17,6 +17,8 @@
 		88BA61782C64C87600BAF4FA /* UIButton+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88BA61772C64C87600BAF4FA /* UIButton+Extension.swift */; };
 		88BA617A2C64C99400BAF4FA /* CategoryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88BA61792C64C99400BAF4FA /* CategoryButton.swift */; };
 		88BA617C2C64CD9D00BAF4FA /* ReviewIncorrect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88BA617B2C64CD9D00BAF4FA /* ReviewIncorrect.swift */; };
+		88BA61812C64DC5D00BAF4FA /* OFL.txt in Resources */ = {isa = PBXBuildFile; fileRef = 88BA617E2C64DC5D00BAF4FA /* OFL.txt */; };
+		88BA61822C64DC5D00BAF4FA /* ZenDots-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 88BA617F2C64DC5D00BAF4FA /* ZenDots-Regular.ttf */; };
 		88F535612C64AEB800B5626A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88F535602C64AEB800B5626A /* AppDelegate.swift */; };
 		88F535632C64AEB800B5626A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88F535622C64AEB800B5626A /* SceneDelegate.swift */; };
 		88F5356A2C64AEBA00B5626A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 88F535692C64AEBA00B5626A /* Assets.xcassets */; };
@@ -32,6 +34,8 @@
 		88BA61772C64C87600BAF4FA /* UIButton+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Extension.swift"; sourceTree = "<group>"; };
 		88BA61792C64C99400BAF4FA /* CategoryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryButton.swift; sourceTree = "<group>"; };
 		88BA617B2C64CD9D00BAF4FA /* ReviewIncorrect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewIncorrect.swift; sourceTree = "<group>"; };
+		88BA617E2C64DC5D00BAF4FA /* OFL.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OFL.txt; sourceTree = "<group>"; };
+		88BA617F2C64DC5D00BAF4FA /* ZenDots-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ZenDots-Regular.ttf"; sourceTree = "<group>"; };
 		88F5355D2C64AEB800B5626A /* Qint_iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Qint_iOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		88F535602C64AEB800B5626A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		88F535622C64AEB800B5626A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -56,6 +60,7 @@
 		88BA615F2C64B30700BAF4FA /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				88BA617D2C64DC3700BAF4FA /* font */,
 				88F5356B2C64AEBA00B5626A /* LaunchScreen.storyboard */,
 				88F535692C64AEBA00B5626A /* Assets.xcassets */,
 				88F535622C64AEB800B5626A /* SceneDelegate.swift */,
@@ -125,6 +130,23 @@
 				88BA61692C64C35B00BAF4FA /* MyViewController.swift */,
 			);
 			path = Main;
+			sourceTree = "<group>";
+		};
+		88BA617D2C64DC3700BAF4FA /* font */ = {
+			isa = PBXGroup;
+			children = (
+				88BA61802C64DC5D00BAF4FA /* Zen_Dots */,
+			);
+			path = font;
+			sourceTree = "<group>";
+		};
+		88BA61802C64DC5D00BAF4FA /* Zen_Dots */ = {
+			isa = PBXGroup;
+			children = (
+				88BA617E2C64DC5D00BAF4FA /* OFL.txt */,
+				88BA617F2C64DC5D00BAF4FA /* ZenDots-Regular.ttf */,
+			);
+			path = Zen_Dots;
 			sourceTree = "<group>";
 		};
 		88F535542C64AEB800B5626A = {
@@ -219,6 +241,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				88BA61812C64DC5D00BAF4FA /* OFL.txt in Resources */,
+				88BA61822C64DC5D00BAF4FA /* ZenDots-Regular.ttf in Resources */,
 				88F5356A2C64AEBA00B5626A /* Assets.xcassets in Resources */,
 				88F5356D2C64AEBA00B5626A /* Base in Resources */,
 			);
