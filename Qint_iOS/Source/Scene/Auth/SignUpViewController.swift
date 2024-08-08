@@ -26,6 +26,11 @@ class SignUpViewController: UIViewController {
     
     let signUpButton = UIButton().then {
         $0.QintButton(setTitle: "회원가입", setTitleColor: "White", buttonColor: "Mint300")
+        $0.addTarget(self, action: #selector(signUpButtonTapped), for: .touchUpInside)
+    }
+    
+    @objc func signUpButtonTapped() {
+        print("회원가입")
     }
     
     let goLoginButton = UIButton().then {
