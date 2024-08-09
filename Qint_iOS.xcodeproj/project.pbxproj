@@ -7,15 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		884ABF482C65D0F5005A3562 /* DGCharts in Frameworks */ = {isa = PBXBuildFile; productRef = 884ABF472C65D0F5005A3562 /* DGCharts */; };
 		884ABF4A2C65D4D1005A3562 /* QuestionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 884ABF492C65D4D1005A3562 /* QuestionViewController.swift */; };
 		884ABF4C2C660C04005A3562 /* QuestionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 884ABF4B2C660C04005A3562 /* QuestionCell.swift */; };
+		884ABF5A2C662656005A3562 /* DGCharts in Frameworks */ = {isa = PBXBuildFile; productRef = 884ABF592C662656005A3562 /* DGCharts */; };
+		884ABF5D2C662661005A3562 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 884ABF5C2C662661005A3562 /* SnapKit */; };
+		884ABF602C66266B005A3562 /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = 884ABF5F2C66266B005A3562 /* Then */; };
 		88BA61682C64C34B00BAF4FA /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88BA61672C64C34B00BAF4FA /* MainViewController.swift */; };
 		88BA616A2C64C35B00BAF4FA /* MyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88BA61692C64C35B00BAF4FA /* MyViewController.swift */; };
 		88BA616C2C64C41000BAF4FA /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88BA616B2C64C41000BAF4FA /* LoginViewController.swift */; };
 		88BA616E2C64C42700BAF4FA /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88BA616D2C64C42700BAF4FA /* SignUpViewController.swift */; };
-		88BA61712C64C45200BAF4FA /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 88BA61702C64C45200BAF4FA /* SnapKit */; };
-		88BA61742C64C45A00BAF4FA /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = 88BA61732C64C45A00BAF4FA /* Then */; };
 		88BA61762C64C70C00BAF4FA /* AuthTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88BA61752C64C70C00BAF4FA /* AuthTextField.swift */; };
 		88BA61782C64C87600BAF4FA /* UIButton+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88BA61772C64C87600BAF4FA /* UIButton+Extension.swift */; };
 		88BA617A2C64C99400BAF4FA /* CategoryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88BA61792C64C99400BAF4FA /* CategoryButton.swift */; };
@@ -54,9 +54,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				88BA61712C64C45200BAF4FA /* SnapKit in Frameworks */,
-				884ABF482C65D0F5005A3562 /* DGCharts in Frameworks */,
-				88BA61742C64C45A00BAF4FA /* Then in Frameworks */,
+				884ABF5A2C662656005A3562 /* DGCharts in Frameworks */,
+				884ABF602C66266B005A3562 /* Then in Frameworks */,
+				884ABF5D2C662661005A3562 /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -200,9 +200,9 @@
 			);
 			name = Qint_iOS;
 			packageProductDependencies = (
-				88BA61702C64C45200BAF4FA /* SnapKit */,
-				88BA61732C64C45A00BAF4FA /* Then */,
-				884ABF472C65D0F5005A3562 /* DGCharts */,
+				884ABF592C662656005A3562 /* DGCharts */,
+				884ABF5C2C662661005A3562 /* SnapKit */,
+				884ABF5F2C66266B005A3562 /* Then */,
 			);
 			productName = Qint_iOS;
 			productReference = 88F5355D2C64AEB800B5626A /* Qint_iOS.app */;
@@ -233,9 +233,9 @@
 			);
 			mainGroup = 88F535542C64AEB800B5626A;
 			packageReferences = (
-				88BA616F2C64C45200BAF4FA /* XCRemoteSwiftPackageReference "SnapKit" */,
-				88BA61722C64C45A00BAF4FA /* XCRemoteSwiftPackageReference "Then" */,
-				884ABF462C65D0F5005A3562 /* XCRemoteSwiftPackageReference "Charts" */,
+				884ABF582C662656005A3562 /* XCRemoteSwiftPackageReference "Charts" */,
+				884ABF5B2C662661005A3562 /* XCRemoteSwiftPackageReference "SnapKit" */,
+				884ABF5E2C66266B005A3562 /* XCRemoteSwiftPackageReference "Then" */,
 			);
 			productRefGroup = 88F5355E2C64AEB800B5626A /* Products */;
 			projectDirPath = "";
@@ -489,15 +489,15 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		884ABF462C65D0F5005A3562 /* XCRemoteSwiftPackageReference "Charts" */ = {
+		884ABF582C662656005A3562 /* XCRemoteSwiftPackageReference "Charts" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/ChartsOrg/Charts.git";
+			repositoryURL = "https://github.com/danielgindi/Charts.git";
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 5.1.0;
 			};
 		};
-		88BA616F2C64C45200BAF4FA /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+		884ABF5B2C662661005A3562 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
 			requirement = {
@@ -505,7 +505,7 @@
 				minimumVersion = 5.7.1;
 			};
 		};
-		88BA61722C64C45A00BAF4FA /* XCRemoteSwiftPackageReference "Then" */ = {
+		884ABF5E2C66266B005A3562 /* XCRemoteSwiftPackageReference "Then" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/devxoul/Then.git";
 			requirement = {
@@ -516,19 +516,19 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		884ABF472C65D0F5005A3562 /* DGCharts */ = {
+		884ABF592C662656005A3562 /* DGCharts */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 884ABF462C65D0F5005A3562 /* XCRemoteSwiftPackageReference "Charts" */;
+			package = 884ABF582C662656005A3562 /* XCRemoteSwiftPackageReference "Charts" */;
 			productName = DGCharts;
 		};
-		88BA61702C64C45200BAF4FA /* SnapKit */ = {
+		884ABF5C2C662661005A3562 /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 88BA616F2C64C45200BAF4FA /* XCRemoteSwiftPackageReference "SnapKit" */;
+			package = 884ABF5B2C662661005A3562 /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
 		};
-		88BA61732C64C45A00BAF4FA /* Then */ = {
+		884ABF5F2C66266B005A3562 /* Then */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 88BA61722C64C45A00BAF4FA /* XCRemoteSwiftPackageReference "Then" */;
+			package = 884ABF5E2C66266B005A3562 /* XCRemoteSwiftPackageReference "Then" */;
 			productName = Then;
 		};
 /* End XCSwiftPackageProductDependency section */
