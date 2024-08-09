@@ -35,6 +35,11 @@ class MainViewController: UIViewController {
     
     let startButton = UIButton().then {
         $0.QintButton(setTitle: "시작하기", setTitleColor: "White", buttonColor: "Mint300")
+        $0.addTarget(self, action: #selector(startButtonTapped), for: .touchUpInside)
+    }
+    
+    @objc func startButtonTapped() {
+        print("시작하기")
     }
     
     override func viewDidLoad() {
