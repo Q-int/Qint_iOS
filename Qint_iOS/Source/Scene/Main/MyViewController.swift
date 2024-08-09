@@ -1,6 +1,7 @@
 import UIKit
 import SnapKit
 import Then
+import DGCharts
 
 class MyViewController: UIViewController {
     
@@ -34,9 +35,16 @@ class MyViewController: UIViewController {
         $0.textColor = UIColor(named: "Gray400")
     }
     
+    var pieChartView: PieChartView!
+    
     let reviewIncorrectButton = UIButton().then {
         $0.backgroundColor = .white
         $0.layer.cornerRadius = 10
+        $0.addTarget(self, action: #selector(<#T##@objc method#>), for: .touchUpInside)
+    }
+    
+    @objc func reviewIncorrectButtonTapped() {
+        print("틀린 문제 다시보기")
     }
     
     let reviewIncorrectView = reviewIncorrect()
@@ -63,12 +71,46 @@ class MyViewController: UIViewController {
         super.viewDidLoad()
         
         attribute()
+        chart()
         add()
         layout()
     }
     
     func attribute() {
         view.backgroundColor = UIColor(named: "Mint100")
+    }
+    
+    func chart() {
+        pieChartView = PieChartView()
+        
+        var entries = [
+            PieChartDataEntry(value: 75, label: "정답"),
+            PieChartDataEntry(value: 25, label: "오답"),
+        ]
+        
+        let dataSet = PieChartDataSet(entries: entries, label: "")
+        
+        dataSet.colors = [
+            UIColor(named: "Green100") ?? .green,
+            UIColor(named: "Red100") ?? .red
+        ]
+        
+        let data = PieChartData(dataSet: dataSet)
+        pieChartView.data = data
+        
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .percent
+        formatter.multiplier = 1
+        data.setValueFormatter(DefaultValueFormatter(formatter: formatter))
+        
+        data.setValueFont(UIFont.systemFont(ofSize: 16, weight: .bold))
+        data.setValueTextColor(.black)
+        
+        pieChartView.legend.verticalAlignment = .top
+        pieChartView.legend.orientation = .vertical
+        pieChartView.legend.xOffset = 20
+        
+        pieChartView.animate(xAxisDuration: 1.0, yAxisDuration: 1.0, easingOption: .easeInOutQuad)
     }
     
     func add() {
@@ -82,6 +124,7 @@ class MyViewController: UIViewController {
         ].forEach{ view.addSubview($0) }
         reviewIncorrectButton.addSubview(reviewIncorrectView)
         accuracyView.addSubview(reviewIncorrectLabel)
+        accuracyView.addSubview(pieChartView)
     }
     
     func layout() {
@@ -101,6 +144,11 @@ class MyViewController: UIViewController {
         }
         reviewIncorrectLabel.snp.makeConstraints {
             $0.top.left.equalToSuperview().inset(24)
+        }
+        pieChartView.snp.makeConstraints {
+            $0.top.equalToSuperview().inset(70)
+            $0.left.right.equalToSuperview().inset(30)
+            $0.bottom.equalToSuperview().inset(30)
         }
         reviewIncorrectButton.snp.makeConstraints {
             $0.bottom.equalTo(emailLabel.snp.bottom).inset(160)

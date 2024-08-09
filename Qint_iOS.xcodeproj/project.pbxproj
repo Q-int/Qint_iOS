@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		884ABF482C65D0F5005A3562 /* DGCharts in Frameworks */ = {isa = PBXBuildFile; productRef = 884ABF472C65D0F5005A3562 /* DGCharts */; };
 		88BA61682C64C34B00BAF4FA /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88BA61672C64C34B00BAF4FA /* MainViewController.swift */; };
 		88BA616A2C64C35B00BAF4FA /* MyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88BA61692C64C35B00BAF4FA /* MyViewController.swift */; };
 		88BA616C2C64C41000BAF4FA /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88BA616B2C64C41000BAF4FA /* LoginViewController.swift */; };
@@ -50,6 +51,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				88BA61712C64C45200BAF4FA /* SnapKit in Frameworks */,
+				884ABF482C65D0F5005A3562 /* DGCharts in Frameworks */,
 				88BA61742C64C45A00BAF4FA /* Then in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -194,6 +196,7 @@
 			packageProductDependencies = (
 				88BA61702C64C45200BAF4FA /* SnapKit */,
 				88BA61732C64C45A00BAF4FA /* Then */,
+				884ABF472C65D0F5005A3562 /* DGCharts */,
 			);
 			productName = Qint_iOS;
 			productReference = 88F5355D2C64AEB800B5626A /* Qint_iOS.app */;
@@ -226,6 +229,7 @@
 			packageReferences = (
 				88BA616F2C64C45200BAF4FA /* XCRemoteSwiftPackageReference "SnapKit" */,
 				88BA61722C64C45A00BAF4FA /* XCRemoteSwiftPackageReference "Then" */,
+				884ABF462C65D0F5005A3562 /* XCRemoteSwiftPackageReference "Charts" */,
 			);
 			productRefGroup = 88F5355E2C64AEB800B5626A /* Products */;
 			projectDirPath = "";
@@ -477,6 +481,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		884ABF462C65D0F5005A3562 /* XCRemoteSwiftPackageReference "Charts" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ChartsOrg/Charts.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.1.0;
+			};
+		};
 		88BA616F2C64C45200BAF4FA /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
@@ -496,6 +508,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		884ABF472C65D0F5005A3562 /* DGCharts */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 884ABF462C65D0F5005A3562 /* XCRemoteSwiftPackageReference "Charts" */;
+			productName = DGCharts;
+		};
 		88BA61702C64C45200BAF4FA /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 88BA616F2C64C45200BAF4FA /* XCRemoteSwiftPackageReference "SnapKit" */;
