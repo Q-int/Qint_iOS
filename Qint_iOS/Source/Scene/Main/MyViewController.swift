@@ -40,14 +40,16 @@ class MyViewController: UIViewController {
     let reviewIncorrectButton = UIButton().then {
         $0.backgroundColor = .white
         $0.layer.cornerRadius = 10
-        $0.addTarget(self, action: #selector(<#T##@objc method#>), for: .touchUpInside)
+        $0.addTarget(self, action: #selector(reviewIncorrectButtonTapped), for: .touchUpInside)
     }
     
     @objc func reviewIncorrectButtonTapped() {
         print("틀린 문제 다시보기")
     }
     
-    let reviewIncorrectView = reviewIncorrect()
+    let reviewIncorrectView = reviewIncorrect().then {
+        $0.isUserInteractionEnabled = false
+    }
     
     let emailLabel = UILabel().then {
         $0.text = "오류 신고 이메일 : 1234@dsm.hs.kr"
@@ -59,7 +61,7 @@ class MyViewController: UIViewController {
         $0.setTitle("로그아웃", for: .normal)
         $0.setTitleColor(UIColor(named: "Gray400"), for: .normal)
         $0.titleLabel?.font = .systemFont(ofSize: 10)
-        $0.contentEdgeInsets = UIEdgeInsets(top: -1, left: 0, bottom: -1, right: 0) // 여백 설정
+        $0.contentEdgeInsets = UIEdgeInsets(top: -1, left: 0, bottom: -1, right: 0)
         $0.addTarget(self, action: #selector(logoutButtonTapped), for: .touchUpInside)
     }
     
