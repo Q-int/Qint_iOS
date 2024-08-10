@@ -39,7 +39,7 @@ class MainViewController: UIViewController {
     }
     
     @objc func startButtonTapped() {
-        print("시작하기")
+        self.navigationController?.pushViewController(QuestionViewController(), animated: true)
     }
     
     override func viewDidLoad() {

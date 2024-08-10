@@ -6,8 +6,10 @@ import Then
 class QuestionCell: UICollectionViewCell {
     
     var nextButtonTap: ((Int) -> Void)?
+    var mainButtonTap: ((Bool) -> Void)?
     
     var index: Int = 0
+    var main: Bool = false
     
     private let questionView = UIView().then {
         $0.backgroundColor = UIColor(named: "Mint100")
@@ -32,7 +34,7 @@ class QuestionCell: UICollectionViewCell {
     
     let answerView = AnswerButtonView()
     
-    let mainButtom = UIButton().then {
+    let mainButton = UIButton().then {
         $0.setImage(UIImage(named: "Home2"), for: .normal)
         $0.tintColor = UIColor(named: "Gray400")
         $0.imageView?.contentMode = .scaleAspectFill
@@ -42,6 +44,7 @@ class QuestionCell: UICollectionViewCell {
     }
     
     @objc func mainButtonTapped() {
+        main = true
         print("홈 버튼 누름")
     }
     
@@ -63,6 +66,7 @@ class QuestionCell: UICollectionViewCell {
 
     func attribute() {
         nextButton.addTarget(self, action: #selector(nextButtonClicked), for: .touchUpInside)
+        mainButton.addTarget(self, action: #selector(mainButtonClicked), for: .touchUpInside)
     }
     
     func add() {
@@ -70,16 +74,16 @@ class QuestionCell: UICollectionViewCell {
             questionView,
             indexLabel,
             answerView,
-            mainButtom,
+            mainButton,
             nextButton
         ].forEach{ contentView.addSubview($0) }
         questionView.addSubview(questionLabel)
     }
     func layout() {
         questionView.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(70)
+            $0.top.equalToSuperview().inset(91)
             $0.left.right.equalToSuperview().inset(20)
-            $0.bottom.equalToSuperview().inset(564)
+            $0.height.equalTo(200)
         }
         questionLabel.snp.makeConstraints {
             $0.top.bottom.left.right.equalToSuperview().inset(15)
@@ -92,21 +96,24 @@ class QuestionCell: UICollectionViewCell {
             $0.top.equalTo(indexLabel.snp.bottom).offset(30)
             $0.left.right.equalToSuperview().inset(20)
         }
-        mainButtom.snp.makeConstraints {
-            $0.bottom.equalToSuperview().inset(95)
+        mainButton.snp.makeConstraints {
+            $0.top.equalTo(answerView.snp.bottom).offset(65)
             $0.left.equalToSuperview().inset(24)
             $0.height.width.equalTo(30)
         }
         nextButton.snp.makeConstraints {
-            $0.bottom.equalToSuperview().inset(91)
+            $0.top.equalTo(answerView.snp.bottom).offset(55)
             $0.right.equalToSuperview().inset(24)
             $0.height.equalTo(45)
             $0.width.equalTo(105)
         }
+        
     }
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
     func configure(with index: Int) {
         indexLabel.text = "\(index)/15"
         self.index = index
@@ -114,5 +121,9 @@ class QuestionCell: UICollectionViewCell {
     
     @objc func nextButtonClicked() {
         self.nextButtonTap?(index)
+    }
+    
+    @objc func mainButtonClicked() {
+        self.mainButtonTap?(main)
     }
 }
