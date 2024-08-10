@@ -10,6 +10,8 @@ class QuestionViewController: UIViewController, UICollectionViewDataSource, UICo
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.navigationController?.isNavigationBarHidden = true
+        
         attribute()
         add()
         layout()
@@ -52,6 +54,12 @@ class QuestionViewController: UIViewController, UICollectionViewDataSource, UICo
                 self.collectionView.isPagingEnabled = false
                 self.collectionView.scrollToItem(at: IndexPath(row: index, section: 0), at: .left, animated: true)
                 self.collectionView.isPagingEnabled = true
+            }
+        }
+        
+        cell?.mainButtonTap = { main in
+            if(main == true) {
+                self.navigationController?.popViewController(animated: true)
             }
         }
         return cell ?? UICollectionViewCell()
