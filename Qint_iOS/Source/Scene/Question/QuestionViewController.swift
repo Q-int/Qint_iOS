@@ -27,7 +27,10 @@ class QuestionViewController: UIViewController, UICollectionViewDataSource, UICo
         collectionView.delegate = self
         collectionView.register(QuestionCell.self, forCellWithReuseIdentifier: "cell")
         collectionView.isPagingEnabled = true
+        collectionView.showsVerticalScrollIndicator = false
+        collectionView.isScrollEnabled = false
     }
+    
     func add() {
         view.addSubview(collectionView)
     }
@@ -40,7 +43,17 @@ class QuestionViewController: UIViewController, UICollectionViewDataSource, UICo
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as? QuestionCell
         
         cell?.configure(with: indexPath.item + 1)
-        
+    
+        cell?.nextButtonTap = { index in
+            print("현재 클릭된 인덱스 \(index - 1)")
+            if(index == 15) {
+                print("마지막!")
+            } else {
+                self.collectionView.isPagingEnabled = false
+                self.collectionView.scrollToItem(at: IndexPath(row: index, section: 0), at: .left, animated: true)
+                self.collectionView.isPagingEnabled = true
+            }
+        }
         return cell ?? UICollectionViewCell()
     }
     

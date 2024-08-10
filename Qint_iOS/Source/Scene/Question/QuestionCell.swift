@@ -1,10 +1,15 @@
 import UIKit
+
 import SnapKit
 import Then
 
 class QuestionCell: UICollectionViewCell {
     
-    let questionView = UIView().then {
+    var nextButtonTap: ((Int) -> Void)?
+    
+    var index: Int = 0
+    
+    private let questionView = UIView().then {
         $0.backgroundColor = UIColor(named: "Mint100")
         $0.layer.cornerRadius = 20
         $0.clipsToBounds = false
@@ -25,6 +30,11 @@ class QuestionCell: UICollectionViewCell {
         $0.textColor = UIColor(named: "Gray400")
     }
     
+    
+    let mainButtom = UIButton().then {
+        $0.setImage(UIImage(named: "Home"), for: .normal)
+    }
+    
     let nextButton = UIButton().then {
         $0.setTitle("다음 문제", for: .normal)
         $0.titleLabel?.font = .systemFont(ofSize: 20)
@@ -40,9 +50,11 @@ class QuestionCell: UICollectionViewCell {
         add()
         layout()
     }
+
     func attribute() {
-        
+        nextButton.addTarget(self, action: #selector(nextButtonClicked), for: .touchUpInside)
     }
+    
     func add() {
         [
             questionView,
@@ -76,5 +88,10 @@ class QuestionCell: UICollectionViewCell {
     }
     func configure(with index: Int) {
         indexLabel.text = "\(index)/15"
+        self.index = index
+    }
+    
+    @objc func nextButtonClicked() {
+        self.nextButtonTap?(index)
     }
 }

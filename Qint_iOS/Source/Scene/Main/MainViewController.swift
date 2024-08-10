@@ -67,6 +67,7 @@ class MainViewController: UIViewController {
             categoryLabel,
             startButton
         ].forEach{ view.addSubview($0) }
+        view.addSubview(qintLabel)
     }
     
     func layout() {
