@@ -30,9 +30,19 @@ class QuestionCell: UICollectionViewCell {
         $0.textColor = UIColor(named: "Gray400")
     }
     
+    let answerView = AnswerButtonView()
     
     let mainButtom = UIButton().then {
-        $0.setImage(UIImage(named: "Home"), for: .normal)
+        $0.setImage(UIImage(named: "Home2"), for: .normal)
+        $0.tintColor = UIColor(named: "Gray400")
+        $0.imageView?.contentMode = .scaleAspectFill
+        $0.contentHorizontalAlignment = .fill
+        $0.contentVerticalAlignment = .fill
+        $0.addTarget(self, action: #selector(mainButtonTapped), for: .touchUpInside)
+    }
+    
+    @objc func mainButtonTapped() {
+        print("홈 버튼 누름")
     }
     
     let nextButton = UIButton().then {
@@ -59,6 +69,8 @@ class QuestionCell: UICollectionViewCell {
         [
             questionView,
             indexLabel,
+            answerView,
+            mainButtom,
             nextButton
         ].forEach{ contentView.addSubview($0) }
         questionView.addSubview(questionLabel)
@@ -76,8 +88,17 @@ class QuestionCell: UICollectionViewCell {
             $0.top.equalTo(questionView.snp.bottom).offset(4)
             $0.centerX.equalToSuperview()
         }
+        answerView.snp.makeConstraints {
+            $0.top.equalTo(indexLabel.snp.bottom).offset(30)
+            $0.left.right.equalToSuperview().inset(20)
+        }
+        mainButtom.snp.makeConstraints {
+            $0.bottom.equalToSuperview().inset(95)
+            $0.left.equalToSuperview().inset(24)
+            $0.height.width.equalTo(30)
+        }
         nextButton.snp.makeConstraints {
-            $0.bottom.equalToSuperview().inset(93)
+            $0.bottom.equalToSuperview().inset(91)
             $0.right.equalToSuperview().inset(24)
             $0.height.equalTo(45)
             $0.width.equalTo(105)

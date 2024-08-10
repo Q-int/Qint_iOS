@@ -100,12 +100,10 @@ class CategoryButton: UIView {
     
     func layout() {
         button.snp.makeConstraints {
-            $0.top.bottom.equalToSuperview().inset(0)
-            $0.left.right.equalToSuperview().inset(0)
+            $0.top.bottom.left.right.equalToSuperview()
         }
         label.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
-            $0.centerY.equalToSuperview()
+            $0.centerX.centerY.equalToSuperview()
         }
     }
 }
