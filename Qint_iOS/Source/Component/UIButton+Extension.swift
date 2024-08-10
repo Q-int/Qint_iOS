@@ -8,4 +8,9 @@ extension UIButton {
         self.backgroundColor = UIColor(named: buttonColor)
         self.layer.cornerRadius = 8
     }
+    
+    func answerButton() {
+        self.backgroundColor = UIColor(named: "Mint100")
+        self.layer.cornerRadius = 10
+    }
 }
