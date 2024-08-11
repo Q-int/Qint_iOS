@@ -2,15 +2,14 @@ import UIKit
 import SnapKit
 import Then
 
-class QuestionViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, PopupDelegate {
+class ReviewIncorrectViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
-    var collectionView: UICollectionView!
-    var darkBackground: UIView?
+    var collectionView :UICollectionView!
+    
+    var viewIndex: Int = 15
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.navigationController?.isNavigationBarHidden = true
         
         attribute()
         add()
@@ -27,16 +26,14 @@ class QuestionViewController: UIViewController, UICollectionViewDataSource, UICo
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.dataSource = self
         collectionView.delegate = self
-        collectionView.register(QuestionCell.self, forCellWithReuseIdentifier: "cell")
+        collectionView.register(ReviewIncorrectCell.self, forCellWithReuseIdentifier: "cell")
         collectionView.isPagingEnabled = true
         collectionView.showsVerticalScrollIndicator = false
         collectionView.isScrollEnabled = false
     }
-    
     func add() {
         view.addSubview(collectionView)
     }
-    
     func layout() {
         collectionView.snp.makeConstraints {
             $0.edges.equalToSuperview()
@@ -44,13 +41,14 @@ class QuestionViewController: UIViewController, UICollectionViewDataSource, UICo
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as? QuestionCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as? ReviewIncorrectCell
         
         cell?.configure(with: indexPath.item + 1)
         
         cell?.nextButtonTap = { index in
-            if (index == 15) {
-                self.buttonTapped()
+            print("현재 인덱스 : \(index)")
+            if(index == self.viewIndex) {
+                print("마지막!")
             } else {
                 self.collectionView.isPagingEnabled = false
                 self.collectionView.scrollToItem(at: IndexPath(row: index, section: 0), at: .left, animated: true)
@@ -59,54 +57,19 @@ class QuestionViewController: UIViewController, UICollectionViewDataSource, UICo
         }
         
         cell?.mainButtonTap = { main in
-            if (main == true) {
+            if(main == true) {
                 self.navigationController?.popViewController(animated: true)
             }
         }
-        return cell ?? UICollectionViewCell()
+        return cell ?? ReviewIncorrectCell()
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 15
+        return viewIndex
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: collectionView.frame.width, height: collectionView.frame.height)
     }
     
-    func buttonTapped() {
-        showPopup()
-    }
-    
-    private func showPopup() {
-        let dark = UIView(frame: self.view.bounds)
-        dark.backgroundColor = UIColor.black.withAlphaComponent(0.5)
-        self.view.addSubview(dark)
-        self.darkBackground = dark
-        
-        let popup = PopupView().then {
-            $0.delegate = self
-            self.view.addSubview($0)
-        }
-        
-        popup.snp.makeConstraints {
-            $0.center.equalToSuperview()
-            $0.width.equalTo(270)
-            $0.height.equalTo(297)
-        }
-    }
-    
-    func navigateToMainView() {
-        dismissPopup()
-        navigationController?.pushViewController(MainViewController(), animated: true)
-    }
-    
-    func navigateToMyView() {
-        dismissPopup()
-        navigationController?.pushViewController(MyViewController(), animated: true)
-    }
-    
-    private func dismissPopup() {
-        darkBackground?.removeFromSuperview()
-    }
 }
