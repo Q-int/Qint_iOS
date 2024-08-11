@@ -6,6 +6,6 @@ extension UILabel {
         self.font = UIFont.systemFont(ofSize: 20)
         self.numberOfLines = 0
         self.adjustsFontSizeToFitWidth = true
-        self.minimumScaleFactor = 0.7
+        self.minimumScaleFactor = 0.1
     }
 }

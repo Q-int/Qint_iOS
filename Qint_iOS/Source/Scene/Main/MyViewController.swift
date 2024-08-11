@@ -44,6 +44,7 @@ class MyViewController: UIViewController {
     }
     
     @objc func reviewIncorrectButtonTapped() {
+        self.navigationController?.pushViewController(ReviewIncorrectViewController(), animated: true)
         print("틀린 문제 다시보기")
     }
     

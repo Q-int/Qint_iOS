@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		882570CF2C68802800D8D601 /* ReviewIncorrectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882570CE2C68802800D8D601 /* ReviewIncorrectViewController.swift */; };
+		882570D12C68829500D8D601 /* ReviewIncorrectCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882570D02C68829500D8D601 /* ReviewIncorrectCell.swift */; };
+		882570D42C68C0CB00D8D601 /* PopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882570D32C68C0CB00D8D601 /* PopupView.swift */; };
 		884ABF4A2C65D4D1005A3562 /* QuestionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 884ABF492C65D4D1005A3562 /* QuestionViewController.swift */; };
 		884ABF4C2C660C04005A3562 /* QuestionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 884ABF4B2C660C04005A3562 /* QuestionCell.swift */; };
 		884ABF5A2C662656005A3562 /* DGCharts in Frameworks */ = {isa = PBXBuildFile; productRef = 884ABF592C662656005A3562 /* DGCharts */; };
@@ -31,6 +34,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		882570CE2C68802800D8D601 /* ReviewIncorrectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewIncorrectViewController.swift; sourceTree = "<group>"; };
+		882570D02C68829500D8D601 /* ReviewIncorrectCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewIncorrectCell.swift; sourceTree = "<group>"; };
+		882570D32C68C0CB00D8D601 /* PopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupView.swift; sourceTree = "<group>"; };
 		884ABF492C65D4D1005A3562 /* QuestionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionViewController.swift; sourceTree = "<group>"; };
 		884ABF4B2C660C04005A3562 /* QuestionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionCell.swift; sourceTree = "<group>"; };
 		88BA61672C64C34B00BAF4FA /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -67,6 +73,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		882570D22C68B15600D8D601 /* ReviewIncorrect */ = {
+			isa = PBXGroup;
+			children = (
+				882570CE2C68802800D8D601 /* ReviewIncorrectViewController.swift */,
+				882570D02C68829500D8D601 /* ReviewIncorrectCell.swift */,
+			);
+			path = ReviewIncorrect;
+			sourceTree = "<group>";
+		};
 		88BA615F2C64B30700BAF4FA /* Resource */ = {
 			isa = PBXGroup;
 			children = (
@@ -133,6 +148,7 @@
 			children = (
 				884ABF492C65D4D1005A3562 /* QuestionViewController.swift */,
 				884ABF4B2C660C04005A3562 /* QuestionCell.swift */,
+				882570D32C68C0CB00D8D601 /* PopupView.swift */,
 			);
 			path = Question;
 			sourceTree = "<group>";
@@ -140,6 +156,7 @@
 		88BA61662C64C2B000BAF4FA /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				882570D22C68B15600D8D601 /* ReviewIncorrect */,
 				88BA61672C64C34B00BAF4FA /* MainViewController.swift */,
 				88BA61692C64C35B00BAF4FA /* MyViewController.swift */,
 			);
@@ -272,6 +289,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				88BA617A2C64C99400BAF4FA /* CategoryButton.swift in Sources */,
+				882570D42C68C0CB00D8D601 /* PopupView.swift in Sources */,
 				88BA616C2C64C41000BAF4FA /* LoginViewController.swift in Sources */,
 				88BA616E2C64C42700BAF4FA /* SignUpViewController.swift in Sources */,
 				88E26C0A2C67161800DDA85E /* AnswerButtonView.swift in Sources */,
@@ -281,10 +299,12 @@
 				88F535632C64AEB800B5626A /* SceneDelegate.swift in Sources */,
 				88BA61782C64C87600BAF4FA /* UIButton+Extension.swift in Sources */,
 				88BA616A2C64C35B00BAF4FA /* MyViewController.swift in Sources */,
+				882570CF2C68802800D8D601 /* ReviewIncorrectViewController.swift in Sources */,
 				88E26C0C2C67246400DDA85E /* UILabel+Extension.swift in Sources */,
 				884ABF4C2C660C04005A3562 /* QuestionCell.swift in Sources */,
 				88BA61682C64C34B00BAF4FA /* MainViewController.swift in Sources */,
 				884ABF4A2C65D4D1005A3562 /* QuestionViewController.swift in Sources */,
+				882570D12C68829500D8D601 /* ReviewIncorrectCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

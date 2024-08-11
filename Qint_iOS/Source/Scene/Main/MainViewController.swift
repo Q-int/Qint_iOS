@@ -11,11 +11,8 @@ class MainViewController: UIViewController {
     }
 
     let myButton = UIButton().then {
+        $0.iconButton()
         $0.setImage(UIImage(systemName: "person.fill"), for: .normal)
-        $0.tintColor = UIColor(named: "Gray400")
-        $0.imageView?.contentMode = .scaleAspectFill
-        $0.contentHorizontalAlignment = .fill
-        $0.contentVerticalAlignment = .fill
         $0.addTarget(self, action: #selector(myButtonTapped), for: .touchUpInside)
     }
     

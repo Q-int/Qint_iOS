@@ -13,14 +13,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        guard let windowScene = (scene as? UIWindowScene) else { return }
-        window = UIWindow(windowScene: windowScene)
-        let mainViewController = UINavigationController(rootViewController:
-    MainViewController())
-        
-        window?.rootViewController = mainViewController
-        window?.makeKeyAndVisible()
-    }
+            guard let windowScene = (scene as? UIWindowScene) else { return }
+            window = UIWindow(frame: windowScene.coordinateSpace.bounds)
+            window?.windowScene = windowScene
+            let navigationController = UINavigationController(rootViewController: LoginViewController())
+            window?.rootViewController = navigationController // 루트 뷰컨트롤러 생성
+            window?.makeKeyAndVisible()
+        }
     
     func sceneDidDisconnect(_ scene: UIScene) {
         // Called as the scene is being released by the system.
