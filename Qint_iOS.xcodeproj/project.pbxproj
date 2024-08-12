@@ -15,6 +15,7 @@
 		884ABF5A2C662656005A3562 /* DGCharts in Frameworks */ = {isa = PBXBuildFile; productRef = 884ABF592C662656005A3562 /* DGCharts */; };
 		884ABF5D2C662661005A3562 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 884ABF5C2C662661005A3562 /* SnapKit */; };
 		884ABF602C66266B005A3562 /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = 884ABF5F2C66266B005A3562 /* Then */; };
+		88A94E8A2C69B1D4003E37FC /* AuthAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A94E892C69B1D4003E37FC /* AuthAPI.swift */; };
 		88BA61682C64C34B00BAF4FA /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88BA61672C64C34B00BAF4FA /* MainViewController.swift */; };
 		88BA616A2C64C35B00BAF4FA /* MyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88BA61692C64C35B00BAF4FA /* MyViewController.swift */; };
 		88BA616C2C64C41000BAF4FA /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88BA616B2C64C41000BAF4FA /* LoginViewController.swift */; };
@@ -39,6 +40,7 @@
 		882570D32C68C0CB00D8D601 /* PopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupView.swift; sourceTree = "<group>"; };
 		884ABF492C65D4D1005A3562 /* QuestionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionViewController.swift; sourceTree = "<group>"; };
 		884ABF4B2C660C04005A3562 /* QuestionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionCell.swift; sourceTree = "<group>"; };
+		88A94E892C69B1D4003E37FC /* AuthAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthAPI.swift; sourceTree = "<group>"; };
 		88BA61672C64C34B00BAF4FA /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		88BA61692C64C35B00BAF4FA /* MyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyViewController.swift; sourceTree = "<group>"; };
 		88BA616B2C64C41000BAF4FA /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -82,6 +84,22 @@
 			path = ReviewIncorrect;
 			sourceTree = "<group>";
 		};
+		88A94E842C69AEBB003E37FC /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				88A94E872C69B0E9003E37FC /* API */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
+		88A94E872C69B0E9003E37FC /* API */ = {
+			isa = PBXGroup;
+			children = (
+				88A94E892C69B1D4003E37FC /* AuthAPI.swift */,
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
 		88BA615F2C64B30700BAF4FA /* Resource */ = {
 			isa = PBXGroup;
 			children = (
@@ -97,8 +115,8 @@
 		88BA61602C64B31200BAF4FA /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				88A94E842C69AEBB003E37FC /* Service */,
 				88BA61632C64B3F800BAF4FA /* Scene */,
-				88BA61622C64B3ED00BAF4FA /* Service */,
 				88BA61612C64B3D900BAF4FA /* Component */,
 			);
 			path = Source;
@@ -115,13 +133,6 @@
 				88E26C092C67161800DDA85E /* AnswerButtonView.swift */,
 			);
 			path = Component;
-			sourceTree = "<group>";
-		};
-		88BA61622C64B3ED00BAF4FA /* Service */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Service;
 			sourceTree = "<group>";
 		};
 		88BA61632C64B3F800BAF4FA /* Scene */ = {
@@ -259,6 +270,7 @@
 				884ABF582C662656005A3562 /* XCRemoteSwiftPackageReference "Charts" */,
 				884ABF5B2C662661005A3562 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				884ABF5E2C66266B005A3562 /* XCRemoteSwiftPackageReference "Then" */,
+				88A94E882C69B1C7003E37FC /* XCRemoteSwiftPackageReference "Moya" */,
 			);
 			productRefGroup = 88F5355E2C64AEB800B5626A /* Products */;
 			projectDirPath = "";
@@ -305,6 +317,7 @@
 				88BA61682C64C34B00BAF4FA /* MainViewController.swift in Sources */,
 				884ABF4A2C65D4D1005A3562 /* QuestionViewController.swift in Sources */,
 				882570D12C68829500D8D601 /* ReviewIncorrectCell.swift in Sources */,
+				88A94E8A2C69B1D4003E37FC /* AuthAPI.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -539,6 +552,14 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 3.0.0;
+			};
+		};
+		88A94E882C69B1C7003E37FC /* XCRemoteSwiftPackageReference "Moya" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Moya/Moya.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 15.0.3;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

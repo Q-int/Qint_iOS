@@ -1,10 +1,13 @@
 import UIKit
+import Moya
 import SnapKit
 import Then
 
 class LoginViewController: UIViewController {
     
-    let loginLabel = UILabel().then {
+    private let prvoider = MoyaProvider<AuthAPI>()
+    
+    private let loginLabel = UILabel().then {
         $0.text = "로그인"
         $0.textColor = UIColor(named: "Mint300")
         $0.font = .systemFont(ofSize: 30, weight: .bold)
