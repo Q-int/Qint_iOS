@@ -71,11 +71,11 @@ class AuthTextField: UIView {
         case .pwd:
             textField.isSecureTextEntry = true
             textField.rightView = showPasswordButton
-            textField.rightViewMode = .always
+            textField.rightViewMode = .whileEditing
         case .confirmpwd:
             textField.isSecureTextEntry = true
             textField.rightView = showPasswordButton
-            textField.rightViewMode = .always
+            textField.rightViewMode = .whileEditing
         case .custom:
             let texts = type.text.components(separatedBy: ",")
             textField.attributedPlaceholder = NSAttributedString(string: texts[1], attributes: [NSAttributedString.Key.foregroundColor : UIColor.lightGray])
@@ -108,8 +108,7 @@ class AuthTextField: UIView {
         iconClick = !iconClick
     }
     
-    
-    public func currentText() -> String {
+    public func currentText() -> String? {
         return textField.text ?? ""
     }
 }

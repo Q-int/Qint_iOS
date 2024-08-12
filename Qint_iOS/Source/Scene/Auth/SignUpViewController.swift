@@ -4,7 +4,7 @@ import Then
 
 class SignUpViewController: UIViewController {
     
-    let signUpLabel = UILabel().then {
+    private let signUpLabel = UILabel().then {
         $0.text = "회원가입"
         $0.textColor = UIColor(named: "Mint300")
         $0.font = .systemFont(ofSize: 30, weight: .bold)
@@ -12,55 +12,64 @@ class SignUpViewController: UIViewController {
     
     private let emailTextField = AuthTextField(type: .email)
     
-    let sendButton = UIButton().then {
+    private let sendButton = UIButton().then {
         $0.setTitle("Send", for: .normal)
-        
         $0.setTitleColor(.white, for: .normal)
         $0.backgroundColor = UIColor(named: "Mint300")
         $0.layer.cornerRadius = 5
+        $0.isEnabled = false
     }
     
     private let authenticationTextField = AuthTextField(type: .authentication)
     private let pwdTextField = AuthTextField(type: .pwd)
     private let pwdConfirmTextField = AuthTextField(type: .confirmpwd)
     
-    let signUpButton = UIButton().then {
+    private let signUpButton = UIButton().then {
         $0.QintButton(setTitle: "회원가입", setTitleColor: "White", buttonColor: "Mint300")
-        $0.addTarget(self, action: #selector(signUpButtonTapped), for: .touchUpInside)
     }
     
-    @objc func signUpButtonTapped() {
-        print("회원가입")
-    }
-    
-    let goLoginButton = UIButton().then {
+    private let goLoginButton = UIButton().then {
         $0.QintButton(setTitle: "로그인하러 가기", setTitleColor: "Mint300", buttonColor: "Mint100")
-        $0.addTarget(self, action: #selector(goLoginButtonTapped), for: .touchUpInside)
     }
     
-    @objc func goLoginButtonTapped() {
+    @objc private func goLoginButtonTapped() {
         dismiss(animated: true, completion: nil)
     }
     
-    let tap = UITapGestureRecognizer(target: self, action: #selector(UIView.endEditing))
+    private let tap = UITapGestureRecognizer(target: self, action: #selector(UIView.endEditing))
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if emailTextField.TFEditing == false {
+            guard let email = emailTextField.currentText(), email.count != 0 else {
+                print("이메일 입력 안함")
+                return
+            }
+            if isValidEmail(email: email) {
+                print("유효한 이메일")
+                sendButton.isEnabled = true
+            }
+            else { print("유효하지 않은 이메일") }
+        }
         
         attribute()
         add()
         layout()
     }
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?){
-     
         self.view.endEditing(true)
     }
     
-    func attribute() {
+    private func attribute() {
         view.backgroundColor = .white
+        sendButton.addTarget(self, action: #selector(sendButtonTapped), for: .touchUpInside)
+        signUpButton.addTarget(self, action: #selector(signUpButtonTapped), for: .touchUpInside)
+        goLoginButton.addTarget(self, action: #selector(goLoginButtonTapped), for: .touchUpInside)
     }
     
-    func add() {
+    private func add() {
         [
             signUpLabel,
             emailTextField,
@@ -74,7 +83,7 @@ class SignUpViewController: UIViewController {
         view.addGestureRecognizer(tap)
     }
     
-    func layout() {
+    private func layout() {
         signUpLabel.snp.makeConstraints {
             $0.top.equalToSuperview().inset(100)
             $0.centerX.equalToSuperview()
@@ -115,6 +124,45 @@ class SignUpViewController: UIViewController {
             $0.left.right.equalToSuperview().inset(24)
             $0.height.equalTo(52)
         }
+    }
+    
+    @objc private func sendButtonTapped() {
+        print("send버튼 눌림")
+    }
+    
+    @objc private func signUpButtonTapped() {
+//        guard let email = emailTextField.currentText(), email.count != 0 else {
+//            print("이메일 입력 안함")
+//            return
+//        }
+//        if isValidEmail(email: email) {
+//            print("유효한 이메일")
+//            sendButton.isEnabled = true
+//        }
+//        else { print("유효하지 않은 이메일") }
+        
+        guard let pwd = pwdTextField.currentText(), pwd.count != 0 else {
+            print("비밀번호 입력 안함")
+            return
+        }
+        if isValidPwd(pwd: pwd) { print("유효한 비밀번호") }
+        else { print("유효하지 않은 비밀번호") }
+        
+        if pwdTextField.currentText() == pwdConfirmTextField.currentText() {
+            print("비밀번호 일치")
+        } else { print("비밀번호 일치하지 않음") }
+    }
+    
+    private func isValidEmail(email: String) -> Bool {
+        let regExp = "^.+@([A-Za-z0-9-]+\\.)+[A-Za-z]{2}[A-Za-z]*$"
+        let passwordTest = NSPredicate(format: "SELF MATCHES %@", regExp)
+                return passwordTest.evaluate(with: email)
+    }
+
+    private func isValidPwd(pwd: String) -> Bool {
+        let reGex = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[!@#$%^&*()\\-_=+<>?]).{8,64}$"
+        let passwordTest = NSPredicate(format: "SELF MATCHES %@", reGex)
+                return passwordTest.evaluate(with: pwd)
     }
 }
 
