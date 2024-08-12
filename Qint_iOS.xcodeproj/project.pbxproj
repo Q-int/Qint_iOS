@@ -13,10 +13,10 @@
 		884ABF4A2C65D4D1005A3562 /* QuestionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 884ABF492C65D4D1005A3562 /* QuestionViewController.swift */; };
 		884ABF4C2C660C04005A3562 /* QuestionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 884ABF4B2C660C04005A3562 /* QuestionCell.swift */; };
 		88A94E8A2C69B1D4003E37FC /* AuthAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A94E892C69B1D4003E37FC /* AuthAPI.swift */; };
-		88A94E9E2C69D3C6003E37FC /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 88A94E9D2C69D3C6003E37FC /* SnapKit */; };
-		88A94EA12C69D3CF003E37FC /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = 88A94EA02C69D3CF003E37FC /* Then */; };
-		88A94EA42C69D3E0003E37FC /* DGCharts in Frameworks */ = {isa = PBXBuildFile; productRef = 88A94EA32C69D3E0003E37FC /* DGCharts */; };
-		88A94EA72C69D444003E37FC /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = 88A94EA62C69D444003E37FC /* Moya */; };
+		88A94EB42C6A2BCB003E37FC /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 88A94EB32C6A2BCB003E37FC /* SnapKit */; };
+		88A94EB72C6A2BD7003E37FC /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = 88A94EB62C6A2BD7003E37FC /* Then */; };
+		88A94EBA2C6A2BF0003E37FC /* DGCharts in Frameworks */ = {isa = PBXBuildFile; productRef = 88A94EB92C6A2BF0003E37FC /* DGCharts */; };
+		88A94EBC2C6A2BF0003E37FC /* DGChartsDynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 88A94EBB2C6A2BF0003E37FC /* DGChartsDynamic */; };
 		88BA61682C64C34B00BAF4FA /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88BA61672C64C34B00BAF4FA /* MainViewController.swift */; };
 		88BA616A2C64C35B00BAF4FA /* MyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88BA61692C64C35B00BAF4FA /* MyViewController.swift */; };
 		88BA616C2C64C41000BAF4FA /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88BA616B2C64C41000BAF4FA /* LoginViewController.swift */; };
@@ -67,10 +67,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				88A94E9E2C69D3C6003E37FC /* SnapKit in Frameworks */,
-				88A94EA42C69D3E0003E37FC /* DGCharts in Frameworks */,
-				88A94EA72C69D444003E37FC /* Moya in Frameworks */,
-				88A94EA12C69D3CF003E37FC /* Then in Frameworks */,
+				88A94EBC2C6A2BF0003E37FC /* DGChartsDynamic in Frameworks */,
+				88A94EB42C6A2BCB003E37FC /* SnapKit in Frameworks */,
+				88A94EBA2C6A2BF0003E37FC /* DGCharts in Frameworks */,
+				88A94EB72C6A2BD7003E37FC /* Then in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -244,10 +244,10 @@
 			);
 			name = Qint_iOS;
 			packageProductDependencies = (
-				88A94E9D2C69D3C6003E37FC /* SnapKit */,
-				88A94EA02C69D3CF003E37FC /* Then */,
-				88A94EA32C69D3E0003E37FC /* DGCharts */,
-				88A94EA62C69D444003E37FC /* Moya */,
+				88A94EB32C6A2BCB003E37FC /* SnapKit */,
+				88A94EB62C6A2BD7003E37FC /* Then */,
+				88A94EB92C6A2BF0003E37FC /* DGCharts */,
+				88A94EBB2C6A2BF0003E37FC /* DGChartsDynamic */,
 			);
 			productName = Qint_iOS;
 			productReference = 88F5355D2C64AEB800B5626A /* Qint_iOS.app */;
@@ -278,10 +278,10 @@
 			);
 			mainGroup = 88F535542C64AEB800B5626A;
 			packageReferences = (
-				88A94E9C2C69D3C6003E37FC /* XCRemoteSwiftPackageReference "SnapKit" */,
-				88A94E9F2C69D3CF003E37FC /* XCRemoteSwiftPackageReference "Then" */,
-				88A94EA22C69D3E0003E37FC /* XCRemoteSwiftPackageReference "Charts" */,
-				88A94EA52C69D3E8003E37FC /* XCRemoteSwiftPackageReference "Moya" */,
+				88A94EB22C6A2BCB003E37FC /* XCRemoteSwiftPackageReference "SnapKit" */,
+				88A94EB52C6A2BD7003E37FC /* XCRemoteSwiftPackageReference "Then" */,
+				88A94EB82C6A2BF0003E37FC /* XCRemoteSwiftPackageReference "Charts" */,
+				88A94EBD2C6A2BF7003E37FC /* XCRemoteSwiftPackageReference "Moya" */,
 			);
 			productRefGroup = 88F5355E2C64AEB800B5626A /* Products */;
 			projectDirPath = "";
@@ -541,7 +541,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		88A94E9C2C69D3C6003E37FC /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+		88A94EB22C6A2BCB003E37FC /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
 			requirement = {
@@ -549,7 +549,7 @@
 				minimumVersion = 5.7.1;
 			};
 		};
-		88A94E9F2C69D3CF003E37FC /* XCRemoteSwiftPackageReference "Then" */ = {
+		88A94EB52C6A2BD7003E37FC /* XCRemoteSwiftPackageReference "Then" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/devxoul/Then.git";
 			requirement = {
@@ -557,7 +557,7 @@
 				minimumVersion = 3.0.0;
 			};
 		};
-		88A94EA22C69D3E0003E37FC /* XCRemoteSwiftPackageReference "Charts" */ = {
+		88A94EB82C6A2BF0003E37FC /* XCRemoteSwiftPackageReference "Charts" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/danielgindi/Charts.git";
 			requirement = {
@@ -565,7 +565,7 @@
 				minimumVersion = 5.1.0;
 			};
 		};
-		88A94EA52C69D3E8003E37FC /* XCRemoteSwiftPackageReference "Moya" */ = {
+		88A94EBD2C6A2BF7003E37FC /* XCRemoteSwiftPackageReference "Moya" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Moya/Moya.git";
 			requirement = {
@@ -576,25 +576,25 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		88A94E9D2C69D3C6003E37FC /* SnapKit */ = {
+		88A94EB32C6A2BCB003E37FC /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 88A94E9C2C69D3C6003E37FC /* XCRemoteSwiftPackageReference "SnapKit" */;
+			package = 88A94EB22C6A2BCB003E37FC /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
 		};
-		88A94EA02C69D3CF003E37FC /* Then */ = {
+		88A94EB62C6A2BD7003E37FC /* Then */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 88A94E9F2C69D3CF003E37FC /* XCRemoteSwiftPackageReference "Then" */;
+			package = 88A94EB52C6A2BD7003E37FC /* XCRemoteSwiftPackageReference "Then" */;
 			productName = Then;
 		};
-		88A94EA32C69D3E0003E37FC /* DGCharts */ = {
+		88A94EB92C6A2BF0003E37FC /* DGCharts */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 88A94EA22C69D3E0003E37FC /* XCRemoteSwiftPackageReference "Charts" */;
+			package = 88A94EB82C6A2BF0003E37FC /* XCRemoteSwiftPackageReference "Charts" */;
 			productName = DGCharts;
 		};
-		88A94EA62C69D444003E37FC /* Moya */ = {
+		88A94EBB2C6A2BF0003E37FC /* DGChartsDynamic */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 88A94EA52C69D3E8003E37FC /* XCRemoteSwiftPackageReference "Moya" */;
-			productName = Moya;
+			package = 88A94EB82C6A2BF0003E37FC /* XCRemoteSwiftPackageReference "Charts" */;
+			productName = DGChartsDynamic;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
