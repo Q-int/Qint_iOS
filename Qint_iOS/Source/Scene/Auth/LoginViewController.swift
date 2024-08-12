@@ -16,35 +16,15 @@ class LoginViewController: UIViewController {
     private let emailTextField = AuthTextField(type: .email)
     private let pwdTextField = AuthTextField(type: .pwd)
     
-    let loginButton = UIButton().then {
+    private let loginButton = UIButton().then {
         $0.QintButton(setTitle: "로그인", setTitleColor: "White", buttonColor: "Mint300")
-        $0.addTarget(self, action: #selector(loginButtonTapped), for: .touchUpInside)
     }
     
-    @objc func loginButtonTapped() {
-        print("로그인")
-    }
-    
-    let goSignUpButton = UIButton().then {
+    private let goSignUpButton = UIButton().then {
         $0.QintButton(setTitle: "회원가입하러 가기", setTitleColor: "Mint300", buttonColor: "Mint100")
-        $0.addTarget(self, action: #selector(goSignUpButtonTapped), for: .touchUpInside)
-        
     }
     
-    @objc func goSignUpButtonTapped() {
-        let next = SignUpViewController()
-        next.modalPresentationStyle = .fullScreen
-        
-        let transition = CATransition()
-        transition.duration = 0.5
-        transition.type = .fade
-        transition.subtype = .fromTop
-        view.window?.layer.add(transition, forKey: kCATransition)
-        
-        present(next, animated: true, completion: nil)
-    }
-    
-    let tap = UITapGestureRecognizer(target: self, action: #selector(UIView.endEditing))
+    private let tap = UITapGestureRecognizer(target: self, action: #selector(UIView.endEditing))
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -60,6 +40,8 @@ class LoginViewController: UIViewController {
     
     func attribute() {
         view.backgroundColor = .white
+        loginButton.addTarget(self, action: #selector(loginButtonTapped), for: .touchUpInside)
+        goSignUpButton.addTarget(self, action: #selector(goSignUpButtonTapped), for: .touchUpInside)
     }
     
     func add() {
@@ -101,4 +83,19 @@ class LoginViewController: UIViewController {
         }
     }
     
+    @objc private func loginButtonTapped() {
+        print("로그인")
+    }
+    @objc private func goSignUpButtonTapped() {
+        let next = SignUpViewController()
+        next.modalPresentationStyle = .fullScreen
+        
+        let transition = CATransition()
+        transition.duration = 0.5
+        transition.type = .fade
+        transition.subtype = .fromTop
+        view.window?.layer.add(transition, forKey: kCATransition)
+        
+        present(next, animated: true, completion: nil)
+    }
 }
