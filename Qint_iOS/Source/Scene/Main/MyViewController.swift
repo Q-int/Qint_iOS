@@ -40,7 +40,7 @@ class MyViewController: UIViewController {
     let reviewIncorrectButton = UIButton().then {
         $0.backgroundColor = .white
         $0.layer.cornerRadius = 10
-        $0.addTarget(self, action: #selector(<#T##@objc method#>), for: .touchUpInside)
+        $0.addTarget(self, action: #selector(reviewIncorrectButtonTapped), for: .touchUpInside)
     }
     
     @objc func reviewIncorrectButtonTapped() {

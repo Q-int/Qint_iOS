@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		884ABF482C65D0F5005A3562 /* DGCharts in Frameworks */ = {isa = PBXBuildFile; productRef = 884ABF472C65D0F5005A3562 /* DGCharts */; };
+		88A94E822C698199003E37FC /* UserAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A94E812C698199003E37FC /* UserAPI.swift */; };
 		88BA61682C64C34B00BAF4FA /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88BA61672C64C34B00BAF4FA /* MainViewController.swift */; };
 		88BA616A2C64C35B00BAF4FA /* MyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88BA61692C64C35B00BAF4FA /* MyViewController.swift */; };
 		88BA616C2C64C41000BAF4FA /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88BA616B2C64C41000BAF4FA /* LoginViewController.swift */; };
@@ -27,6 +28,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		88A94E812C698199003E37FC /* UserAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAPI.swift; sourceTree = "<group>"; };
 		88BA61672C64C34B00BAF4FA /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		88BA61692C64C35B00BAF4FA /* MyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyViewController.swift; sourceTree = "<group>"; };
 		88BA616B2C64C41000BAF4FA /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -59,6 +61,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		88A94E802C698147003E37FC /* API */ = {
+			isa = PBXGroup;
+			children = (
+				88A94E812C698199003E37FC /* UserAPI.swift */,
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
 		88BA615F2C64B30700BAF4FA /* Resource */ = {
 			isa = PBXGroup;
 			children = (
@@ -95,6 +105,7 @@
 		88BA61622C64B3ED00BAF4FA /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				88A94E802C698147003E37FC /* API */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -230,6 +241,7 @@
 				88BA616F2C64C45200BAF4FA /* XCRemoteSwiftPackageReference "SnapKit" */,
 				88BA61722C64C45A00BAF4FA /* XCRemoteSwiftPackageReference "Then" */,
 				884ABF462C65D0F5005A3562 /* XCRemoteSwiftPackageReference "Charts" */,
+				88A94E832C698238003E37FC /* XCRemoteSwiftPackageReference "Moya" */,
 			);
 			productRefGroup = 88F5355E2C64AEB800B5626A /* Products */;
 			projectDirPath = "";
@@ -261,6 +273,7 @@
 			files = (
 				88BA617A2C64C99400BAF4FA /* CategoryButton.swift in Sources */,
 				88BA616C2C64C41000BAF4FA /* LoginViewController.swift in Sources */,
+				88A94E822C698199003E37FC /* UserAPI.swift in Sources */,
 				88BA616E2C64C42700BAF4FA /* SignUpViewController.swift in Sources */,
 				88BA617C2C64CD9D00BAF4FA /* ReviewIncorrect.swift in Sources */,
 				88BA61762C64C70C00BAF4FA /* AuthTextField.swift in Sources */,
@@ -487,6 +500,14 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 5.1.0;
+			};
+		};
+		88A94E832C698238003E37FC /* XCRemoteSwiftPackageReference "Moya" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Moya/Moya.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 15.0.3;
 			};
 		};
 		88BA616F2C64C45200BAF4FA /* XCRemoteSwiftPackageReference "SnapKit" */ = {
