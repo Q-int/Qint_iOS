@@ -27,7 +27,7 @@ enum TFType {
 class AuthTextField: UIView {
     var iconClick = true
     
-    let textField = UITextField().then() {
+    let textField = UITextField().then {
         let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 13, height: $0.frame.height))
         $0.leftView = paddingView
         $0.leftViewMode = .always
@@ -37,6 +37,12 @@ class AuthTextField: UIView {
         $0.layer.cornerRadius = 5
         $0.addTarget(self, action: #selector(didSetectTextField), for: .editingDidBegin)
         $0.addTarget(self, action: #selector(didEndSetectTextField), for: .editingDidEnd)
+    }
+    
+    let label = UILabel().then {
+        $0.font = .systemFont(ofSize: 10)
+        $0.textColor = UIColor(named: "Red100")
+//        $0.text = "이메일을 입력햐 ㅈ새용"
     }
     
     @objc func didSetectTextField() {
@@ -90,10 +96,15 @@ class AuthTextField: UIView {
     
     func layout() {
         self.addSubview(textField)
+        self.addSubview(label)
         
         textField.snp.makeConstraints {
             $0.left.right.equalToSuperview().inset(0)
             $0.height.equalTo(52)
+        }
+        label.snp.makeConstraints {
+            $0.top.equalTo(textField.snp.bottom).offset(5)
+            $0.left.equalToSuperview().inset(0)
         }
     }
     
