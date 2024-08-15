@@ -1,8 +1,12 @@
-//
-//  SolutionViewController.swift
-//  Qint_iOS
-//
-//  Created by 원이 on 8/12/24.
-//
+import UIKit
+import SnapKit
+import Then
 
-import Foundation
+class SolutionViewController: UIViewController {
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        view.backgroundColor = .red
+    }
+}

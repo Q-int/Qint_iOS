@@ -2,6 +2,45 @@ import UIKit
 import SnapKit
 import Then
 
+class foodButton: UIButton {
+    
+    public init(color: UIColor) {
+        super.init(frame: .zero)
+        
+        self.backgroundColor = color
+    }
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        
+        self.backgroundColor = .red
+        self.setTitle("food", for: .normal)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
+struct Component {
+    static func foodButtonComponent(color: UIColor) -> UIButton {
+        UIButton().then {
+            $0.backgroundColor = color
+        }
+    }
+}
+
+class testViewController: UIViewController {
+    
+    var a = foodButton(color: .red)
+    
+    var b = Component.foodButtonComponent(color: .red)
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+    }
+    
+}
+
 
 class AnswerButtonView: UIView {
     

@@ -5,7 +5,7 @@ import Then
 
 class LoginViewController: UIViewController {
     
-    private let prvoider = MoyaProvider<AuthAPI>()
+    private let authPrvoider = MoyaProvider<AuthAPI>()
     
     private let loginLabel = UILabel().then {
         $0.text = "로그인"
@@ -17,18 +17,18 @@ class LoginViewController: UIViewController {
     private let pwdTextField = AuthTextField(type: .pwd)
     
     private let loginButton = UIButton().then {
-        $0.QintButton(setTitle: "로그인", setTitleColor: "White", buttonColor: "Mint300")
+        $0.qintButton(setTitle: "로그인", setTitleColor: "White", buttonColor: "Mint300")
     }
     
     private let goSignUpButton = UIButton().then {
-        $0.QintButton(setTitle: "회원가입하러 가기", setTitleColor: "Mint300", buttonColor: "Mint100")
+        $0.qintButton(setTitle: "회원가입하러 가기", setTitleColor: "Mint300", buttonColor: "Mint100")
     }
     
     private let tap = UITapGestureRecognizer(target: self, action: #selector(UIView.endEditing))
     
     override func viewDidLoad() {
         super.viewDidLoad()
-                
+        
         attribute()
         add()
         layout()
@@ -85,15 +85,43 @@ class LoginViewController: UIViewController {
     
     @objc private func loginButtonTapped() {
         print("로그인")
+        authPrvoider.request(.login(email: emailTextField.textField.text ?? "이메일이 입력되지 않음", password: pwdTextField.textField.text ?? "비밀번호가 입력되지 않음")) { response in
+            switch response {
+            case let .success(response):
+                switch response.statusCode {
+                case 200:
+                    if let data = try? JSONDecoder().decode(AuthResponse.self, from: response.data) {
+                        DispatchQueue.main.async {
+                            Token.accessToken = data.accessToken
+                            print(Token.accessToken)
+                            let mainViewController = MainViewController()
+                            let navigationController = self.navigationController
+                            navigationController?.setViewControllers([mainViewController], animated: true)
+                        }
+                    } else {
+                        print("auth json decode fail")
+                    }
+                    print("로그인 성공")
+                case 400:
+                    print("이메일 또는 비밀번호 불일치")
+                default:
+                    print("존재하지 않는 유저")
+                }
+            case let .failure(errror):
+                print("(err.localizedDescription)")
+            }
+        }
     }
     @objc private func goSignUpButtonTapped() {
         let next = SignUpViewController()
         next.modalPresentationStyle = .fullScreen
         
-        let transition = CATransition()
-        transition.duration = 0.5
-        transition.type = .fade
-        transition.subtype = .fromTop
+        let transition = CATransition().then {
+            $0.duration = 0.5
+            $0.type = .fade
+            $0.subtype = .fromTop
+        }
+        
         view.window?.layer.add(transition, forKey: kCATransition)
         
         present(next, animated: true, completion: nil)

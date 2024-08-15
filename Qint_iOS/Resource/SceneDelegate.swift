@@ -17,7 +17,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             window = UIWindow(frame: windowScene.coordinateSpace.bounds)
             window?.windowScene = windowScene
             let navigationController = UINavigationController(rootViewController: LoginViewController())
-            window?.rootViewController = navigationController // 루트 뷰컨트롤러 생성
+            window?.rootViewController = navigationController 
             window?.makeKeyAndVisible()
         }
     

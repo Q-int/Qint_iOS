@@ -1,8 +1,13 @@
 import UIKit
 import SnapKit
 import Then
+import Moya
 
 class SignUpViewController: UIViewController {
+    
+    private let authPrvoider = MoyaProvider<AuthAPI>()
+    
+    var errorModel: ErrorModel = .DoNotEnterPwd
     
     private let signUpLabel = UILabel().then {
         $0.text = "회원가입"
@@ -25,11 +30,11 @@ class SignUpViewController: UIViewController {
     private let pwdConfirmTextField = AuthTextField(type: .confirmpwd)
     
     private let signUpButton = UIButton().then {
-        $0.QintButton(setTitle: "회원가입", setTitleColor: "White", buttonColor: "Mint300")
+        $0.qintButton(setTitle: "회원가입", setTitleColor: "White", buttonColor: "Mint300")
     }
     
     private let goLoginButton = UIButton().then {
-        $0.QintButton(setTitle: "로그인하러 가기", setTitleColor: "Mint300", buttonColor: "Mint100")
+        $0.qintButton(setTitle: "로그인하러 가기", setTitleColor: "Mint300", buttonColor: "Mint100")
     }
     
     @objc private func goLoginButtonTapped() {
@@ -55,6 +60,10 @@ class SignUpViewController: UIViewController {
         sendButton.addTarget(self, action: #selector(sendButtonTapped), for: .touchUpInside)
         signUpButton.addTarget(self, action: #selector(signUpButtonTapped), for: .touchUpInside)
         goLoginButton.addTarget(self, action: #selector(goLoginButtonTapped), for: .touchUpInside)
+        
+        emailTextField.textField.delegate = self
+        pwdTextField.textField.delegate = self
+        pwdConfirmTextField.textField.delegate = self
     }
     
     private func add() {
@@ -119,26 +128,19 @@ class SignUpViewController: UIViewController {
     }
     
     @objc private func signUpButtonTapped() {
-        guard let email = emailTextField.currentText(), email.count != 0 else {
-            print("이메일 입력 안함")
-            return
+        authPrvoider.request(.signup(password: pwdTextField.textField.text!, passwordCheck: pwdConfirmTextField.textField.text!, email: emailTextField.textField.text!)) { response in
+            switch response {
+            case let .success(response):
+                switch response.statusCode {
+                case 201:
+                    print("회원가입 성공")
+                default:
+                    print("회원가입 실패")
+                }
+            case let .failure(error):
+                print("(err.localizedDescription)")
+            }
         }
-        if isValidEmail(email: email) {
-            print("유효한 이메일")
-            sendButton.isEnabled = true
-        }
-        else { print("유효하지 않은 이메일") }
-        
-        guard let pwd = pwdTextField.currentText(), pwd.count != 0 else {
-            print("비밀번호 입력 안함")
-            return
-        }
-        if isValidPwd(pwd: pwd) { print("유효한 비밀번호") }
-        else { print("유효하지 않은 비밀번호") }
-        
-        if pwdTextField.currentText() == pwdConfirmTextField.currentText() {
-            print("비밀번호 일치")
-        } else { print("비밀번호 일치하지 않음") }
     }
     
     private func isValidEmail(email: String) -> Bool {
@@ -154,3 +156,86 @@ class SignUpViewController: UIViewController {
     }
 }
 
+extension SignUpViewController: UITextFieldDelegate {
+    
+    
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        
+//        switch errorModel {
+//        case .DoNotEnterEmail(email: let email):
+//            <#code#>
+//        case .EmailIsValid(email: let email):
+//            <#code#>
+//        case .EmailNotValid(email: let email):
+//            <#code#>
+//        case .DoNotEnterPwd:
+//            <#code#>
+//        case .PwdIsValid:
+//            <#code#>
+//        case .PwdNotValid:
+//            <#code#>
+//        case .DoNotEnterPwdConfirm:
+//            <#code#>
+//        case .PwdConfirmIsValid:
+//            <#code#>
+//        case .PwdConfirmNotValid:
+//            <#code#>
+//        }
+        
+        if textField == emailTextField.textField {
+            guard let email = emailTextField.currentText(), email.count != 0 else {
+                print("이메일 입력 안함")
+                emailTextField.textField.layer.borderColor = UIColor(named: "Red100")?.cgColor
+                emailTextField.textField.layer.borderWidth = 1
+                emailTextField.label.text = "이메일을 입력해주세요"
+                return
+            }
+            if isValidEmail(email: email) {
+                print("유효한 이메일")
+                emailTextField.textField.layer.borderColor = UIColor(named: "Green100")?.cgColor
+                emailTextField.textField.layer.borderWidth = 1
+                emailTextField.label.text = .none
+                sendButton.isEnabled = true
+            }
+            else {
+                print("유효하지 않은 이메일")
+                emailTextField.textField.layer.borderColor = UIColor(named: "Red100")?.cgColor
+                emailTextField.textField.layer.borderWidth = 1
+                emailTextField.label.text = "이메일 형식이 일치하지 않습니다"
+            }
+        } else if textField == pwdTextField.textField {
+            guard let pwd = pwdTextField.currentText(), pwd.count != 0 else {
+                pwdTextField.textField.layer.borderColor = UIColor(named: "Red100")?.cgColor
+                pwdTextField.textField.layer.borderWidth = 1
+                pwdTextField.label.text = "비밀번호를 입력해주세요"
+                print("비밀번호 입력 안함")
+                return
+            }
+            if isValidPwd(pwd: pwd) { 
+                pwdTextField.textField.layer.borderColor = UIColor(named: "Green100")?.cgColor
+                pwdTextField.textField.layer.borderWidth = 1
+                pwdTextField.label.text = .none
+                print("유효한 비밀번호")
+            }
+            else {
+                pwdTextField.textField.layer.borderColor = UIColor(named: "Red100")?.cgColor
+                pwdTextField.textField.layer.borderWidth = 1
+                pwdTextField.label.text = "비밀번호 형식이 일치하지 않습니다"
+                print("유효하지 않은 비밀번호")
+            }
+        } else if textField == pwdConfirmTextField.textField {
+            if pwdTextField.currentText() == pwdConfirmTextField.currentText() {
+                pwdConfirmTextField.textField.layer.borderColor = UIColor(named: "Green100")?.cgColor
+                pwdConfirmTextField.textField.layer.borderWidth = 1
+                pwdConfirmTextField.label.text = .none
+                print("비밀번호 일치")
+            } else {
+                pwdConfirmTextField.textField.layer.borderColor = UIColor(named: "Red100")?.cgColor
+                pwdConfirmTextField.textField.layer.borderWidth = 1
+                pwdConfirmTextField.label.text = "비밀번호가 일치하지 않습니다"
+                print("비밀번호 일치하지 않음")
+            }
+        }
+    }
+}

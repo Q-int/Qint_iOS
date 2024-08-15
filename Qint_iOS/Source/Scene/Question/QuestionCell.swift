@@ -7,9 +7,11 @@ class QuestionCell: UICollectionViewCell {
     
     var nextButtonTap: ((Int) -> Void)?
     var mainButtonTap: ((Bool) -> Void)?
+    var solutionButtonTap: ((Bool) -> Void)?
     
     var index: Int = 0
     var main: Bool = false
+    var soluton: Bool = false
     
     private let questionView = UIView().then {
         $0.backgroundColor = UIColor(named: "Mint100")
@@ -44,6 +46,19 @@ class QuestionCell: UICollectionViewCell {
         print("홈 버튼 누름")
     }
     
+    let solutionButton = UIButton().then {
+        $0.setTitle("해설", for: .normal)
+        $0.setTitleColor(.white, for: .normal)
+        $0.titleLabel?.font = .systemFont(ofSize: 20)
+        $0.backgroundColor = UIColor(named: "Mint300")
+        $0.layer.cornerRadius = 10
+        $0.addTarget(self, action: #selector(solutionButtonTapped), for: .touchUpInside)
+    }
+    
+    @objc func solutionButtonTapped() {
+        soluton = true
+    }
+    
     let nextButton = UIButton().then {
         $0.nextButton()
     }
@@ -59,6 +74,7 @@ class QuestionCell: UICollectionViewCell {
     func attribute() {
         nextButton.addTarget(self, action: #selector(nextButtonClicked), for: .touchUpInside)
         mainButton.addTarget(self, action: #selector(mainButtonClicked), for: .touchUpInside)
+        solutionButton.addTarget(self, action: #selector(solutionButtonClicked), for: .touchUpInside)
     }
     
     func add() {
@@ -67,6 +83,7 @@ class QuestionCell: UICollectionViewCell {
             indexLabel,
             answerView,
             mainButton,
+            solutionButton,
             nextButton
         ].forEach{ contentView.addSubview($0) }
         questionView.addSubview(questionLabel)
@@ -74,8 +91,8 @@ class QuestionCell: UICollectionViewCell {
     func layout() {
         questionView.snp.makeConstraints {
             $0.top.equalToSuperview().inset(91)
-            $0.left.right.equalToSuperview().inset(20)
-            $0.height.equalTo(200)
+            $0.left.right.equalToSuperview().inset(24)
+            $0.height.equalTo(230)
         }
         questionLabel.snp.makeConstraints {
             $0.top.bottom.left.right.equalToSuperview().inset(15)
@@ -86,15 +103,21 @@ class QuestionCell: UICollectionViewCell {
         }
         answerView.snp.makeConstraints {
             $0.top.equalTo(indexLabel.snp.bottom).offset(30)
-            $0.left.right.equalToSuperview().inset(20)
+            $0.left.right.equalToSuperview().inset(24)
         }
         mainButton.snp.makeConstraints {
-            $0.bottom.equalToSuperview().inset(99)
+            $0.bottom.equalToSuperview().inset(110)
             $0.left.equalToSuperview().inset(24)
             $0.height.width.equalTo(30)
         }
+        solutionButton.snp.makeConstraints {
+            $0.bottom.equalToSuperview().inset(101)
+            $0.right.equalTo(nextButton.snp.left).offset(-12)
+            $0.height.equalTo(45)
+            $0.width.equalTo(67)
+        }
         nextButton.snp.makeConstraints {
-            $0.bottom.equalToSuperview().inset(90)
+            $0.bottom.equalToSuperview().inset(101)
             $0.right.equalToSuperview().inset(24)
             $0.height.equalTo(45)
             $0.width.equalTo(105)
@@ -117,5 +140,9 @@ class QuestionCell: UICollectionViewCell {
     
     @objc func mainButtonClicked() {
         self.mainButtonTap?(main)
+    }
+    
+    @objc func solutionButtonClicked() {
+        self.solutionButtonTap?(soluton)
     }
 }

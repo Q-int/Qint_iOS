@@ -1,8 +1,11 @@
-//
-//  AuthResponse.swift
-//  Qint_iOS
-//
-//  Created by 원이 on 8/13/24.
-//
-
 import Foundation
+
+
+struct AuthResponse: Codable {
+    let tokenResponse: TokenResponse
+    let message: String
+}
+
+struct TokenResponse: Codable {
+    let accessToken, refreshToken: String
+}

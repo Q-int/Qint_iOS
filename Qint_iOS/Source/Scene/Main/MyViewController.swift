@@ -5,31 +5,26 @@ import DGCharts
 
 class MyViewController: UIViewController {
     
-    let qintLabel = UILabel().then {
+    private let qintLabel = UILabel().then {
         $0.text = "Q-int"
         $0.font = UIFont(name: "ZenDots-Regular", size: 24)
         $0.textColor = UIColor(named: "Gray400")
     }
     
-    let mainButton = UIButton().then {
+    private let mainButton = UIButton().then {
         $0.setImage(UIImage(named: "Home2"), for: .normal)
         $0.tintColor = UIColor(named: "Gray400")
         $0.imageView?.contentMode = .scaleAspectFill
         $0.contentHorizontalAlignment = .fill
         $0.contentVerticalAlignment = .fill
-        $0.addTarget(self, action: #selector(mainButtonTapped), for: .touchUpInside)
     }
     
-    @objc func mainButtonTapped() {
-        self.navigationController?.popViewController(animated: true)
-    }
-    
-    let accuracyView = UIView().then {
+    private let accuracyView = UIView().then {
         $0.backgroundColor = .white
         $0.layer.cornerRadius = 10
     }
     
-    let reviewIncorrectLabel = UILabel().then {
+    private let reviewIncorrectLabel = UILabel().then {
         $0.text = "나의 정답률"
         $0.font = .boldSystemFont(ofSize: 20)
         $0.textColor = UIColor(named: "Gray400")
@@ -37,37 +32,26 @@ class MyViewController: UIViewController {
     
     var pieChartView: PieChartView!
     
-    let reviewIncorrectButton = UIButton().then {
+    private let reviewIncorrectButton = UIButton().then {
         $0.backgroundColor = .white
         $0.layer.cornerRadius = 10
-        $0.addTarget(self, action: #selector(reviewIncorrectButtonTapped), for: .touchUpInside)
     }
     
-    @objc func reviewIncorrectButtonTapped() {
-        self.navigationController?.pushViewController(ReviewIncorrectViewController(), animated: true)
-        print("틀린 문제 다시보기")
-    }
-    
-    let reviewIncorrectView = reviewIncorrect().then {
+    private let reviewIncorrectView = reviewIncorrect().then {
         $0.isUserInteractionEnabled = false
     }
     
-    let emailLabel = UILabel().then {
+    private let emailLabel = UILabel().then {
         $0.text = "오류 신고 이메일 : 1234@dsm.hs.kr"
         $0.font = .systemFont(ofSize: 10)
         $0.textColor = UIColor(named: "Gray400")
     }
     
-    let logoutButton = UIButton().then {
+    private let logoutButton = UIButton().then {
         $0.setTitle("로그아웃", for: .normal)
         $0.setTitleColor(UIColor(named: "Gray400"), for: .normal)
         $0.titleLabel?.font = .systemFont(ofSize: 10)
         $0.contentEdgeInsets = UIEdgeInsets(top: -1, left: 0, bottom: -1, right: 0)
-        $0.addTarget(self, action: #selector(logoutButtonTapped), for: .touchUpInside)
-    }
-    
-    @objc func logoutButtonTapped() {
-        print("로그아웃")
     }
     
     override func viewDidLoad() {
@@ -79,11 +63,14 @@ class MyViewController: UIViewController {
         layout()
     }
     
-    func attribute() {
+    private func attribute() {
         view.backgroundColor = UIColor(named: "Mint100")
+        mainButton.addTarget(self, action: #selector(mainButtonTapped), for: .touchUpInside)
+        reviewIncorrectButton.addTarget(self, action: #selector(reviewIncorrectButtonTapped), for: .touchUpInside)
+        logoutButton.addTarget(self, action: #selector(logoutButtonTapped), for: .touchUpInside)
     }
     
-    func chart() {
+    private func chart() {
         pieChartView = PieChartView()
         
         var entries = [
@@ -116,7 +103,7 @@ class MyViewController: UIViewController {
         pieChartView.animate(xAxisDuration: 1.0, yAxisDuration: 1.0, easingOption: .easeInOutQuad)
     }
     
-    func add() {
+    private func add() {
         [
             qintLabel,
             mainButton,
@@ -130,7 +117,7 @@ class MyViewController: UIViewController {
         accuracyView.addSubview(pieChartView)
     }
     
-    func layout() {
+    private func layout() {
         qintLabel.snp.makeConstraints {
             $0.top.equalToSuperview().inset(71)
             $0.left.equalToSuperview().inset(30)
@@ -170,6 +157,16 @@ class MyViewController: UIViewController {
             $0.bottom.equalToSuperview().inset(75)
             $0.right.equalToSuperview().inset(24)
         }
+    }
+    
+    @objc private func reviewIncorrectButtonTapped() {
+        self.navigationController?.pushViewController(ReviewIncorrectViewController(), animated: true)
+    }
+    @objc private func mainButtonTapped() {
+        self.navigationController?.popViewController(animated: true)
+    }
+    @objc private func logoutButtonTapped() {
+        self.navigationController?.pushViewController(LoginViewController(), animated: true)
     }
     
 }
