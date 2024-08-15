@@ -90,7 +90,7 @@ class LoginViewController: UIViewController {
             case let .success(response):
                 switch response.statusCode {
                 case 200:
-                    if let data = try? JSONDecoder().decode(AuthResponse.self, from: response.data) {
+                    if let data = try? JSONDecoder().decode(TokenResponse.self, from: response.data) {
                         DispatchQueue.main.async {
                             Token.accessToken = data.accessToken
                             print(Token.accessToken)

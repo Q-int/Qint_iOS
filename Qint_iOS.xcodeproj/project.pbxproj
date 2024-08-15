@@ -22,6 +22,7 @@
 		88A94EE72C6B14B3003E37FC /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A94EE62C6B14B3003E37FC /* Token.swift */; };
 		88A94EEA2C6B2449003E37FC /* AuthResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A94EE92C6B2449003E37FC /* AuthResponse.swift */; };
 		88A94EF02C6B53AE003E37FC /* ErrorModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A94EEF2C6B53AE003E37FC /* ErrorModel.swift */; };
+		88A94EF22C6E4E35003E37FC /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A94EF12C6E4E34003E37FC /* UIView+Extension.swift */; };
 		88BA61682C64C34B00BAF4FA /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88BA61672C64C34B00BAF4FA /* MainViewController.swift */; };
 		88BA616A2C64C35B00BAF4FA /* MyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88BA61692C64C35B00BAF4FA /* MyViewController.swift */; };
 		88BA616C2C64C41000BAF4FA /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88BA616B2C64C41000BAF4FA /* LoginViewController.swift */; };
@@ -51,6 +52,7 @@
 		88A94EE62C6B14B3003E37FC /* Token.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Token.swift; sourceTree = "<group>"; };
 		88A94EE92C6B2449003E37FC /* AuthResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthResponse.swift; sourceTree = "<group>"; };
 		88A94EEF2C6B53AE003E37FC /* ErrorModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorModel.swift; sourceTree = "<group>"; };
+		88A94EF12C6E4E34003E37FC /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
 		88BA61672C64C34B00BAF4FA /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		88BA61692C64C35B00BAF4FA /* MyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyViewController.swift; sourceTree = "<group>"; };
 		88BA616B2C64C41000BAF4FA /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -120,6 +122,7 @@
 			children = (
 				88BA61772C64C87600BAF4FA /* UIButton+Extension.swift */,
 				88E26C0B2C67246400DDA85E /* UILabel+Extension.swift */,
+				88A94EF12C6E4E34003E37FC /* UIView+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -368,6 +371,7 @@
 				88E26C0A2C67161800DDA85E /* AnswerButtonView.swift in Sources */,
 				88BA617C2C64CD9D00BAF4FA /* ReviewIncorrect.swift in Sources */,
 				88BA61762C64C70C00BAF4FA /* AuthTextField.swift in Sources */,
+				88A94EF22C6E4E35003E37FC /* UIView+Extension.swift in Sources */,
 				88F535612C64AEB800B5626A /* AppDelegate.swift in Sources */,
 				88F535632C64AEB800B5626A /* SceneDelegate.swift in Sources */,
 				88BA61782C64C87600BAF4FA /* UIButton+Extension.swift in Sources */,
