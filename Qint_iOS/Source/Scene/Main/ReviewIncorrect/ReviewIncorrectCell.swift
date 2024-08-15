@@ -103,6 +103,7 @@ class ReviewIncorrectCell: UICollectionViewCell {
         correctButton.snp.makeConstraints {
             $0.top.equalTo(questionView.snp.bottom).offset(18)
             $0.left.right.equalToSuperview().inset(24)
+            $0.height.equalTo(75)
         }
         correctLabel.snp.makeConstraints {
             $0.edges.equalToSuperview().inset(20)
@@ -110,6 +111,7 @@ class ReviewIncorrectCell: UICollectionViewCell {
         wrongButton.snp.makeConstraints {
             $0.top.equalTo(correctButton.snp.bottom).offset(18)
             $0.left.right.equalToSuperview().inset(24)
+            $0.height.equalTo(75)
         }
         wrongLabel.snp.makeConstraints {
             $0.edges.equalToSuperview().inset(20)
