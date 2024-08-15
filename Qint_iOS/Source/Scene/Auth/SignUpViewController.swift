@@ -41,18 +41,6 @@ class SignUpViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if emailTextField.TFEditing == false {
-            guard let email = emailTextField.currentText(), email.count != 0 else {
-                print("이메일 입력 안함")
-                return
-            }
-            if isValidEmail(email: email) {
-                print("유효한 이메일")
-                sendButton.isEnabled = true
-            }
-            else { print("유효하지 않은 이메일") }
-        }
-        
         attribute()
         add()
         layout()
@@ -131,15 +119,15 @@ class SignUpViewController: UIViewController {
     }
     
     @objc private func signUpButtonTapped() {
-//        guard let email = emailTextField.currentText(), email.count != 0 else {
-//            print("이메일 입력 안함")
-//            return
-//        }
-//        if isValidEmail(email: email) {
-//            print("유효한 이메일")
-//            sendButton.isEnabled = true
-//        }
-//        else { print("유효하지 않은 이메일") }
+        guard let email = emailTextField.currentText(), email.count != 0 else {
+            print("이메일 입력 안함")
+            return
+        }
+        if isValidEmail(email: email) {
+            print("유효한 이메일")
+            sendButton.isEnabled = true
+        }
+        else { print("유효하지 않은 이메일") }
         
         guard let pwd = pwdTextField.currentText(), pwd.count != 0 else {
             print("비밀번호 입력 안함")
