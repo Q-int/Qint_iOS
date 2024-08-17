@@ -14,19 +14,11 @@ class QuestionCell: UICollectionViewCell {
     var soluton: Bool = false
     
     private let questionView = UIView().then {
-        $0.backgroundColor = UIColor(named: "Mint100")
-        $0.layer.cornerRadius = 20
-        $0.clipsToBounds = false
-        $0.layer.shadowOffset = CGSizeMake(0.4, 0.4)
-        $0.layer.shadowOpacity = 0.2
+        $0.questionView()
     }
     
     let questionLabel = UILabel().then {
-        $0.text = "π를 제대로 기술한 것은?π를 제대로 기술한 것은?π를 제대로 기술한 것은?π를 제대로 기술한 것은?π를 제대로 기술한 것은?π를 제대로 기술한 것은?π를 제대로 기술한 것은?π를 제대로 기술한 것은?π를 제대로 기술한 것은?π를 제대로 기술한 것은?π를 제대로 기술한 것은?π를 제대로 기술한 것은?"
-        $0.font = UIFont.systemFont(ofSize: 25)
-        $0.numberOfLines = 0
-        $0.adjustsFontSizeToFitWidth = true
-        $0.minimumScaleFactor = 0.7
+        $0.questionLabel()
     }
     
     let indexLabel = UILabel().then {
@@ -90,9 +82,9 @@ class QuestionCell: UICollectionViewCell {
     }
     func layout() {
         questionView.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(91)
+            $0.top.equalToSuperview().inset(85)
             $0.left.right.equalToSuperview().inset(24)
-            $0.height.equalTo(230)
+            $0.height.equalTo(215)
         }
         questionLabel.snp.makeConstraints {
             $0.top.bottom.left.right.equalToSuperview().inset(15)
@@ -106,18 +98,18 @@ class QuestionCell: UICollectionViewCell {
             $0.left.right.equalToSuperview().inset(24)
         }
         mainButton.snp.makeConstraints {
-            $0.bottom.equalToSuperview().inset(110)
+            $0.top.equalTo(answerView.button4.snp.bottom).offset(49)
             $0.left.equalToSuperview().inset(24)
             $0.height.width.equalTo(30)
         }
         solutionButton.snp.makeConstraints {
-            $0.bottom.equalToSuperview().inset(101)
+            $0.top.equalTo(answerView.button4.snp.bottom).offset(44)
             $0.right.equalTo(nextButton.snp.left).offset(-12)
             $0.height.equalTo(45)
             $0.width.equalTo(67)
         }
         nextButton.snp.makeConstraints {
-            $0.bottom.equalToSuperview().inset(101)
+            $0.top.equalTo(answerView.button4.snp.bottom).offset(44)
             $0.right.equalToSuperview().inset(24)
             $0.height.equalTo(45)
             $0.width.equalTo(105)

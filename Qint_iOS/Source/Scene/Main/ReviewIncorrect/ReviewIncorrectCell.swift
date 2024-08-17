@@ -93,7 +93,7 @@ class ReviewIncorrectCell: UICollectionViewCell {
     }
     private func layout() {
         questionView.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(91)
+            $0.top.equalToSuperview().inset(85)
             $0.left.right.equalToSuperview().inset(24)
             $0.height.equalTo(230)
         }
@@ -103,6 +103,7 @@ class ReviewIncorrectCell: UICollectionViewCell {
         correctButton.snp.makeConstraints {
             $0.top.equalTo(questionView.snp.bottom).offset(18)
             $0.left.right.equalToSuperview().inset(24)
+            $0.height.equalTo(75)
         }
         correctLabel.snp.makeConstraints {
             $0.edges.equalToSuperview().inset(20)
@@ -110,6 +111,7 @@ class ReviewIncorrectCell: UICollectionViewCell {
         wrongButton.snp.makeConstraints {
             $0.top.equalTo(correctButton.snp.bottom).offset(18)
             $0.left.right.equalToSuperview().inset(24)
+            $0.height.equalTo(75)
         }
         wrongLabel.snp.makeConstraints {
             $0.edges.equalToSuperview().inset(20)
@@ -123,12 +125,12 @@ class ReviewIncorrectCell: UICollectionViewCell {
             $0.top.right.left.equalToSuperview().inset(15)
         }
         mainButton.snp.makeConstraints {
-            $0.top.equalTo(solutionView.snp.bottom).offset(50)
+            $0.top.equalTo(solutionView.snp.bottom).offset(23)
             $0.left.equalToSuperview().inset(24)
             $0.height.width.equalTo(30)
         }
         nextButton.snp.makeConstraints {
-            $0.top.equalTo(solutionView.snp.bottom).offset(41)
+            $0.top.equalTo(solutionView.snp.bottom).offset(18)
             $0.right.equalToSuperview().inset(24)
             $0.height.equalTo(44)
             $0.width.equalTo(105)
