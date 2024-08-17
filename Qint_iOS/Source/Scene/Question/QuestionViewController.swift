@@ -66,16 +66,7 @@ class QuestionViewController: UIViewController, UICollectionViewDataSource, UICo
         
         cell?.solutionButtonTap = { solution in
             if (solution == true) {
-                let next = SolutionViewController()
-                next.modalPresentationStyle = .fullScreen
-                
-                let transition = CATransition()
-                transition.duration = 0.5
-                transition.type = .fade
-                transition.subtype = .fromTop
-                collectionView.window?.layer.add(transition, forKey: kCATransition)
-                
-                self.present(next, animated: true, completion: nil)
+                self.navigationController?.pushViewController(SolutionViewController(), animated: true)
             }
         }
         return cell ?? UICollectionViewCell()
