@@ -208,7 +208,7 @@ extension SignUpViewController: UITextFieldDelegate {
             guard let pwd = pwdTextField.currentText(), pwd.count != 0 else {
                 pwdTextField.textField.layer.borderColor = UIColor(named: "Red100")?.cgColor
                 pwdTextField.textField.layer.borderWidth = 1
-                pwdTextField.label.text = "비밀번호를 입력해주세요"
+                pwdTextField.label.text = "영어, 숫자, 특수기호를 모두 한 개 이상 포함한 8~64 문자 사이의 비밀번호"
                 print("비밀번호 입력 안함")
                 return
             }
@@ -221,7 +221,7 @@ extension SignUpViewController: UITextFieldDelegate {
             else {
                 pwdTextField.textField.layer.borderColor = UIColor(named: "Red100")?.cgColor
                 pwdTextField.textField.layer.borderWidth = 1
-                pwdTextField.label.text = "비밀번호 형식이 일치하지 않습니다"
+                pwdTextField.label.text = "영어, 숫자, 특수기호를 모두 한 개 이상 포함한 8~64 문자 사이의 비밀번호"
                 print("유효하지 않은 비밀번호")
             }
         } else if textField == pwdConfirmTextField.textField {

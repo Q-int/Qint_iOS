@@ -4,6 +4,7 @@ import Then
 
 class SolutionViewController: UIViewController {
     
+    var solutionIndex: Int = 0
     
     private let questionView = UIView().then {
         $0.questionView()

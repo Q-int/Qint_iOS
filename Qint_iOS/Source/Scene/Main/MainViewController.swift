@@ -9,7 +9,7 @@ class MainViewController: UIViewController {
         $0.font = UIFont(name: "ZenDots-Regular", size: 24)
         $0.textColor = UIColor(named: "Gray400")
     }
-
+    
     let myButton = UIButton().then {
         $0.iconButton()
         $0.setImage(UIImage(systemName: "person.fill"), for: .normal)
@@ -51,6 +51,14 @@ class MainViewController: UIViewController {
     
     func attribute() {
         view.backgroundColor = .white
+        [
+            feButton.button,
+            beButton.button,
+            iosButton.button,
+            flutterButton.button
+        ].forEach{ button in
+            button.addTarget(self, action: #selector(categoryButtonTapped(_:)), for: .touchUpInside)
+        }
     }
     
     func add() {
@@ -105,6 +113,19 @@ class MainViewController: UIViewController {
             $0.bottom.equalToSuperview().inset(48)
             $0.left.right.equalToSuperview().inset(24)
             $0.height.equalTo(52)
+        }
+    }
+    @objc private func categoryButtonTapped(_ sender: UIButton) {
+        sender.isSelected.toggle()
+        
+        if sender.isSelected {
+            sender.layer.borderColor = UIColor(named: "Mint300")?.cgColor
+            sender.layer.borderWidth = 2
+            sender.backgroundColor = UIColor(named: "Mint200")
+        } else {
+            sender.layer.borderColor = UIColor.clear.cgColor
+            sender.layer.borderWidth = 0
+            sender.backgroundColor = UIColor(named: "Mint100")
         }
     }
 }

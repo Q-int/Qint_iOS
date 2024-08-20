@@ -16,6 +16,12 @@ class LoginViewController: UIViewController {
     private let emailTextField = AuthTextField(type: .email)
     private let pwdTextField = AuthTextField(type: .pwd)
     
+    private let errorLabel = UILabel().then {
+        $0.font = .systemFont(ofSize: 10)
+        $0.textColor = UIColor(named: "Red100")
+        $0.isHidden = true
+    }
+    
     private let loginButton = UIButton().then {
         $0.qintButton(setTitle: "로그인", setTitleColor: "White", buttonColor: "Mint300")
     }
@@ -28,6 +34,8 @@ class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        Token.saveAccessToken = ""
         
         attribute()
         add()
@@ -49,6 +57,7 @@ class LoginViewController: UIViewController {
             loginLabel,
             emailTextField,
             pwdTextField,
+            errorLabel,
             loginButton,
             goSignUpButton,
         ].forEach{ view.addSubview($0) }
@@ -70,6 +79,10 @@ class LoginViewController: UIViewController {
             $0.top.equalTo(emailTextField.snp.bottom).offset(40)
             $0.left.right.equalToSuperview().inset(24)
             $0.height.equalTo(52)
+        }
+        errorLabel.snp.makeConstraints {
+            $0.bottom.equalTo(loginButton.snp.bottom).offset(10)
+            $0.centerX.equalToSuperview()
         }
         loginButton.snp.makeConstraints {
             $0.bottom.equalToSuperview().inset(124)
@@ -102,8 +115,12 @@ class LoginViewController: UIViewController {
                         print("auth json decode fail")
                     }
                     print("로그인 성공")
+                    self.navigationController?.pushViewController(MainViewController(), animated: true)
                 case 400:
                     print("이메일 또는 비밀번호 불일치")
+                    self.errorLabel.text = "이메일 또는 비밀번호가 일치하지 않습니다"
+                    self.errorLabel.isHidden = false
+//                case 
                 default:
                     print("존재하지 않는 유저")
                 }

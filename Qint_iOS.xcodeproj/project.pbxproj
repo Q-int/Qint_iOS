@@ -164,8 +164,8 @@
 				88BA617D2C64DC3700BAF4FA /* font */,
 				88F5356B2C64AEBA00B5626A /* LaunchScreen.storyboard */,
 				88F535692C64AEBA00B5626A /* Assets.xcassets */,
-				88F535622C64AEB800B5626A /* SceneDelegate.swift */,
 				88F535602C64AEB800B5626A /* AppDelegate.swift */,
+				88F535622C64AEB800B5626A /* SceneDelegate.swift */,
 			);
 			path = Resource;
 			sourceTree = "<group>";

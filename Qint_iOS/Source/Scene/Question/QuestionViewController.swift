@@ -6,6 +6,7 @@ class QuestionViewController: UIViewController, UICollectionViewDataSource, UICo
     
     var collectionView: UICollectionView!
     var darkBackground: UIView?
+    var cellIndex: Int = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,6 +48,8 @@ class QuestionViewController: UIViewController, UICollectionViewDataSource, UICo
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as? QuestionCell
         
         cell?.configure(with: indexPath.item + 1)
+        self.cellIndex = indexPath.item
+        
         
         cell?.nextButtonTap = { index in
             if (index == 15) {
@@ -66,7 +69,9 @@ class QuestionViewController: UIViewController, UICollectionViewDataSource, UICo
         
         cell?.solutionButtonTap = { solution in
             if (solution == true) {
-                self.navigationController?.pushViewController(SolutionViewController(), animated: true)
+                let vc = SolutionViewController()
+                vc.solutionIndex = self.cellIndex
+                self.navigationController?.pushViewController(vc, animated: true)
             }
         }
         return cell ?? UICollectionViewCell()
