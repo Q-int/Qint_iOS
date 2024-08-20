@@ -4,6 +4,7 @@ import Then
 
 class SolutionViewController: UIViewController {
     
+    var solutionIndex: Int = 0
     
     private let questionView = UIView().then {
         $0.questionView()
@@ -123,7 +124,7 @@ class SolutionViewController: UIViewController {
     
     @objc private func mainButtonTapped() {
         print("메인버튼")
-        self.navigationController?.popViewController(animated: true)
+        self.navigationController?.pushViewController(MainViewController(), animated: true)
     }
     @objc private func nextButtonTapped() {
         self.navigationController?.pushViewController(QuestionViewController(), animated: true)
