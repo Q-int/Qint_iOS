@@ -4,19 +4,21 @@ import Then
 
 class MainViewController: UIViewController {
     
-    let qintLabel = UILabel().then {
+    private var categoryButtonNumber = 0
+    
+    private let qintLabel = UILabel().then {
         $0.text = "Q-int"
         $0.font = UIFont(name: "ZenDots-Regular", size: 24)
         $0.textColor = UIColor(named: "Gray400")
     }
     
-    let myButton = UIButton().then {
+    private let myButton = UIButton().then {
         $0.iconButton()
         $0.setImage(UIImage(systemName: "person.fill"), for: .normal)
         $0.addTarget(self, action: #selector(myButtonTapped), for: .touchUpInside)
     }
     
-    @objc func myButtonTapped() {
+    @objc private func myButtonTapped() {
         self.navigationController?.pushViewController(MyViewController(), animated: true)
     }
     
@@ -25,17 +27,18 @@ class MainViewController: UIViewController {
     private let iosButton = CategoryButton(type: .ios)
     private let flutterButton = CategoryButton(type: .flutter)
     
-    let categoryLabel = UILabel().then {
+    private let categoryLabel = UILabel().then {
         $0.text = "카테고리를 한 개 이상 선택해주세요!"
         $0.textColor = UIColor(named: "Gray400")
     }
     
-    let startButton = UIButton().then {
+    private let startButton = UIButton().then {
+        $0.isHidden = true
         $0.qintButton(setTitle: "시작하기", setTitleColor: "White", buttonColor: "Mint300")
         $0.addTarget(self, action: #selector(startButtonTapped), for: .touchUpInside)
     }
     
-    @objc func startButtonTapped() {
+    @objc private func startButtonTapped() {
         self.navigationController?.pushViewController(QuestionViewController(), animated: true)
     }
     
@@ -49,7 +52,7 @@ class MainViewController: UIViewController {
         layout()
     }
     
-    func attribute() {
+    private func attribute() {
         view.backgroundColor = .white
         [
             feButton.button,
@@ -61,7 +64,7 @@ class MainViewController: UIViewController {
         }
     }
     
-    func add() {
+    private func add() {
         [
             qintLabel,
             myButton,
@@ -75,7 +78,7 @@ class MainViewController: UIViewController {
         view.addSubview(qintLabel)
     }
     
-    func layout() {
+    private func layout() {
         qintLabel.snp.makeConstraints {
             $0.top.equalToSuperview().inset(71)
             $0.left.equalToSuperview().inset(30)
@@ -122,10 +125,18 @@ class MainViewController: UIViewController {
             sender.layer.borderColor = UIColor(named: "Mint300")?.cgColor
             sender.layer.borderWidth = 2
             sender.backgroundColor = UIColor(named: "Mint200")
+            startButton.isHidden = false
+            categoryButtonNumber += 1
+            categoryLabel.isHidden = true
         } else {
             sender.layer.borderColor = UIColor.clear.cgColor
             sender.layer.borderWidth = 0
             sender.backgroundColor = UIColor(named: "Mint100")
+            categoryButtonNumber -= 1
+            if categoryButtonNumber == 0 {
+                startButton.isHidden = true
+                categoryLabel.isHidden = false
+            }
         }
     }
 }
