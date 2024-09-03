@@ -33,7 +33,6 @@
 		88BA617C2C64CD9D00BAF4FA /* ReviewIncorrect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88BA617B2C64CD9D00BAF4FA /* ReviewIncorrect.swift */; };
 		88BA61812C64DC5D00BAF4FA /* OFL.txt in Resources */ = {isa = PBXBuildFile; fileRef = 88BA617E2C64DC5D00BAF4FA /* OFL.txt */; };
 		88BA61822C64DC5D00BAF4FA /* ZenDots-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 88BA617F2C64DC5D00BAF4FA /* ZenDots-Regular.ttf */; };
-		88E26C0A2C67161800DDA85E /* AnswerButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E26C092C67161800DDA85E /* AnswerButtonView.swift */; };
 		88E26C0C2C67246400DDA85E /* UILabel+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E26C0B2C67246400DDA85E /* UILabel+Extension.swift */; };
 		88F535612C64AEB800B5626A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88F535602C64AEB800B5626A /* AppDelegate.swift */; };
 		88F535632C64AEB800B5626A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88F535622C64AEB800B5626A /* SceneDelegate.swift */; };
@@ -63,7 +62,6 @@
 		88BA617B2C64CD9D00BAF4FA /* ReviewIncorrect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewIncorrect.swift; sourceTree = "<group>"; };
 		88BA617E2C64DC5D00BAF4FA /* OFL.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OFL.txt; sourceTree = "<group>"; };
 		88BA617F2C64DC5D00BAF4FA /* ZenDots-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ZenDots-Regular.ttf"; sourceTree = "<group>"; };
-		88E26C092C67161800DDA85E /* AnswerButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerButtonView.swift; sourceTree = "<group>"; };
 		88E26C0B2C67246400DDA85E /* UILabel+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Extension.swift"; sourceTree = "<group>"; };
 		88F5355D2C64AEB800B5626A /* Qint_iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Qint_iOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		88F535602C64AEB800B5626A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -187,7 +185,6 @@
 				88BA61752C64C70C00BAF4FA /* AuthTextField.swift */,
 				88BA61792C64C99400BAF4FA /* CategoryButton.swift */,
 				88BA617B2C64CD9D00BAF4FA /* ReviewIncorrect.swift */,
-				88E26C092C67161800DDA85E /* AnswerButtonView.swift */,
 			);
 			path = Component;
 			sourceTree = "<group>";
@@ -368,7 +365,6 @@
 				88A94EF02C6B53AE003E37FC /* ErrorModel.swift in Sources */,
 				88A94EEA2C6B2449003E37FC /* AuthResponse.swift in Sources */,
 				88BA616E2C64C42700BAF4FA /* SignUpViewController.swift in Sources */,
-				88E26C0A2C67161800DDA85E /* AnswerButtonView.swift in Sources */,
 				88BA617C2C64CD9D00BAF4FA /* ReviewIncorrect.swift in Sources */,
 				88BA61762C64C70C00BAF4FA /* AuthTextField.swift in Sources */,
 				88A94EF22C6E4E35003E37FC /* UIView+Extension.swift in Sources */,
