@@ -63,10 +63,12 @@ class MyViewController: UIViewController {
         layout()
     }
     
+    
     private func attribute() {
         view.backgroundColor = UIColor(named: "Mint100")
         mainButton.addTarget(self, action: #selector(mainButtonTapped), for: .touchUpInside)
-        reviewIncorrectButton.addTarget(self, action: #selector(reviewIncorrectButtonTapped), for: .touchUpInside)
+        reviewIncorrectButton.addTarget(self, action: #selector(reviewIncorrectButtonTapped), for: .
+                                        touchUpInside)
         logoutButton.addTarget(self, action: #selector(logoutButtonTapped), for: .touchUpInside)
     }
     
@@ -163,7 +165,7 @@ class MyViewController: UIViewController {
         self.navigationController?.pushViewController(ReviewIncorrectViewController(), animated: true)
     }
     @objc private func mainButtonTapped() {
-        self.navigationController?.popViewController(animated: true)
+        self.navigationController?.pushViewController(MainViewController(), animated: true)
     }
     @objc private func logoutButtonTapped() {
         self.navigationController?.pushViewController(LoginViewController(), animated: true)

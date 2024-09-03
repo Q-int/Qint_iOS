@@ -30,6 +30,8 @@ class ReviewIncorrectViewController: UIViewController, UICollectionViewDataSourc
         collectionView.isPagingEnabled = true
         collectionView.showsVerticalScrollIndicator = false
         collectionView.isScrollEnabled = false
+        
+        
     }
     func add() {
         view.addSubview(collectionView)

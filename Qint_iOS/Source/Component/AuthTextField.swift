@@ -57,8 +57,8 @@ class AuthTextField: UIView {
     }
     
     let showPasswordButton = UIButton().then {
-        $0.setImage(UIImage(named: "Eye open"), for: .normal)
-        $0.setImage(UIImage(named: "Eye off"), for: .selected)
+        $0.setImage(UIImage(named: "Eye off"), for: .normal)
+        $0.setImage(UIImage(named: "Eye open"), for: .selected)
         $0.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
         $0.contentEdgeInsets = UIEdgeInsets(top: 0, left: -13, bottom: 0, right: 10)
         $0.addTarget(self, action: #selector(togglePasswordVisibility), for: .touchUpInside)
@@ -111,10 +111,10 @@ class AuthTextField: UIView {
     @objc private func togglePasswordVisibility(_ sender: UIButton) {
         if iconClick {
             textField.isSecureTextEntry = false
-            sender.setImage(UIImage(named: "Eye off"), for: .normal)
+            sender.setImage(UIImage(named: "Eye open"), for: .normal)
         } else {
             textField.isSecureTextEntry = true
-            sender.setImage(UIImage(named: "Eye open"), for: .normal)
+            sender.setImage(UIImage(named: "Eye off"), for: .normal)
         }
         iconClick = !iconClick
     }
