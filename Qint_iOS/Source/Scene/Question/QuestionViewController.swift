@@ -8,10 +8,25 @@ class QuestionViewController: UIViewController, UICollectionViewDataSource, UICo
     var darkBackground: UIView?
     var cellIndex: Int = 0
     
+    private let mainButton = UIButton().then {
+        $0.iconButton()
+    }
+    
+    private let solutionButton = UIButton().then {
+        $0.setTitle("해설", for: .normal)
+        $0.setTitleColor(.white, for: .normal)
+        $0.titleLabel?.font = .systemFont(ofSize: 20)
+        $0.backgroundColor = UIColor(named: "Mint300")
+        $0.layer.cornerRadius = 10
+    }
+    
+    private let nextButton = UIButton().then {
+        $0.nextButton()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationController?.isNavigationBarHidden = true
         
         attribute()
         add()
@@ -32,15 +47,41 @@ class QuestionViewController: UIViewController, UICollectionViewDataSource, UICo
         collectionView.isPagingEnabled = true
         collectionView.showsVerticalScrollIndicator = false
         collectionView.isScrollEnabled = false
+        
+        mainButton.addTarget(self, action: #selector(mainButtonTap), for: .touchUpInside)
+        solutionButton.addTarget(self, action: #selector(solutionButtonTap), for: .touchUpInside)
+        nextButton.addTarget(self, action: #selector(nextButtonTapped), for: .touchUpInside)
     }
     
     func add() {
-        view.addSubview(collectionView)
+        [
+            collectionView,
+            mainButton,
+            solutionButton,
+            nextButton
+        ].forEach{ view.addSubview($0) }
     }
     
     func layout() {
         collectionView.snp.makeConstraints {
             $0.edges.equalToSuperview()
+        }
+        mainButton.snp.makeConstraints {
+            $0.bottom.equalToSuperview().inset(74)
+            $0.left.equalToSuperview().inset(24)
+            $0.height.width.equalTo(30)
+        }
+        solutionButton.snp.makeConstraints {
+            $0.bottom.equalToSuperview().inset(64)
+            $0.right.equalTo(nextButton.snp.left).offset(-12)
+            $0.height.equalTo(45)
+            $0.width.equalTo(67)
+        }
+        nextButton.snp.makeConstraints {
+            $0.bottom.equalToSuperview().inset(64)
+            $0.right.equalToSuperview().inset(24)
+            $0.height.equalTo(45)
+            $0.width.equalTo(105)
         }
     }
     
@@ -48,33 +89,61 @@ class QuestionViewController: UIViewController, UICollectionViewDataSource, UICo
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as? QuestionCell
         
         cell?.configure(with: indexPath.item + 1)
-        self.cellIndex = indexPath.item
+        self.cellIndex = indexPath.item + 1
         
         
-        cell?.nextButtonTap = { index in
-            if (index == 15) {
-                self.buttonTapped()
-            } else {
-                self.collectionView.isPagingEnabled = false
-                self.collectionView.scrollToItem(at: IndexPath(row: index, section: 0), at: .left, animated: true)
-                self.collectionView.isPagingEnabled = true
-            }
-        }
+//        cell?.nextButtonTap = { [weak self] index in
+//            if (index == 15) {
+//                self?.buttonTapped()
+//            } else {
+//                print("index: \(index)")
+//                DispatchQueue.main.async {
+//                    self?.collectionView.isPagingEnabled = false
+//                    self?.collectionView.scrollToItem(at: IndexPath(row: index, section: 0), at: .left, animated: true)
+//                    self?.collectionView.isPagingEnabled = true
+//                    self?.cellIndex = index + 1
+//                }
+//            }
+//        }
         
-        cell?.mainButtonTap = { main in
-            if (main == true) {
-                self.navigationController?.popViewController(animated: true)
-            }
-        }
+//        cell?.mainButtonTap = { main in
+//            if (main == true) {
+//                self.navigationController?.popToRootViewController(animated: true)
+//            }
+//        }
         
-        cell?.solutionButtonTap = { solution in
-            if (solution == true) {
-                let vc = SolutionViewController()
-                vc.solutionIndex = self.cellIndex
-                self.navigationController?.pushViewController(vc, animated: true)
-            }
-        }
+//        cell?.solutionButtonTap = { solution in
+////            if (solution == true) {
+//                let vc = SolutionViewController()
+//                vc.solutionIndex = self.cellIndex
+//                self.navigationController?.pushViewController(vc, animated: true)
+////            }
+//        }
         return cell ?? UICollectionViewCell()
+    }
+    
+    @objc func mainButtonTap() {
+        self.navigationController?.popToRootViewController(animated: true)
+    }
+    
+    @objc func solutionButtonTap() {
+        let vc = SolutionViewController()
+        vc.solutionIndex = self.cellIndex
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    @objc func nextButtonTapped() {
+        if (cellIndex == 15) {
+            self.buttonTapped()
+        } else {
+            print("index: \(cellIndex)")
+            DispatchQueue.main.async {
+                self.collectionView.isPagingEnabled = false
+                self.collectionView.scrollToItem(at: IndexPath(row: self.cellIndex, section: 0), at: .left, animated: true)
+                self.collectionView.isPagingEnabled = true
+//                self.cellIndex = Index + 1
+            }
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

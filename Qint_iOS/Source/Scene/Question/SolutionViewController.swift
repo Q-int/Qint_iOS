@@ -14,9 +14,8 @@ class SolutionViewController: UIViewController {
         $0.questionLabel()
     }
     
-    let indexLabel = UILabel().then {
-        $0.text = "2/15"
-//        $0.text = QuestionCell().indexLabel.text
+    lazy var indexLabel = UILabel().then {
+        $0.text = "\(solutionIndex)/15"
         $0.font = UIFont.systemFont(ofSize: 20)
         $0.textColor = UIColor(named: "Gray400")
     }
@@ -58,6 +57,7 @@ class SolutionViewController: UIViewController {
         attribute()
         add()
         layout()
+        print("solutionIndex: \(solutionIndex)")
     }
     
     func attribute() {
