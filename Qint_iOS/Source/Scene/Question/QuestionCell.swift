@@ -1,5 +1,4 @@
 import UIKit
-
 import SnapKit
 import Then
 
@@ -10,15 +9,15 @@ class QuestionCell: UICollectionViewCell {
     var solutionButtonTap: ((Bool) -> Void)?
     
     var index: Int = 0
-    var main: Bool = false
-    var soluton: Bool = false
-    var buttonSelect = [UIButton]()
+    private var main: Bool = false
+    private var soluton: Bool = false
+    private var buttonSelect = [UIButton]()
     
     private let questionView = UIView().then {
         $0.questionView()
     }
     
-    let questionLabel = UILabel().then {
+    private let questionLabel = UILabel().then {
         $0.questionLabel()
     }
     
@@ -27,61 +26,50 @@ class QuestionCell: UICollectionViewCell {
         $0.textColor = UIColor(named: "Gray400")
     }
     
-    let button1 = UIButton().then {
+    private let button1 = UIButton().then {
         $0.answerButton()
     }
     
-    let label1 = UILabel().then {
+    private let label1 = UILabel().then {
         $0.answerLabel()
     }
-    let button2 = UIButton().then {
+    private let button2 = UIButton().then {
         $0.answerButton()
     }
     
-    let label2 = UILabel().then {
+    private let label2 = UILabel().then {
         $0.answerLabel()
     }
-    let button3 = UIButton().then {
+    private let button3 = UIButton().then {
         $0.answerButton()
     }
     
-    let label3 = UILabel().then {
+    private let label3 = UILabel().then {
         $0.answerLabel()
     }
-    let button4 = UIButton().then {
+    private let button4 = UIButton().then {
         $0.answerButton()
     }
     
-    let label4 = UILabel().then {
+    private let label4 = UILabel().then {
         $0.answerLabel()
     }
     
-    let mainButton = UIButton().then {
-        $0.iconButton()
-        $0.addTarget(self, action: #selector(mainButtonTapped), for: .touchUpInside)
-    }
-    
-    @objc func mainButtonTapped() {
-        main = true
-        print("홈 버튼 누름")
-    }
-    
-    let solutionButton = UIButton().then {
-        $0.setTitle("해설", for: .normal)
-        $0.setTitleColor(.white, for: .normal)
-        $0.titleLabel?.font = .systemFont(ofSize: 20)
-        $0.backgroundColor = UIColor(named: "Mint300")
-        $0.layer.cornerRadius = 10
-        $0.addTarget(self, action: #selector(solutionButtonTapped), for: .touchUpInside)
-    }
-    
-    @objc func solutionButtonTapped() {
-        soluton = true
-    }
-    
-    let nextButton = UIButton().then {
-        $0.nextButton()
-    }
+//    private let mainButton = UIButton().then {
+//        $0.iconButton()
+//    }
+//    
+//    private let solutionButton = UIButton().then {
+//        $0.setTitle("해설", for: .normal)
+//        $0.setTitleColor(.white, for: .normal)
+//        $0.titleLabel?.font = .systemFont(ofSize: 20)
+//        $0.backgroundColor = UIColor(named: "Mint300")
+//        $0.layer.cornerRadius = 10
+//    }
+//    
+//    private let nextButton = UIButton().then {
+//        $0.nextButton()
+//    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -91,10 +79,12 @@ class QuestionCell: UICollectionViewCell {
         layout()
     }
 
-    func attribute() {
-        nextButton.addTarget(self, action: #selector(nextButtonClicked), for: .touchUpInside)
-        mainButton.addTarget(self, action: #selector(mainButtonClicked), for: .touchUpInside)
-        solutionButton.addTarget(self, action: #selector(solutionButtonClicked), for: .touchUpInside)
+    private func attribute() {
+//        nextButton.addTarget(self, action: #selector(nextButtonClicked), for: .touchUpInside)
+//        mainButton.addTarget(self, action: #selector(mainButtonTapped), for: .touchUpInside)
+//        mainButton.addTarget(self, action: #selector(mainButtonClicked), for: .touchUpInside)
+//        solutionButton.addTarget(self, action: #selector(solutionButtonTapped), for: .touchUpInside)
+//        solutionButton.addTarget(self, action: #selector(solutionButtonClicked), for: .touchUpInside)
         [
             button1,
             button2,
@@ -105,7 +95,7 @@ class QuestionCell: UICollectionViewCell {
         }
     }
     
-    func add() {
+    private func add() {
         [
             button1,
             button2,
@@ -120,9 +110,9 @@ class QuestionCell: UICollectionViewCell {
             button2,
             button3,
             button4,
-            mainButton,
-            solutionButton,
-            nextButton
+//            mainButton,
+//            solutionButton,
+//            nextButton
         ].forEach{ contentView.addSubview($0) }
         questionView.addSubview(questionLabel)
         button1.addSubview(label1)
@@ -130,9 +120,10 @@ class QuestionCell: UICollectionViewCell {
         button3.addSubview(label3)
         button4.addSubview(label4)
     }
-    func layout() {
+    
+    private func layout() {
         questionView.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(85)
+            $0.top.equalToSuperview().inset(74)
             $0.left.right.equalToSuperview().inset(24)
             $0.height.equalTo(215)
         }
@@ -179,23 +170,23 @@ class QuestionCell: UICollectionViewCell {
             $0.centerY.equalToSuperview()
             $0.left.right.equalToSuperview().inset(12)
         }
-        mainButton.snp.makeConstraints {
-            $0.top.equalTo(button4.snp.bottom).offset(49)
-            $0.left.equalToSuperview().inset(24)
-            $0.height.width.equalTo(30)
-        }
-        solutionButton.snp.makeConstraints {
-            $0.top.equalTo(button4.snp.bottom).offset(44)
-            $0.right.equalTo(nextButton.snp.left).offset(-12)
-            $0.height.equalTo(45)
-            $0.width.equalTo(67)
-        }
-        nextButton.snp.makeConstraints {
-            $0.top.equalTo(button4.snp.bottom).offset(44)
-            $0.right.equalToSuperview().inset(24)
-            $0.height.equalTo(45)
-            $0.width.equalTo(105)
-        }
+//        mainButton.snp.makeConstraints {
+//            $0.top.equalTo(button4.snp.bottom).offset(49)
+//            $0.left.equalToSuperview().inset(24)
+//            $0.height.width.equalTo(30)
+//        }
+//        solutionButton.snp.makeConstraints {
+//            $0.top.equalTo(button4.snp.bottom).offset(44)
+//            $0.right.equalTo(nextButton.snp.left).offset(-12)
+//            $0.height.equalTo(45)
+//            $0.width.equalTo(67)
+//        }
+//        nextButton.snp.makeConstraints {
+//            $0.top.equalTo(button4.snp.bottom).offset(44)
+//            $0.right.equalToSuperview().inset(24)
+//            $0.height.equalTo(45)
+//            $0.width.equalTo(105)
+//        }
         
     }
     required init?(coder aDecoder: NSCoder) {
@@ -207,25 +198,29 @@ class QuestionCell: UICollectionViewCell {
         self.index = index
     }
     
-    @objc func nextButtonClicked() {
+    @objc private func nextButtonClicked() {
+        print("cellIndex: \(index)")
         self.nextButtonTap?(index)
     }
     
-    @objc func mainButtonClicked() {
+    @objc private func mainButtonClicked() {
         self.mainButtonTap?(main)
     }
     
-    @objc func solutionButtonClicked() {
+    @objc private  func solutionButtonClicked() {
         self.solutionButtonTap?(soluton)
     }
     
-    @objc func buttonTapped(_ sender: UIButton) {
+    @objc private func buttonTapped(_ sender: UIButton) {
         for i in buttonSelect {
-            if i == sender {
-                i.backgroundColor = UIColor(named: "Mint200")
-            } else {
-                i.backgroundColor = UIColor(named: "Mint100")
-            }
+            i.backgroundColor = i == sender ? UIColor(named: "Mint200") : UIColor(named: "Mint100")
         }
+    }
+    @objc private func mainButtonTapped() {
+        main = true
+        print("홈 버튼 누름")
+    }
+    @objc private func solutionButtonTapped() {
+        soluton = true
     }
 }
