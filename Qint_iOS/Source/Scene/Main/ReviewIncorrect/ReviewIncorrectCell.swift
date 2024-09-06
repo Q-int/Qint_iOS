@@ -61,6 +61,7 @@ class ReviewIncorrectCell: UICollectionViewCell {
     
     private let mainButton = UIButton().then {
         $0.iconButton()
+        $0.setImage(UIImage(systemName: "person.fill"), for: .normal)
     }
     
     private let nextButton = UIButton().then {

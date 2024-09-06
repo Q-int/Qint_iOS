@@ -42,7 +42,6 @@ class AuthTextField: UIView {
     let label = UILabel().then {
         $0.font = .systemFont(ofSize: 10)
         $0.textColor = UIColor(named: "Red100")
-//        $0.text = "이메일을 입력햐 ㅈ새용"
     }
     
     @objc func didSetectTextField() {
