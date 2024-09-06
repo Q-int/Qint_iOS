@@ -4,6 +4,8 @@ import Then
 
 class QuestionCell: UICollectionViewCell {
     
+    static let identifier = "QuestionCell"
+    
     var nextButtonTap: ((Int) -> Void)?
     var mainButtonTap: ((Bool) -> Void)?
     var solutionButtonTap: ((Bool) -> Void)?
@@ -55,22 +57,6 @@ class QuestionCell: UICollectionViewCell {
         $0.answerLabel()
     }
     
-//    private let mainButton = UIButton().then {
-//        $0.iconButton()
-//    }
-//    
-//    private let solutionButton = UIButton().then {
-//        $0.setTitle("해설", for: .normal)
-//        $0.setTitleColor(.white, for: .normal)
-//        $0.titleLabel?.font = .systemFont(ofSize: 20)
-//        $0.backgroundColor = UIColor(named: "Mint300")
-//        $0.layer.cornerRadius = 10
-//    }
-//    
-//    private let nextButton = UIButton().then {
-//        $0.nextButton()
-//    }
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -80,11 +66,6 @@ class QuestionCell: UICollectionViewCell {
     }
 
     private func attribute() {
-//        nextButton.addTarget(self, action: #selector(nextButtonClicked), for: .touchUpInside)
-//        mainButton.addTarget(self, action: #selector(mainButtonTapped), for: .touchUpInside)
-//        mainButton.addTarget(self, action: #selector(mainButtonClicked), for: .touchUpInside)
-//        solutionButton.addTarget(self, action: #selector(solutionButtonTapped), for: .touchUpInside)
-//        solutionButton.addTarget(self, action: #selector(solutionButtonClicked), for: .touchUpInside)
         [
             button1,
             button2,
@@ -110,9 +91,6 @@ class QuestionCell: UICollectionViewCell {
             button2,
             button3,
             button4,
-//            mainButton,
-//            solutionButton,
-//            nextButton
         ].forEach{ contentView.addSubview($0) }
         questionView.addSubview(questionLabel)
         button1.addSubview(label1)
@@ -170,23 +148,6 @@ class QuestionCell: UICollectionViewCell {
             $0.centerY.equalToSuperview()
             $0.left.right.equalToSuperview().inset(12)
         }
-//        mainButton.snp.makeConstraints {
-//            $0.top.equalTo(button4.snp.bottom).offset(49)
-//            $0.left.equalToSuperview().inset(24)
-//            $0.height.width.equalTo(30)
-//        }
-//        solutionButton.snp.makeConstraints {
-//            $0.top.equalTo(button4.snp.bottom).offset(44)
-//            $0.right.equalTo(nextButton.snp.left).offset(-12)
-//            $0.height.equalTo(45)
-//            $0.width.equalTo(67)
-//        }
-//        nextButton.snp.makeConstraints {
-//            $0.top.equalTo(button4.snp.bottom).offset(44)
-//            $0.right.equalToSuperview().inset(24)
-//            $0.height.equalTo(45)
-//            $0.width.equalTo(105)
-//        }
         
     }
     required init?(coder aDecoder: NSCoder) {

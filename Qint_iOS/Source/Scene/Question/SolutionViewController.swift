@@ -110,12 +110,12 @@ class SolutionViewController: UIViewController {
             $0.top.right.left.equalToSuperview().inset(15)
         }
         mainButton.snp.makeConstraints {
-            $0.top.equalTo(solutionView.snp.bottom).offset(36)
+            $0.bottom.equalToSuperview().inset(74)
             $0.left.equalToSuperview().inset(24)
             $0.height.width.equalTo(30)
         }
         nextButton.snp.makeConstraints {
-            $0.top.equalTo(solutionView.snp.bottom).offset(29)
+            $0.bottom.equalToSuperview().inset(64)
             $0.right.equalToSuperview().inset(24)
             $0.height.equalTo(44)
             $0.width.equalTo(105)
@@ -126,7 +126,10 @@ class SolutionViewController: UIViewController {
         print("메인버튼")
         self.navigationController?.pushViewController(MainViewController(), animated: true)
     }
+
     @objc private func nextButtonTapped() {
-        self.navigationController?.pushViewController(QuestionViewController(), animated: true)
+        let questionViewController = QuestionViewController()
+        questionViewController.solIndex = self.solutionIndex
+        self.navigationController?.pushViewController(questionViewController, animated: true)
     }
 }
