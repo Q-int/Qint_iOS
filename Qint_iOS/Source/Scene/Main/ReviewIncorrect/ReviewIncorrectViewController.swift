@@ -4,9 +4,9 @@ import Then
 
 class ReviewIncorrectViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
-    var collectionView :UICollectionView!
+    private var collectionView :UICollectionView!
     
-    var viewIndex: Int = 15
+    private var viewIndex: Int = 15
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -16,7 +16,7 @@ class ReviewIncorrectViewController: UIViewController, UICollectionViewDataSourc
         layout()
     }
     
-    func attribute() {
+    private func attribute() {
         view.backgroundColor = .white
         
         let layout = UICollectionViewFlowLayout()
@@ -33,10 +33,10 @@ class ReviewIncorrectViewController: UIViewController, UICollectionViewDataSourc
         
         
     }
-    func add() {
+    private func add() {
         view.addSubview(collectionView)
     }
-    func layout() {
+    private func layout() {
         collectionView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }

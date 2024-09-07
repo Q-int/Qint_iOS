@@ -60,13 +60,13 @@ class SolutionViewController: UIViewController {
         print("solutionIndex: \(solutionIndex)")
     }
     
-    func attribute() {
+    private func attribute() {
         view.backgroundColor = .white
         mainButton.addTarget(self, action: #selector(mainButtonTapped), for: .touchUpInside)
         nextButton.addTarget(self, action: #selector(nextButtonTapped), for: .touchUpInside)
     }
     
-    func add() {
+    private func add() {
         [
             questionView,
             indexLabel,
@@ -80,7 +80,7 @@ class SolutionViewController: UIViewController {
         solutionView.addSubview(solutionLabel)
     }
     
-    func layout() {
+    private func layout() {
         questionView.snp.makeConstraints {
             $0.top.equalToSuperview().inset(85)
             $0.left.right.equalToSuperview().inset(24)

@@ -4,8 +4,8 @@ import Then
 
 class QuestionViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, PopupDelegate {
     
-    var collectionView: UICollectionView!
-    var darkBackground: UIView?
+    private var collectionView: UICollectionView!
+    private var darkBackground: UIView?
     var cellIndex: Int = 0
     var solIndex: Int = 0
     
@@ -36,7 +36,7 @@ class QuestionViewController: UIViewController, UICollectionViewDataSource, UICo
         layout()
     }
     
-    func attribute() {
+    private func attribute() {
         view.backgroundColor = .white
         
         let layout = UICollectionViewFlowLayout()
@@ -56,7 +56,7 @@ class QuestionViewController: UIViewController, UICollectionViewDataSource, UICo
         nextButton.addTarget(self, action: #selector(nextButtonTapped), for: .touchUpInside)
     }
     
-    func add() {
+    private func add() {
         [
             collectionView,
             mainButton,
@@ -65,7 +65,7 @@ class QuestionViewController: UIViewController, UICollectionViewDataSource, UICo
         ].forEach{ view.addSubview($0) }
     }
     
-    func layout() {
+    private func layout() {
         collectionView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
@@ -106,17 +106,17 @@ class QuestionViewController: UIViewController, UICollectionViewDataSource, UICo
         return CGSize(width: collectionView.frame.width, height: collectionView.frame.height)
     }
     
-    @objc func mainButtonTap() {
+    @objc private func mainButtonTap() {
         self.navigationController?.popToRootViewController(animated: true)
     }
     
-    @objc func solutionButtonTap() {
+    @objc private func solutionButtonTap() {
         let vc = SolutionViewController()
         vc.solutionIndex = self.cellIndex
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
-    @objc func nextButtonTapped() {
+    @objc private func nextButtonTapped() {
         if (solIndex >= 15) {
             self.buttonTapped()
         } else {
