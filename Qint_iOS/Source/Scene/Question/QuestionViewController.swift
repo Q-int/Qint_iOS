@@ -92,9 +92,10 @@ class QuestionViewController: UIViewController, UICollectionViewDataSource, UICo
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier:  QuestionCell.identifier, for: indexPath) as? QuestionCell
         
         cell?.configure(with:  solIndex + 1)
-        self.solIndex = solIndex + 1
+        self.solIndex += 1
         self.cellIndex += 1
-        print("cellIndex : \(self.solIndex)")
+        print("solIndex : \(self.solIndex)")
+        print("cellIndex : \(self.cellIndex)")
         
         return cell ?? UICollectionViewCell()
     }
@@ -112,7 +113,7 @@ class QuestionViewController: UIViewController, UICollectionViewDataSource, UICo
     
     @objc private func solutionButtonTap() {
         let vc = SolutionViewController()
-        vc.solutionIndex = self.cellIndex
+        vc.solutionIndex = self.solIndex
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
