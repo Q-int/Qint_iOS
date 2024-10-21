@@ -11,15 +11,19 @@ class PopupView: UIView {
     
     weak var delegate: PopupDelegate?
     
-    var correct: Int = 10
-    var wrong: Int = 5
+    private var correct: Int = 10
+    private var wrong: Int = 5
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         setup()
     }
-    
-    func setup() {
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    private func setup() {
         self.backgroundColor = .white
         self.layer.cornerRadius = 20
         
@@ -85,12 +89,12 @@ class PopupView: UIView {
         }
     }
     
-    @objc func mainButtonTapped() {
+    @objc private func mainButtonTapped() {
         delegate?.navigateToMainView()
         dismiss()
     }
     
-    @objc func myButtonTapped() {
+    @objc private func myButtonTapped() {
         delegate?.navigateToMyView()
         dismiss()
     }
@@ -101,9 +105,5 @@ class PopupView: UIView {
         }) { _ in
             self.removeFromSuperview()
         }
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
 }

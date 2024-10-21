@@ -25,9 +25,9 @@ enum TFType {
 }
 
 class AuthTextField: UIView {
-    var iconClick = true
+    private var iconClick = true
     
-    let textField = UITextField().then {
+    public let textField = UITextField().then {
         let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 13, height: $0.frame.height))
         $0.leftView = paddingView
         $0.leftViewMode = .always
@@ -39,23 +39,23 @@ class AuthTextField: UIView {
         $0.addTarget(self, action: #selector(didEndSetectTextField), for: .editingDidEnd)
     }
     
-    let label = UILabel().then {
+    public let label = UILabel().then {
         $0.font = .systemFont(ofSize: 10)
         $0.textColor = UIColor(named: "Red100")
     }
     
-    @objc func didSetectTextField() {
+    @objc private func didSetectTextField() {
         textField.backgroundColor = .white
         textField.layer.borderWidth = 1
         textField.layer.borderColor = UIColor(named: "Gray200")?.cgColor
     }
     
-    @objc func didEndSetectTextField() {
+    @objc private func didEndSetectTextField() {
         textField.backgroundColor = UIColor(named: "Gray100")
         textField.layer.borderWidth = 0
     }
     
-    let showPasswordButton = UIButton().then {
+    private let showPasswordButton = UIButton().then {
         $0.setImage(UIImage(named: "Eye off"), for: .normal)
         $0.setImage(UIImage(named: "Eye open"), for: .selected)
         $0.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
@@ -93,7 +93,7 @@ class AuthTextField: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func layout() {
+    private func layout() {
         self.addSubview(textField)
         self.addSubview(label)
         

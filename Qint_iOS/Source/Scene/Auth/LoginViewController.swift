@@ -4,35 +4,34 @@ import SnapKit
 import Then
 
 class LoginViewController: UIViewController {
-    
     private let authPrvoider = MoyaProvider<AuthAPI>()
-    
+
     private let loginLabel = UILabel().then {
         $0.text = "로그인"
         $0.textColor = UIColor(named: "Mint300")
         $0.font = .systemFont(ofSize: 30, weight: .bold)
     }
-    
+
     private let emailTextField = AuthTextField(type: .email)
     private let pwdTextField = AuthTextField(type: .pwd)
-    
+
     private let errorLabel = UILabel().then {
         $0.font = .systemFont(ofSize: 10)
         $0.textColor = UIColor(named: "Red100")
         $0.isHidden = true
     }
-    
+
     private let loginButton = UIButton().then {
         $0.qintButton(setTitle: "로그인", setTitleColor: "White", buttonColor: "Mint300")
     }
-    
+
     private let goSignUpButton = UIButton().then {
         $0.qintButton(setTitle: "회원가입하러 가기", setTitleColor: "Mint300", buttonColor: "Mint100")
     }
-    
+
     private let tap = UITapGestureRecognizer(target: self, action: #selector(UIView.endEditing))
-    
-    override func viewDidLoad() {
+
+    override internal func viewDidLoad() {
         super.viewDidLoad()
         
         Token.saveAccessToken = ""
@@ -42,17 +41,13 @@ class LoginViewController: UIViewController {
         layout()
     }
     
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?){
-        self.view.endEditing(true)
-    }
-    
-    func attribute() {
+    private func attribute() {
         view.backgroundColor = .white
         loginButton.addTarget(self, action: #selector(loginButtonTapped), for: .touchUpInside)
         goSignUpButton.addTarget(self, action: #selector(goSignUpButtonTapped), for: .touchUpInside)
     }
     
-    func add() {
+    private func add() {
         [
             loginLabel,
             emailTextField,
@@ -64,8 +59,7 @@ class LoginViewController: UIViewController {
         view.addGestureRecognizer(tap)
     }
     
-    func layout() {
-        
+    private func layout() {
         loginLabel.snp.makeConstraints {
             $0.top.equalToSuperview().inset(100)
             $0.centerX.equalToSuperview()
@@ -95,7 +89,11 @@ class LoginViewController: UIViewController {
             $0.height.equalTo(52)
         }
     }
-    
+
+    override internal func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?){
+        self.view.endEditing(true)
+    }
+
     @objc private func loginButtonTapped() {
         print("로그인")
         authPrvoider.request(.login(email: emailTextField.textField.text ?? "이메일이 입력되지 않음", password: pwdTextField.textField.text ?? "비밀번호가 입력되지 않음")) { response in
@@ -128,6 +126,7 @@ class LoginViewController: UIViewController {
             }
         }
     }
+
     @objc private func goSignUpButtonTapped() {
         let next = SignUpViewController()
         next.modalPresentationStyle = .fullScreen

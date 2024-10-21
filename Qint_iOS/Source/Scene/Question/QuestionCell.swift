@@ -6,11 +6,11 @@ class QuestionCell: UICollectionViewCell {
     
     static let identifier = "QuestionCell"
     
-    var nextButtonTap: ((Int) -> Void)?
-    var mainButtonTap: ((Bool) -> Void)?
-    var solutionButtonTap: ((Bool) -> Void)?
+    private var nextButtonTap: ((Int) -> Void)?
+    private var mainButtonTap: ((Bool) -> Void)?
+    private var solutionButtonTap: ((Bool) -> Void)?
     
-    var index: Int = 0
+    private var index: Int = 0
     private var main: Bool = false
     private var soluton: Bool = false
     private var buttonSelect = [UIButton]()
@@ -23,7 +23,7 @@ class QuestionCell: UICollectionViewCell {
         $0.questionLabel()
     }
     
-    let indexLabel = UILabel().then {
+    private let indexLabel = UILabel().then {
         $0.font = UIFont.systemFont(ofSize: 20)
         $0.textColor = UIColor(named: "Gray400")
     }
@@ -154,7 +154,7 @@ class QuestionCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure(with index: Int) {
+    public func configure(with index: Int) {
         indexLabel.text = "\(index)/15"
         self.index = index
     }

@@ -3,8 +3,7 @@ import SnapKit
 import Then
 
 class SolutionViewController: UIViewController {
-    
-    var solutionIndex: Int = 0
+    private var solutionIndex: Int = 0
     
     private let questionView = UIView().then {
         $0.questionView()
@@ -51,7 +50,7 @@ class SolutionViewController: UIViewController {
         $0.nextButton()
     }
     
-    override func viewDidLoad() {
+    override internal func viewDidLoad() {
         super.viewDidLoad()
         
         attribute()

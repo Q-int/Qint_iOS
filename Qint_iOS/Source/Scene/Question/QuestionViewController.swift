@@ -6,8 +6,8 @@ class QuestionViewController: UIViewController, UICollectionViewDataSource, UICo
     
     private var collectionView: UICollectionView!
     private var darkBackground: UIView?
-    var cellIndex: Int = 0
-    var solIndex: Int = 0
+    private var cellIndex: Int = 0
+    public var solIndex: Int = 0
     
     
     private let mainButton = UIButton().then {
@@ -26,7 +26,7 @@ class QuestionViewController: UIViewController, UICollectionViewDataSource, UICo
         $0.nextButton()
     }
     
-    override func viewDidLoad() {
+    override internal func viewDidLoad() {
         super.viewDidLoad()
         
         print(cellIndex)
@@ -88,7 +88,7 @@ class QuestionViewController: UIViewController, UICollectionViewDataSource, UICo
         }
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    internal func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier:  QuestionCell.identifier, for: indexPath) as? QuestionCell
         
         cell?.configure(with:  solIndex + 1)
@@ -99,11 +99,11 @@ class QuestionViewController: UIViewController, UICollectionViewDataSource, UICo
         
         return cell ?? UICollectionViewCell()
     }
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    internal func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 15
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    internal func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: collectionView.frame.width, height: collectionView.frame.height)
     }
     

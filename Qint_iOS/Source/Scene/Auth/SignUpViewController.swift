@@ -7,7 +7,7 @@ class SignUpViewController: UIViewController {
     
     private let authPrvoider = MoyaProvider<AuthAPI>()
     
-    var errorModel: ErrorModel = .DoNotEnterPwd
+    private var errorModel: ErrorModel = .DoNotEnterPwd
     
     private let signUpLabel = UILabel().then {
         $0.text = "회원가입"
@@ -43,7 +43,7 @@ class SignUpViewController: UIViewController {
     
     private let tap = UITapGestureRecognizer(target: self, action: #selector(UIView.endEditing))
     
-    override func viewDidLoad() {
+    override internal func viewDidLoad() {
         super.viewDidLoad()
         
         attribute()
@@ -51,7 +51,7 @@ class SignUpViewController: UIViewController {
         layout()
     }
     
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?){
+    override internal func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?){
         self.view.endEditing(true)
     }
     
@@ -142,7 +142,7 @@ class SignUpViewController: UIViewController {
             }
         }
     }
-    
+
     private func isValidEmail(email: String) -> Bool {
         let regExp = "^.+@([A-Za-z0-9-]+\\.)+[A-Za-z]{2}[A-Za-z]*$"
         let passwordTest = NSPredicate(format: "SELF MATCHES %@", regExp)
@@ -157,32 +157,8 @@ class SignUpViewController: UIViewController {
 }
 
 extension SignUpViewController: UITextFieldDelegate {
-    
-    
-    
+
     func textFieldDidEndEditing(_ textField: UITextField) {
-        
-//        switch errorModel {
-//        case .DoNotEnterEmail(email: let email):
-//            <#code#>
-//        case .EmailIsValid(email: let email):
-//            <#code#>
-//        case .EmailNotValid(email: let email):
-//            <#code#>
-//        case .DoNotEnterPwd:
-//            <#code#>
-//        case .PwdIsValid:
-//            <#code#>
-//        case .PwdNotValid:
-//            <#code#>
-//        case .DoNotEnterPwdConfirm:
-//            <#code#>
-//        case .PwdConfirmIsValid:
-//            <#code#>
-//        case .PwdConfirmNotValid:
-//            <#code#>
-//        }
-        
         if textField == emailTextField.textField {
             guard let email = emailTextField.currentText(), email.count != 0 else {
                 print("이메일 입력 안함")

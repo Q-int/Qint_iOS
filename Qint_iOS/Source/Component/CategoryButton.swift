@@ -68,13 +68,13 @@ enum BtType {
 }
 
 class CategoryButton: UIView {
-    let button = UIButton().then {
+    public let button = UIButton().then {
         $0.backgroundColor = UIColor(named: "Mint100")
         $0.layer.cornerRadius = 10
         $0.adjustsImageWhenHighlighted = false
     }
     
-    let label = UILabel().then {
+    public let label = UILabel().then {
         $0.textColor = UIColor(named: "Mint300")
         $0.font = .boldSystemFont(ofSize: 20)
     }
@@ -93,12 +93,12 @@ class CategoryButton: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func add() {
+    private func add() {
         self.addSubview(button)
         button.addSubview(label)
     }
     
-    func layout() {
+    private func layout() {
         button.snp.makeConstraints {
             $0.top.bottom.left.right.equalToSuperview()
         }
