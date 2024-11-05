@@ -4,12 +4,8 @@ import Then
 
 class ReviewIncorrectCell: UICollectionViewCell {
     
-    var nextButtonTap: ((Int) -> Void)?
-    var mainButtonTap: ((Bool) -> Void)?
-    
-    var index: Int = 0
-    var main: Bool = false
-    
+    static let identifier: String = "ReviewIncorrectCell"
+
     private let questionView = UIView().then {
         $0.backgroundColor = UIColor(named: "Mint100")
         $0.layer.cornerRadius = 20
@@ -59,34 +55,22 @@ class ReviewIncorrectCell: UICollectionViewCell {
         $0.font = UIFont.systemFont(ofSize: 16)
     }
     
-    private let mainButton = UIButton().then {
-        $0.iconButton()
-        $0.setImage(UIImage(systemName: "person.fill"), for: .normal)
-    }
-    
-    private let nextButton = UIButton().then {
-        $0.nextButton()
-    }
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        attribute()
         add()
         layout()
     }
-    private func attribute() {
-        nextButton.addTarget(self, action: #selector(nextButtonClicked), for: .touchUpInside)
-        mainButton.addTarget(self, action: #selector(mainButtonClicked), for: .touchUpInside)
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
+
     private func add() {
         [
             questionView,
             correctButton,
             wrongButton,
-            solutionView,
-            mainButton,
-            nextButton
+            solutionView
         ].forEach{ contentView.addSubview($0) }
         questionView.addSubview(questionLabel)
         correctButton.addSubview(correctLabel)
@@ -126,32 +110,5 @@ class ReviewIncorrectCell: UICollectionViewCell {
         solutionLabel.snp.makeConstraints {
             $0.top.right.left.equalToSuperview().inset(15)
         }
-        mainButton.snp.makeConstraints {
-            $0.top.equalTo(solutionView.snp.bottom).offset(23)
-            $0.left.equalToSuperview().inset(24)
-            $0.height.width.equalTo(30)
-        }
-        nextButton.snp.makeConstraints {
-            $0.top.equalTo(solutionView.snp.bottom).offset(18)
-            $0.right.equalToSuperview().inset(24)
-            $0.height.equalTo(44)
-            $0.width.equalTo(105)
-        }
-    }
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    func configure(with index: Int) {
-        self.index = index
-    }
-    
-    @objc func nextButtonClicked() {
-        self.nextButtonTap?(index)
-    }
-    
-    @objc func mainButtonClicked() {
-        main = true
-        self.mainButtonTap?(main)
     }
 }
