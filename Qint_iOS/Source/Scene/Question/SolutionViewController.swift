@@ -3,7 +3,7 @@ import SnapKit
 import Then
 
 class SolutionViewController: UIViewController {
-    private var solutionIndex: Int = 0
+    public var solutionIndex: Int = 0
     
     private let questionView = UIView().then {
         $0.questionView()

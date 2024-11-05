@@ -165,7 +165,8 @@ class MyViewController: UIViewController {
         self.navigationController?.pushViewController(ReviewIncorrectViewController(), animated: true)
     }
     @objc private func mainButtonTapped() {
-        self.navigationController?.pushViewController(MainViewController(), animated: true)
+        self.navigationController?.popViewController(animated: true)
+//        self.navigationController?.pushViewController(MainViewController(), animated: true)
     }
     @objc private func logoutButtonTapped() {
         self.navigationController?.pushViewController(LoginViewController(), animated: true)

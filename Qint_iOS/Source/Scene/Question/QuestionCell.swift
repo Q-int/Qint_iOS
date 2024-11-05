@@ -6,13 +6,7 @@ class QuestionCell: UICollectionViewCell {
     
     static let identifier = "QuestionCell"
     
-    private var nextButtonTap: ((Int) -> Void)?
-    private var mainButtonTap: ((Bool) -> Void)?
-    private var solutionButtonTap: ((Bool) -> Void)?
-    
     private var index: Int = 0
-    private var main: Bool = false
-    private var soluton: Bool = false
     private var buttonSelect = [UIButton]()
     
     private let questionView = UIView().then {
@@ -154,34 +148,13 @@ class QuestionCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    public func configure(with index: Int) {
-        indexLabel.text = "\(index)/15"
+    public func configure(index: Int) {
+        indexLabel.text = "\(index+1)/15"
         self.index = index
     }
-    
-    @objc private func nextButtonClicked() {
-        print("cellIndex: \(index)")
-        self.nextButtonTap?(index)
-    }
-    
-    @objc private func mainButtonClicked() {
-        self.mainButtonTap?(main)
-    }
-    
-    @objc private  func solutionButtonClicked() {
-        self.solutionButtonTap?(soluton)
-    }
-    
     @objc private func buttonTapped(_ sender: UIButton) {
         for i in buttonSelect {
             i.backgroundColor = i == sender ? UIColor(named: "Mint200") : UIColor(named: "Mint100")
         }
-    }
-    @objc private func mainButtonTapped() {
-        main = true
-        print("홈 버튼 누름")
-    }
-    @objc private func solutionButtonTapped() {
-        soluton = true
     }
 }

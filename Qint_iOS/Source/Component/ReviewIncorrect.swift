@@ -4,18 +4,18 @@ import Then
 
 class reviewIncorrect: UIView {
         
-    private let label = UILabel().then {
+    let label = UILabel().then {
         $0.text = "틀린 문제 다시보기"
         $0.font = .boldSystemFont(ofSize: 25)
         $0.textColor = UIColor(named: "Gray400")
     }
     
-    private let image = UIImageView().then {
+    let image = UIImageView().then {
         $0.image = UIImage(named: "Return1")
         $0.tintColor = UIColor(named: "Gray400")
     }
     
-    private init() {
+    init() {
         super.init(frame: .zero)
         
         add()
