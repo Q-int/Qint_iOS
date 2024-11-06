@@ -90,7 +90,6 @@ class QuestionViewController: UIViewController, UICollectionViewDataSource, UICo
     @objc private func solutionButtonTap() {
         let vc = SolutionViewController()
         vc.solutionIndex = solIndex
-//        self.navigationController?.pushViewController(vc, animated: true)
         self.present(vc, animated: true)
     }
     
