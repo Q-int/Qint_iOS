@@ -3,11 +3,21 @@ import SnapKit
 import Then
 
 class QuestionViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, PopupDelegate {
-
-    private var collectionView: UICollectionView!
+    
     private var darkBackground: UIView?
-    private var cellIndex: Int = 0
     public var solIndex: Int = 0
+    
+    lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout().then {
+        $0.scrollDirection = .horizontal
+        $0.minimumLineSpacing = 0
+    }).then {
+        $0.dataSource = self
+        $0.delegate = self
+        $0.register(QuestionCell.self, forCellWithReuseIdentifier: QuestionCell.identifier)
+        $0.isPagingEnabled = true
+        $0.showsVerticalScrollIndicator = false
+        $0.isScrollEnabled = false
+    }
     
     private let mainButton = UIButton().then {
         $0.iconButton()
@@ -35,18 +45,6 @@ class QuestionViewController: UIViewController, UICollectionViewDataSource, UICo
     
     private func attribute() {
         view.backgroundColor = .white
-        
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        layout.minimumLineSpacing = 0
-        
-        collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.dataSource = self
-        collectionView.delegate = self
-        collectionView.showsVerticalScrollIndicator = false
-        collectionView.isScrollEnabled = false
-        collectionView.register(QuestionCell.self, forCellWithReuseIdentifier: QuestionCell.identifier)
-        
         
         mainButton.addTarget(self, action: #selector(mainButtonTap), for: .touchUpInside)
         solutionButton.addTarget(self, action: #selector(solutionButtonTap), for: .touchUpInside)
@@ -85,52 +83,31 @@ class QuestionViewController: UIViewController, UICollectionViewDataSource, UICo
         }
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: QuestionCell.identifier, for: indexPath) as? QuestionCell else {
-            return UICollectionViewCell()
-        }
-        cell.configure(index: solIndex)
-//        self.solIndex += 1
-//        self.cellIndex += 1
-//        print("solIndex : \(self.solIndex)")
-//        print("cellIndex : \(self.cellIndex)")
-        return cell
-    }
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 15
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.frame.width, height: collectionView.frame.height)
-    }
     @objc private func mainButtonTap() {
         self.navigationController?.popToRootViewController(animated: true)
     }
     
     @objc private func solutionButtonTap() {
         let vc = SolutionViewController()
-        vc.solutionIndex = self.solIndex
-        self.navigationController?.pushViewController(vc, animated: true)
+        vc.solutionIndex = solIndex
+//        self.navigationController?.pushViewController(vc, animated: true)
+        self.present(vc, animated: true)
     }
     
     @objc private func nextButtonTapped() {
-        if solIndex >= 15 {
-            buttonTapped()
-        } else {
-            cellIndex += 1
+        if solIndex < 14 {
             solIndex += 1
-            print("index: \(solIndex)")
-            DispatchQueue.main.async {
-                self.collectionView.isPagingEnabled = false
-                self.collectionView.scrollToItem(at: IndexPath(row: self.solIndex, section: 0), at: .left, animated: true)
-                self.collectionView.isPagingEnabled = true
-            }
+            print(solIndex)
+            collectionView.isPagingEnabled = false
+            self.collectionView.scrollToItem(at: IndexPath(row: solIndex, section: 0), at: .left, animated: true)
+        } else {
+            buttonTapped()
         }
     }
     private func buttonTapped() {
         showPopup()
     }
-    public func showPopup() {
+    private func showPopup() {
         if darkBackground != nil { return }
         
         let dark = UIView(frame: self.view.bounds)
@@ -150,16 +127,31 @@ class QuestionViewController: UIViewController, UICollectionViewDataSource, UICo
         }
     }
     
-    public func navigateToMainView() {
+    func navigateToMainView() {
         dismissPopup()
         navigationController?.pushViewController(MainViewController(), animated: true)
     }
     
-    public func navigateToMyView() {
+    func navigateToMyView() {
         dismissPopup()
         navigationController?.pushViewController(MyViewController(), animated: true)
     }
-    public func dismissPopup() {
+    private func dismissPopup() {
         darkBackground?.removeFromSuperview()
+    }
+}
+
+extension QuestionViewController {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: QuestionCell.identifier, for: indexPath) as? QuestionCell
+        cell?.configure(index: indexPath.row)
+        return cell!
+    }
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 15
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: collectionView.frame.width, height: collectionView.frame.height)
     }
 }

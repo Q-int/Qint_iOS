@@ -166,7 +166,6 @@ class MyViewController: UIViewController {
     }
     @objc private func mainButtonTapped() {
         self.navigationController?.popViewController(animated: true)
-//        self.navigationController?.pushViewController(MainViewController(), animated: true)
     }
     @objc private func logoutButtonTapped() {
         self.navigationController?.pushViewController(LoginViewController(), animated: true)

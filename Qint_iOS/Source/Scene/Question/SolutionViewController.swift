@@ -14,7 +14,7 @@ class SolutionViewController: UIViewController {
     }
     
     lazy var indexLabel = UILabel().then {
-        $0.text = "\(solutionIndex)/15"
+        $0.text = "\(solutionIndex+1)/15"
         $0.font = UIFont.systemFont(ofSize: 20)
         $0.textColor = UIColor(named: "Gray400")
     }
@@ -42,14 +42,6 @@ class SolutionViewController: UIViewController {
         $0.textAlignment = .left
     }
     
-    private let mainButton = UIButton().then {
-        $0.iconButton()
-    }
-    
-    private let nextButton = UIButton().then {
-        $0.nextButton()
-    }
-    
     override internal func viewDidLoad() {
         super.viewDidLoad()
         
@@ -61,8 +53,6 @@ class SolutionViewController: UIViewController {
     
     private func attribute() {
         view.backgroundColor = .white
-        mainButton.addTarget(self, action: #selector(mainButtonTapped), for: .touchUpInside)
-        nextButton.addTarget(self, action: #selector(nextButtonTapped), for: .touchUpInside)
     }
     
     private func add() {
@@ -71,8 +61,6 @@ class SolutionViewController: UIViewController {
             indexLabel,
             correctButton,
             solutionView,
-            mainButton,
-            nextButton
         ].forEach{ view.addSubview($0) }
         questionView.addSubview(questionLabel)
         correctButton.addSubview(correctLabel)
@@ -108,27 +96,5 @@ class SolutionViewController: UIViewController {
         solutionLabel.snp.makeConstraints {
             $0.top.right.left.equalToSuperview().inset(15)
         }
-        mainButton.snp.makeConstraints {
-            $0.bottom.equalToSuperview().inset(74)
-            $0.left.equalToSuperview().inset(24)
-            $0.height.width.equalTo(30)
-        }
-        nextButton.snp.makeConstraints {
-            $0.bottom.equalToSuperview().inset(64)
-            $0.right.equalToSuperview().inset(24)
-            $0.height.equalTo(44)
-            $0.width.equalTo(105)
-        }
-    }
-    
-    @objc private func mainButtonTapped() {
-        print("메인버튼")
-        self.navigationController?.pushViewController(MainViewController(), animated: true)
-    }
-
-    @objc private func nextButtonTapped() {
-        let questionViewController = QuestionViewController()
-        questionViewController.solIndex = self.solutionIndex
-        self.navigationController?.pushViewController(questionViewController, animated: true)
     }
 }
