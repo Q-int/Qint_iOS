@@ -1,6 +1,6 @@
 import Foundation
 
-struct AuthResponse: Codable {
+struct Response: Codable {
     let tokenResponse: TokenResponse
     let message: String
 }

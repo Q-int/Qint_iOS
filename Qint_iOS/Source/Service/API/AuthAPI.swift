@@ -3,8 +3,8 @@ import Moya
 
 enum AuthAPI: TargetType {
     case login(email: String, password: String)
-    case emailVerify(email: String)
     case signup(password: String, passwordCheck: String, email: String)
+    case refreshToken(refreshToken: String)
 }
 
 extension AuthAPI {
@@ -14,20 +14,16 @@ extension AuthAPI {
         switch self {
         case .login:
             return "/auth/login"
-        case .emailVerify:
-            return "/auth/email-verify"
         case .signup:
             return "/auth/signup"
+        case .refreshToken:
+            return "/auth/refresh"
         }
     }
     
     var method: Moya.Method {
         switch self {
-        case .login :
-            return .post
-        case .emailVerify:
-            return .post
-        case .signup:
+        default:
             return .post
         }
     }
@@ -42,13 +38,6 @@ extension AuthAPI {
                 ],
                 encoding: JSONEncoding.default
             )
-        case let .emailVerify(email: email):
-            return .requestParameters(
-                parameters: [
-                    "email": email
-                ],
-                encoding: JSONEncoding.default
-            )
         case let .signup(password: password, passwordCheck: passwordCheck, email: email):
             return .requestParameters(
                 parameters: [
@@ -58,12 +47,21 @@ extension AuthAPI {
                 ],
                 encoding: JSONEncoding.default
             )
-        default:
-            return .requestPlain
+        case let .refreshToken(refreshToken: refreshToken):
+            return .requestParameters(
+                parameters: [
+                    "refreshToken": refreshToken
+            ],
+                encoding: JSONEncoding.default)
         }
     }
     var headers: [String: String]? {
-        return nil
+        switch self {
+        case .refreshToken:
+            return Header.refreshToken.header()
+        default:
+            return Header.tokenIsEmpty.header()
+        }
     }
 }
 

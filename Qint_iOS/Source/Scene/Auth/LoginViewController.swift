@@ -34,8 +34,6 @@ class LoginViewController: UIViewController {
     override internal func viewDidLoad() {
         super.viewDidLoad()
         
-        Token.saveAccessToken = ""
-        
         attribute()
         add()
         layout()
