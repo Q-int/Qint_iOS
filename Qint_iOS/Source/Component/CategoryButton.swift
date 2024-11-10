@@ -7,7 +7,7 @@ enum BtType {
     case be
     case ios
     case flutter
-    case custom(title: String, image: String, left: Int, right: Int)
+    case custom(title: String, image: String, left: Int, right: Int, request: String)
     
     var text: String {
         switch self {
@@ -19,7 +19,7 @@ enum BtType {
             return "iOS"
         case .flutter:
             return "플러터"
-        case .custom(let title, _, _, _):
+        case .custom(let title, _, _, _, _):
             return title
         }
     }
@@ -33,36 +33,42 @@ enum BtType {
             return "iosImage"
         case .flutter:
             return "flutterImage"
-        case .custom(_, let image, _, _):
+        case .custom(_, let image, _, _, _):
             return image
         }
     }
     var left: Int {
         switch self {
-        case .fe:
+        case .fe, .ios:
             return 205
-        case .be:
+        case .be, .flutter:
             return 0
-        case .ios:
-            return 205
-        case .flutter:
-            return 0
-        case .custom(_, _, let left, _):
+        case .custom(_, _, let left, _, _):
             return left
         }
     }
     var right: Int {
         switch self {
-        case .fe:
+        case .fe, .ios:
             return 0
-        case .be:
+        case .be, .flutter:
             return 205
-        case .ios:
-            return 0
-        case .flutter:
-            return 205
-        case .custom(_, _, _, let right):
+        case .custom(_, _, _, let right, _):
             return right
+        }
+    }
+    var request: String {
+        switch self {
+        case .fe:
+            return "FRONTEND"
+        case .be:
+            return "BACKEND"
+        case .ios:
+            return "IOS"
+        case .flutter:
+            return "FLUTTER"
+        case .custom(_, _, _, _, let request):
+            return request
         }
     }
 }
@@ -72,6 +78,7 @@ class CategoryButton: UIView {
         $0.backgroundColor = UIColor(named: "Mint100")
         $0.layer.cornerRadius = 10
         $0.adjustsImageWhenHighlighted = false
+        $0.titleLabel?.isHidden = true
     }
     
     public let label = UILabel().then {
@@ -85,6 +92,7 @@ class CategoryButton: UIView {
         button.setImage(UIImage(named: type.image), for: .normal)
         button.imageEdgeInsets = UIEdgeInsets(top: 0, left: CGFloat(type.left), bottom: 0, right: CGFloat(type.right))
         label.text = type.text
+        button.setTitle(type.request, for: .normal)
         
         add()
         layout()

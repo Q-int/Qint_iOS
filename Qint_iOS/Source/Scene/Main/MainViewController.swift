@@ -5,6 +5,7 @@ import Then
 class MainViewController: UIViewController {
     
     private var categoryButtonNumber = 0
+    private var request = [String]()
     
     private let qintLabel = UILabel().then {
         $0.text = "Q-int"
@@ -15,7 +16,6 @@ class MainViewController: UIViewController {
     private let myButton = UIButton().then {
         $0.iconButton()
         $0.setImage(UIImage(systemName: "person.fill"), for: .normal)
-        $0.addTarget(self, action: #selector(myButtonTapped), for: .touchUpInside)
     }
     
     @objc private func myButtonTapped() {
@@ -35,11 +35,6 @@ class MainViewController: UIViewController {
     private let startButton = UIButton().then {
         $0.isHidden = true
         $0.qintButton(setTitle: "시작하기", setTitleColor: "White", buttonColor: "Mint300")
-        $0.addTarget(self, action: #selector(startButtonTapped), for: .touchUpInside)
-    }
-    
-    @objc private func startButtonTapped() {
-        self.navigationController?.pushViewController(QuestionViewController(), animated: true)
     }
     
     override func viewDidLoad() {
@@ -54,6 +49,9 @@ class MainViewController: UIViewController {
     
     private func attribute() {
         view.backgroundColor = .white
+        startButton.addTarget(self, action: #selector(startButtonTapped), for: .touchUpInside)
+        myButton.addTarget(self, action: #selector(myButtonTapped), for: .touchUpInside)
+        
         [
             feButton.button,
             beButton.button,
@@ -127,16 +125,23 @@ class MainViewController: UIViewController {
             sender.backgroundColor = UIColor(named: "Mint200")
             startButton.isHidden = false
             categoryButtonNumber += 1
+            request.append(sender.titleLabel?.text ?? "")
             categoryLabel.isHidden = true
         } else {
             sender.layer.borderColor = UIColor.clear.cgColor
             sender.layer.borderWidth = 0
             sender.backgroundColor = UIColor(named: "Mint100")
             categoryButtonNumber -= 1
+            let index = request.firstIndex(of: sender.titleLabel?.text ?? "")
+            request.remove(at: index ?? 0)
             if categoryButtonNumber == 0 {
                 startButton.isHidden = true
                 categoryLabel.isHidden = false
             }
         }
+    }
+    @objc private func startButtonTapped() {
+        print(request)
+        self.navigationController?.pushViewController(QuestionViewController(), animated: true)
     }
 }
