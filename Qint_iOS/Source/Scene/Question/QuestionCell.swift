@@ -22,10 +22,10 @@ class QuestionCell: UICollectionViewCell {
         $0.textColor = UIColor(named: "Gray400")
     }
     
-    private let button1 = AnswerButton()
-    private let button2 = AnswerButton()
-    private let button3 = AnswerButton()
-    private let button4 = AnswerButton()
+    private let button1 = AnswerButton(type: .question)
+    private let button2 = AnswerButton(type: .question)
+    private let button3 = AnswerButton(type: .question)
+    private let button4 = AnswerButton(type: .question)
     
     override init(frame: CGRect) {
         super.init(frame: frame)

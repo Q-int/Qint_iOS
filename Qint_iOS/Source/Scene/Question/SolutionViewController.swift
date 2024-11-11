@@ -19,24 +19,14 @@ class SolutionViewController: UIViewController {
         $0.font = UIFont.systemFont(ofSize: 20)
         $0.textColor = UIColor(named: "Gray400")
     }
-    private let correctButton = UIButton().then {
-        $0.answerButton()
-        $0.layer.borderColor = UIColor(named: "Green100")?.cgColor
-        $0.layer.borderWidth = 3
-    }
-    private let correctLabel = UILabel().then {
-        $0.answerLabel()
-    }
+    private let correctButton = AnswerButton(type: .correct)
     private let solutionView = UIView().then {
         $0.backgroundColor = UIColor(named: "Mint100")
         $0.layer.cornerRadius = 20
         $0.clipsToBounds = false
     }
     private let solutionLabel = UILabel().then {
-        $0.answerLabel()
-        $0.text = "어쩌구 저쩌구 해서 쨌든 그냥 니가 틀리고 내가 맞음 어쩔팁이"
-        $0.font = UIFont.systemFont(ofSize: 18)
-        $0.textAlignment = .left
+        $0.solutionLabel()
     }
     
     override internal func viewDidLoad() {
@@ -62,7 +52,6 @@ class SolutionViewController: UIViewController {
             solutionView,
         ].forEach{ view.addSubview($0) }
         questionView.addSubview(questionLabel)
-        correctButton.addSubview(correctLabel)
         solutionView.addSubview(solutionLabel)
     }
     
@@ -87,9 +76,6 @@ class SolutionViewController: UIViewController {
             $0.top.equalTo(indexLabel.snp.bottom).offset(25)
             $0.left.right.equalToSuperview().inset(24)
             $0.height.equalTo(75)
-        }
-        correctLabel.snp.makeConstraints {
-            $0.edges.equalToSuperview().inset(20)
         }
         solutionView.snp.makeConstraints {
             $0.top.equalTo(correctButton.snp.bottom).offset(25)

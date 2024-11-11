@@ -22,25 +22,8 @@ class ReviewIncorrectCell: UICollectionViewCell {
         $0.minimumScaleFactor = 0.7
     }
     
-    private let correctButton = UIButton().then {
-        $0.answerButton()
-        $0.layer.borderColor = UIColor(named: "Green100")?.cgColor
-        $0.layer.borderWidth = 3
-    }
-    
-    private let correctLabel = UILabel().then {
-        $0.answerLabel()
-    }
-    
-    private let wrongButton = UIButton().then {
-        $0.answerButton()
-        $0.layer.borderColor = UIColor(named: "Red100")?.cgColor
-        $0.layer.borderWidth = 3
-    }
-    
-    private let wrongLabel = UILabel().then {
-        $0.answerLabel()
-    }
+    private let correctButton = AnswerButton(type: .correct)
+    private let wrongButton = AnswerButton(type: .wrong)
     
     private let solutionView = UIView().then {
         $0.backgroundColor = UIColor(named: "Mint100")
@@ -49,10 +32,7 @@ class ReviewIncorrectCell: UICollectionViewCell {
     }
     
     private let solutionLabel = UILabel().then {
-        $0.answerLabel()
-        $0.textAlignment = .left
-        $0.text = "어쩌구 저쩌구 해서 쨌든 그냥 니가 틀리고 내가 맞음 어쩔팁이"
-        $0.font = UIFont.systemFont(ofSize: 16)
+        $0.solutionLabel()
     }
     
     override init(frame: CGRect) {
@@ -73,8 +53,6 @@ class ReviewIncorrectCell: UICollectionViewCell {
             solutionView
         ].forEach{ contentView.addSubview($0) }
         questionView.addSubview(questionLabel)
-        correctButton.addSubview(correctLabel)
-        wrongButton.addSubview(wrongLabel)
         solutionView.addSubview(solutionLabel)
     }
     private func layout() {
@@ -91,16 +69,10 @@ class ReviewIncorrectCell: UICollectionViewCell {
             $0.left.right.equalToSuperview().inset(24)
             $0.height.equalTo(75)
         }
-        correctLabel.snp.makeConstraints {
-            $0.edges.equalToSuperview().inset(20)
-        }
         wrongButton.snp.makeConstraints {
             $0.top.equalTo(correctButton.snp.bottom).offset(11)
             $0.left.right.equalToSuperview().inset(24)
             $0.height.equalTo(75)
-        }
-        wrongLabel.snp.makeConstraints {
-            $0.edges.equalToSuperview().inset(20)
         }
         solutionView.snp.makeConstraints {
             $0.top.equalTo(wrongButton.snp.bottom).offset(11)
