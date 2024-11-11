@@ -78,7 +78,6 @@ class CategoryButton: UIView {
         $0.backgroundColor = UIColor(named: "Mint100")
         $0.layer.cornerRadius = 10
         $0.adjustsImageWhenHighlighted = false
-        $0.titleLabel?.isHidden = true
     }
     
     public let label = UILabel().then {
@@ -92,7 +91,7 @@ class CategoryButton: UIView {
         button.setImage(UIImage(named: type.image), for: .normal)
         button.imageEdgeInsets = UIEdgeInsets(top: 0, left: CGFloat(type.left), bottom: 0, right: CGFloat(type.right))
         label.text = type.text
-        button.setTitle(type.request, for: .normal)
+        button.setTitle(type.request, for: .disabled)
         
         add()
         layout()
