@@ -91,7 +91,8 @@ class CategoryButton: UIView {
         button.setImage(UIImage(named: type.image), for: .normal)
         button.imageEdgeInsets = UIEdgeInsets(top: 0, left: CGFloat(type.left), bottom: 0, right: CGFloat(type.right))
         label.text = type.text
-        button.setTitle(type.request, for: .disabled)
+        button.setTitle(type.request, for: .normal)
+        button.titleLabel?.alpha = 0
         
         add()
         layout()
