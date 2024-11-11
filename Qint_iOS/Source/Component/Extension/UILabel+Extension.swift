@@ -9,13 +9,4 @@ extension UILabel {
         self.adjustsFontSizeToFitWidth = true
         self.minimumScaleFactor = 0.7
     }
-    
-    func answerLabel() {
-        self.text = "3.1416346535..."
-        self.font = UIFont.systemFont(ofSize: 25)
-        self.textAlignment = .center
-        self.numberOfLines = 0
-        self.adjustsFontSizeToFitWidth = true
-        self.minimumScaleFactor = 0.1
-    }
 }

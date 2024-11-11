@@ -22,34 +22,10 @@ class QuestionCell: UICollectionViewCell {
         $0.textColor = UIColor(named: "Gray400")
     }
     
-    private let button1 = UIButton().then {
-        $0.answerButton()
-    }
-    
-    private let label1 = UILabel().then {
-        $0.answerLabel()
-    }
-    private let button2 = UIButton().then {
-        $0.answerButton()
-    }
-    
-    private let label2 = UILabel().then {
-        $0.answerLabel()
-    }
-    private let button3 = UIButton().then {
-        $0.answerButton()
-    }
-    
-    private let label3 = UILabel().then {
-        $0.answerLabel()
-    }
-    private let button4 = UIButton().then {
-        $0.answerButton()
-    }
-    
-    private let label4 = UILabel().then {
-        $0.answerLabel()
-    }
+    private let button1 = AnswerButton()
+    private let button2 = AnswerButton()
+    private let button3 = AnswerButton()
+    private let button4 = AnswerButton()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -61,23 +37,22 @@ class QuestionCell: UICollectionViewCell {
 
     private func attribute() {
         [
-            button1,
-            button2,
-            button3,
-            button4
+            button1.answerButton,
+            button2.answerButton,
+            button3.answerButton,
+            button4.answerButton
         ].forEach{ button in
             button.addTarget(self, action: #selector(buttonTapped(_:)), for: .touchUpInside)
         }
+        [
+            button1.answerButton,
+            button2.answerButton,
+            button3.answerButton,
+            button4.answerButton
+        ].forEach{ buttonSelect.append($0) }
     }
     
     private func add() {
-        [
-            button1,
-            button2,
-            button3,
-            button4
-        ].forEach{buttonSelect.append($0)}
-        
         [
             questionView,
             indexLabel,
@@ -87,10 +62,6 @@ class QuestionCell: UICollectionViewCell {
             button4,
         ].forEach{ contentView.addSubview($0) }
         questionView.addSubview(questionLabel)
-        button1.addSubview(label1)
-        button2.addSubview(label2)
-        button3.addSubview(label3)
-        button4.addSubview(label4)
     }
     
     private func layout() {
@@ -111,38 +82,21 @@ class QuestionCell: UICollectionViewCell {
             $0.height.equalTo(75)
             $0.left.right.equalToSuperview().inset(20)
         }
-        label1.snp.makeConstraints {
-            $0.centerY.equalToSuperview()
-            $0.left.right.equalToSuperview().inset(12)
-        }
         button2.snp.makeConstraints {
             $0.top.equalTo(button1.snp.bottom).offset(10)
             $0.left.right.equalToSuperview().inset(20)
             $0.height.equalTo(75)
-        }
-        label2.snp.makeConstraints {
-            $0.centerY.equalToSuperview()
-            $0.left.right.equalToSuperview().inset(12)
         }
         button3.snp.makeConstraints {
             $0.top.equalTo(button2.snp.bottom).offset(10)
             $0.left.right.equalToSuperview().inset(20)
             $0.height.equalTo(75)
         }
-        label3.snp.makeConstraints {
-            $0.centerY.equalToSuperview()
-            $0.left.right.equalToSuperview().inset(12)
-        }
         button4.snp.makeConstraints {
             $0.top.equalTo(button3.snp.bottom).offset(10)
             $0.left.right.equalToSuperview().inset(20)
             $0.height.equalTo(75)
         }
-        label4.snp.makeConstraints {
-            $0.centerY.equalToSuperview()
-            $0.left.right.equalToSuperview().inset(12)
-        }
-        
     }
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

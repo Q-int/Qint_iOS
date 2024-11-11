@@ -9,11 +9,6 @@ extension UIButton {
         self.layer.cornerRadius = 8
     }
     
-    func answerButton() {
-        self.backgroundColor = UIColor(named: "Mint100")
-        self.layer.cornerRadius = 10
-    }
-    
     func nextButton() {
         self.setTitle("다음 문제", for: .normal)
         self.titleLabel?.font = .systemFont(ofSize: 20)
