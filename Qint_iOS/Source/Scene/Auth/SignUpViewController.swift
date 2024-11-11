@@ -43,7 +43,7 @@ class SignUpViewController: UIViewController {
     
     private let tap = UITapGestureRecognizer(target: self, action: #selector(UIView.endEditing))
     
-    override internal func viewDidLoad() {
+    override func viewDidLoad() {
         super.viewDidLoad()
         
         attribute()
@@ -51,7 +51,7 @@ class SignUpViewController: UIViewController {
         layout()
     }
     
-    override internal func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?){
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?){
         self.view.endEditing(true)
     }
     

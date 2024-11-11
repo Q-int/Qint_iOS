@@ -19,7 +19,7 @@ class SolutionViewController: UIViewController {
         $0.font = UIFont.systemFont(ofSize: 20)
         $0.textColor = UIColor(named: "Gray400")
     }
-    private let correctButton = AnswerButton(type: .correct)
+    private let correctButton = Answer
     private let solutionView = UIView().then {
         $0.backgroundColor = UIColor(named: "Mint100")
         $0.layer.cornerRadius = 20

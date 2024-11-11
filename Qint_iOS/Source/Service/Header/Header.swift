@@ -1,56 +1,63 @@
 import Foundation
-import KeychainSwift
-import SwiftKeychainWrapper
 
 struct Token {
-    static var localRefreshToken: String?
-    static var localAccessToken: String?
-
-    static var refreshToken: String? {
-        get {
-            localRefreshToken = KeychainWrapper.standard.string(forKey: "refreshToken")
-            return localRefreshToken
-        }
-        set(newToken) {
-            KeychainWrapper.standard.set(newToken ?? "nil", forKey: "refreshToken")
-            localRefreshToken = newToken
-        }
-    }
+    static var saveAccessToken: String?
     static var accessToken: String? {
         get {
-            localAccessToken = KeychainWrapper.standard.string(forKey: "accessToken")
-
-            return localAccessToken
+           saveAccessToken = UserDefaults.standard.string(forKey: "accessToken")
+           return saveAccessToken
         }
+
         set(newToken) {
-            KeychainWrapper.standard.set(newToken ?? "nil", forKey: "accessToken")
-            localAccessToken = newToken
+            UserDefaults.standard.set(newToken, forKey: "accessToken")
+            UserDefaults.standard.synchronize()
+            saveAccessToken = UserDefaults.standard.string(forKey: "accessToken")
         }
     }
+
+    static var saveRefreshToken: String?
+    static var refreshToken: String? {
+        get {
+            saveRefreshToken = UserDefaults.standard.string(forKey: "refreshToken")
+            return saveRefreshToken
+        }
+
+        set(newRefreshToken) {
+            UserDefaults.standard.set(newRefreshToken, forKey: "refreshToken")
+            UserDefaults.standard.synchronize()
+            saveRefreshToken = UserDefaults.standard.string(forKey: "refreshToken")
+        }
+    }
+
     static func removeToken() {
-        self.refreshToken = nil
-        self.accessToken = nil
+        accessToken = nil
+        refreshToken = nil
     }
 }
 
 enum Header {
-    case refreshToken, accessToken, tokenIsEmpty
+    case accessToken, tokenIsEmpty, refreshToken, uploadImage
+
     func header() -> [String: String]? {
-        guard let refreshToken = Token.refreshToken,
-              refreshToken != "nil" else {
-            return ["Content-Type": "application/json"]
+        guard let token = Token.accessToken else {
+            return ["Contect-Type": "application/json"]
         }
-        guard let accessToken = Token.accessToken,
-              accessToken != "nil" else {
-            return ["Content-Type": "application/json"]
+
+        guard let refreshToken = Token.refreshToken else {
+            return ["Contect-Type": "application/json"]
         }
+
         switch self {
-            case .refreshToken:
-                return ["Authorization": "Header " + refreshToken, "Content-Type": "application/json"]
-            case .accessToken:
-                return ["Authorization": "Bearer " + accessToken, "Content-Type": "application/json"]
-            case .tokenIsEmpty:
-                return ["Content-Type": "application/json"]
+        case .accessToken:
+            print(token)
+            return ["Authorization": "Barrer " + token]
+        case .refreshToken:
+            return ["Authorization": "Bearer " + token,
+                    "Refresh-Token": refreshToken, "Contect-Type": "application/json"]
+        case .tokenIsEmpty:
+            return ["Contect-Type": "application/json"]
+        case .uploadImage:
+            return ["Authorization": "Bearer " + token, "Content-Type": "multipart/form-data"]
         }
     }
 }

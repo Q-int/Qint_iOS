@@ -3,12 +3,11 @@ import Moya
 
 enum AuthAPI: TargetType {
     case login(email: String, password: String)
-    case signup(password: String, passwordCheck: String, email: String)
-    case refreshToken(refreshToken: String)
+    case signup(password: String, email: String)
 }
 
 extension AuthAPI {
-    var baseURL: URL { return URL(string: "http://")! }
+    var baseURL: URL { return URL(string: "https://qint.ijw.app")! }
     
     var path: String {
         switch self {
@@ -16,8 +15,6 @@ extension AuthAPI {
             return "/auth/login"
         case .signup:
             return "/auth/signup"
-        case .refreshToken:
-            return "/auth/refresh"
         }
     }
     
@@ -38,30 +35,21 @@ extension AuthAPI {
                 ],
                 encoding: JSONEncoding.default
             )
-        case let .signup(password: password, passwordCheck: passwordCheck, email: email):
+        case let .signup(password: password, email: email):
             return .requestParameters(
                 parameters: [
                     "password": password,
-                    "passwordCheck": passwordCheck,
                     "email": email
                 ],
                 encoding: JSONEncoding.default
             )
-        case let .refreshToken(refreshToken: refreshToken):
-            return .requestParameters(
-                parameters: [
-                    "refreshToken": refreshToken
-            ],
-                encoding: JSONEncoding.default)
         }
     }
+    
     var headers: [String: String]? {
         switch self {
-        case .refreshToken:
-            return Header.refreshToken.header()
         default:
             return Header.tokenIsEmpty.header()
         }
     }
 }
-
