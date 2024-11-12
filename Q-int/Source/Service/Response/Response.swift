@@ -7,3 +7,12 @@ struct Response: Codable {
 struct TokenResponse: Codable {
     let accessToken, refreshToken: String
 }
+
+struct EmailResponse: Codable {
+    let isVerified: Bool
+    
+    enum CodingKeys: String, CodingKey {
+        case isVerified = "isVerified" 
+    }
+}
+

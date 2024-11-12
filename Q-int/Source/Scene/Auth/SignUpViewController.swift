@@ -146,7 +146,7 @@ class SignUpViewController: UIViewController {
     @objc private func sendButtonTapped() {
         emailProvoider.request(.verify(email: emailTextField.textField.text!)) { response in
             switch response {
-                case let .success(response):
+            case let .success(response):
                 switch response.statusCode {
                 case 200:
                     self.sendEmail()
@@ -163,7 +163,7 @@ class SignUpViewController: UIViewController {
     private func sendEmail() {
         emailProvoider.request(.sendAuthCode(email: emailTextField.textField.text!)) { response in
             switch response {
-                case let .success(response):
+            case let .success(response):
                 switch response.statusCode {
                 case 200:
                     self.emailTextField.label.text = "인증코드가 발송되었습니다"
@@ -179,14 +179,31 @@ class SignUpViewController: UIViewController {
     }
     
     @objc private func checkButtonTapped() {
-        emailProvoider.request(.checkAuthCode(email: emailTextField.textField.text!, authCode: authenticationTextField.textField.text!)) { response in
+        emailProvoider.request(.checkAuthCode(email: emailTextField.textField.text!, auth_code: authenticationTextField.textField.text!)) { response in
             switch response {
             case let .success(response):
                 do {
                     switch response.statusCode {
                     case 200:
-                        let data = try response.mapJSON()
-                        print(data)
+                        if let responseString = String(data: response.data, encoding: .utf8) {
+                            let fixedResponseString = responseString.replacingOccurrences(of: "isVerified = 1;", with: "{\"isVerified\": true}")
+                            print("변환된 응답 데이터: \(fixedResponseString)")
+                            
+                            if let data = fixedResponseString.data(using: .utf8) {
+                                let emailResponse = try JSONDecoder().decode(EmailResponse.self, from: data)
+                                if emailResponse.isVerified {
+                                    self.authenticationTextField.label.text = "인증 코드가 일치합니다"
+                                    self.authenticationTextField.label.textColor = UIColor.mint300
+                                    self.authenticationTextField.textField.layer.borderColor = UIColor.mint300.cgColor
+                                    self.authenticationTextField.textField.layer.borderWidth = 1
+                                } else {
+                                    self.authenticationTextField.label.text = "인증 코드가 일치하지 않습니다"
+                                    self.authenticationTextField.label.textColor = UIColor.red100
+                                    self.authenticationTextField.textField.layer.borderColor = UIColor.red100.cgColor
+                                    self.authenticationTextField.textField.layer.borderWidth = 1
+                                }
+                            }
+                        }
                     default:
                         print("잘못된 인증 코드")
                     }
@@ -214,22 +231,23 @@ class SignUpViewController: UIViewController {
             }
         }
     }
-
+    
     private func isValidEmail(email: String) -> Bool {
         let regExp = "^.+@([A-Za-z0-9-]+\\.)+[A-Za-z]{2}[A-Za-z]*$"
         let passwordTest = NSPredicate(format: "SELF MATCHES %@", regExp)
-                return passwordTest.evaluate(with: email)
+        return passwordTest.evaluate(with: email)
     }
-
+    
     private func isValidPwd(pwd: String) -> Bool {
         let reGex = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[!@#$%^&*()\\-_=+<>?]).{8,64}$"
         let passwordTest = NSPredicate(format: "SELF MATCHES %@", reGex)
-                return passwordTest.evaluate(with: pwd)
+        return passwordTest.evaluate(with: pwd)
     }
+
 }
 
 extension SignUpViewController: UITextFieldDelegate {
-
+    
     func textFieldDidEndEditing(_ textField: UITextField) {
         if textField == emailTextField.textField {
             guard let email = emailTextField.currentText(), email.count != 0 else {
@@ -260,7 +278,7 @@ extension SignUpViewController: UITextFieldDelegate {
                 print("비밀번호 입력 안함")
                 return
             }
-            if isValidPwd(pwd: pwd) { 
+            if isValidPwd(pwd: pwd) {
                 pwdTextField.textField.layer.borderColor = UIColor(named: "Mint300")?.cgColor
                 pwdTextField.textField.layer.borderWidth = 1
                 pwdTextField.label.text = .none

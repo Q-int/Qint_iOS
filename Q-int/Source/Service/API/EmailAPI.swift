@@ -4,7 +4,7 @@ import Moya
 enum EmailAPI: TargetType {
     case verify(email: String)
     case sendAuthCode(email: String)
-    case checkAuthCode(email: String, authCode: String)
+    case checkAuthCode(email: String, auth_code: String)
 }
 
 extension EmailAPI {
@@ -44,11 +44,11 @@ extension EmailAPI {
                 ],
                 encoding: JSONEncoding.default
             )
-        case let .checkAuthCode(email, authCode):
+        case let .checkAuthCode(email, auth_code):
             return .requestParameters(
                 parameters: [
                     "email": email,
-                    "authCode": authCode
+                    "auth_code": auth_code
                 ],
                 encoding: JSONEncoding.default
             )
