@@ -6,6 +6,7 @@ import Moya
 class SignUpViewController: UIViewController {
     
     private let authPrvoider = MoyaProvider<AuthAPI>()
+    private let emailProvoider = MoyaProvider<EmailAPI>()
     
     private var errorModel: ErrorModel = .DoNotEnterPwd
     
@@ -19,6 +20,16 @@ class SignUpViewController: UIViewController {
     
     private let sendButton = UIButton().then {
         $0.setTitle("Send", for: .normal)
+        $0.titleLabel?.font = .systemFont(ofSize: 14)
+        $0.setTitleColor(.white, for: .normal)
+        $0.backgroundColor = UIColor(named: "Mint300")
+        $0.layer.cornerRadius = 5
+        $0.isEnabled = false
+    }
+    
+    private let checkButton = UIButton().then {
+        $0.setTitle("Check", for: .normal)
+        $0.titleLabel?.font = .systemFont(ofSize: 14)
         $0.setTitleColor(.white, for: .normal)
         $0.backgroundColor = UIColor(named: "Mint300")
         $0.layer.cornerRadius = 5
@@ -31,6 +42,7 @@ class SignUpViewController: UIViewController {
     
     private let signUpButton = UIButton().then {
         $0.qintButton(setTitle: "회원가입", setTitleColor: "White", buttonColor: "Mint300")
+        $0.isEnabled = false
     }
     
     private let goLoginButton = UIButton().then {
@@ -58,6 +70,7 @@ class SignUpViewController: UIViewController {
     private func attribute() {
         view.backgroundColor = .white
         sendButton.addTarget(self, action: #selector(sendButtonTapped), for: .touchUpInside)
+        checkButton.addTarget(self, action: #selector(checkButtonTapped), for: .touchUpInside)
         signUpButton.addTarget(self, action: #selector(signUpButtonTapped), for: .touchUpInside)
         goLoginButton.addTarget(self, action: #selector(goLoginButtonTapped), for: .touchUpInside)
         
@@ -71,6 +84,7 @@ class SignUpViewController: UIViewController {
             signUpLabel,
             emailTextField,
             sendButton,
+            checkButton,
             authenticationTextField,
             pwdTextField,
             pwdConfirmTextField,
@@ -101,8 +115,14 @@ class SignUpViewController: UIViewController {
             $0.left.right.equalToSuperview().inset(24)
             $0.height.equalTo(52)
         }
-        pwdTextField.snp.makeConstraints {
+        checkButton.snp.makeConstraints {
             $0.top.equalTo(authenticationTextField.snp.bottom).offset(40)
+            $0.right.equalToSuperview().inset(24)
+            $0.height.equalTo(32)
+            $0.width.equalTo(66)
+        }
+        pwdTextField.snp.makeConstraints {
+            $0.top.equalTo(checkButton.snp.bottom).offset(16)
             $0.left.right.equalToSuperview().inset(24)
             $0.height.equalTo(52)
         }
@@ -124,7 +144,59 @@ class SignUpViewController: UIViewController {
     }
     
     @objc private func sendButtonTapped() {
-        print("send버튼 눌림")
+        emailProvoider.request(.verify(email: emailTextField.textField.text!)) { response in
+            switch response {
+                case let .success(response):
+                switch response.statusCode {
+                case 200:
+                    self.sendEmail()
+                default:
+                    self.emailTextField.label.text = "이미 회원가입이 완료된 이메일 입니다"
+                    self.emailTextField.label.textColor = UIColor.red100
+                }
+            case let .failure(error):
+                print("(err.localizedDescription)")
+            }
+        }
+    }
+    
+    private func sendEmail() {
+        emailProvoider.request(.sendAuthCode(email: emailTextField.textField.text!)) { response in
+            switch response {
+                case let .success(response):
+                switch response.statusCode {
+                case 200:
+                    self.emailTextField.label.text = "인증코드가 발송되었습니다"
+                    self.emailTextField.label.textColor = UIColor.mint300
+                    self.checkButton.isEnabled = true
+                default:
+                    print("잘못된 이메일")
+                }
+            case let .failure(error):
+                print("(err.localizedDescription)")
+            }
+        }
+    }
+    
+    @objc private func checkButtonTapped() {
+        emailProvoider.request(.checkAuthCode(email: emailTextField.textField.text!, authCode: authenticationTextField.textField.text!)) { response in
+            switch response {
+            case let .success(response):
+                do {
+                    switch response.statusCode {
+                    case 200:
+                        let data = try response.mapJSON()
+                        print(data)
+                    default:
+                        print("잘못된 인증 코드")
+                    }
+                } catch {
+                    print("에러 발생: \(error.localizedDescription)")
+                }
+            case let .failure(error):
+                print("(err.localizedDescription)")
+            }
+        }
     }
     
     @objc private func signUpButtonTapped() {
@@ -169,7 +241,7 @@ extension SignUpViewController: UITextFieldDelegate {
             }
             if isValidEmail(email: email) {
                 print("유효한 이메일")
-                emailTextField.textField.layer.borderColor = UIColor(named: "Green100")?.cgColor
+                emailTextField.textField.layer.borderColor = UIColor(named: "Mint300")?.cgColor
                 emailTextField.textField.layer.borderWidth = 1
                 emailTextField.label.text = .none
                 sendButton.isEnabled = true
@@ -189,7 +261,7 @@ extension SignUpViewController: UITextFieldDelegate {
                 return
             }
             if isValidPwd(pwd: pwd) { 
-                pwdTextField.textField.layer.borderColor = UIColor(named: "Green100")?.cgColor
+                pwdTextField.textField.layer.borderColor = UIColor(named: "Mint300")?.cgColor
                 pwdTextField.textField.layer.borderWidth = 1
                 pwdTextField.label.text = .none
                 print("유효한 비밀번호")
@@ -202,7 +274,7 @@ extension SignUpViewController: UITextFieldDelegate {
             }
         } else if textField == pwdConfirmTextField.textField {
             if pwdTextField.currentText() == pwdConfirmTextField.currentText() {
-                pwdConfirmTextField.textField.layer.borderColor = UIColor(named: "Green100")?.cgColor
+                pwdConfirmTextField.textField.layer.borderColor = UIColor(named: "Mint300")?.cgColor
                 pwdConfirmTextField.textField.layer.borderWidth = 1
                 pwdConfirmTextField.label.text = .none
                 print("비밀번호 일치")

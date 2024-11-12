@@ -55,16 +55,6 @@
 			path = "Q-int";
 			sourceTree = "<group>";
 		};
-		8820EA372CE2166100C305DA /* Q-intTests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = "Q-intTests";
-			sourceTree = "<group>";
-		};
-		8820EA412CE2166100C305DA /* Q-intUITests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = "Q-intUITests";
-			sourceTree = "<group>";
-		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,8 +90,6 @@
 			isa = PBXGroup;
 			children = (
 				8820EA202CE2165F00C305DA /* Q-int */,
-				8820EA372CE2166100C305DA /* Q-intTests */,
-				8820EA412CE2166100C305DA /* Q-intUITests */,
 				8820EA1F2CE2165F00C305DA /* Products */,
 			);
 			sourceTree = "<group>";
@@ -158,9 +146,6 @@
 			dependencies = (
 				8820EA362CE2166100C305DA /* PBXTargetDependency */,
 			);
-			fileSystemSynchronizedGroups = (
-				8820EA372CE2166100C305DA /* Q-intTests */,
-			);
 			name = "Q-intTests";
 			packageProductDependencies = (
 			);
@@ -180,9 +165,6 @@
 			);
 			dependencies = (
 				8820EA402CE2166100C305DA /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				8820EA412CE2166100C305DA /* Q-intUITests */,
 			);
 			name = "Q-intUITests";
 			packageProductDependencies = (
