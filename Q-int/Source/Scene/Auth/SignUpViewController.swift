@@ -8,8 +8,6 @@ class SignUpViewController: UIViewController {
     private let authPrvoider = MoyaProvider<AuthAPI>()
     private let emailProvoider = MoyaProvider<EmailAPI>()
     
-    private var errorModel: ErrorModel = .DoNotEnterPwd
-    
     private let signUpLabel = UILabel().then {
         $0.text = "회원가입"
         $0.textColor = UIColor(named: "Mint300")
@@ -42,7 +40,6 @@ class SignUpViewController: UIViewController {
     
     private let signUpButton = UIButton().then {
         $0.qintButton(setTitle: "회원가입", setTitleColor: "White", buttonColor: "Mint300")
-        $0.isEnabled = false
     }
     
     private let goLoginButton = UIButton().then {
@@ -147,15 +144,30 @@ class SignUpViewController: UIViewController {
         emailProvoider.request(.verify(email: emailTextField.textField.text!)) { response in
             switch response {
             case let .success(response):
-                switch response.statusCode {
-                case 200:
-                    self.sendEmail()
-                default:
-                    self.emailTextField.label.text = "이미 회원가입이 완료된 이메일 입니다"
-                    self.emailTextField.label.textColor = UIColor.red100
+                do {
+                    switch response.statusCode {
+                    case 200:
+                        if let responseString = String(data: response.data, encoding: .utf8) {
+                            let fixedResponseString = responseString.replacingOccurrences(of: "success = 1;", with: "{\"success\": true}")
+                            
+                            if let data = fixedResponseString.data(using: .utf8) {
+                                let emailResponse = try JSONDecoder().decode(EmailVerify.self, from: data)
+                                if emailResponse.success {
+                                    self.sendEmail()
+                                } else {
+                                    self.textFieldAppearance(self.emailTextField.textField, color: "Red100", message: "이미 가입된 이메일 입니다")
+                                }
+                            }
+                        }
+                    default:
+                        self.emailTextField.label.text = "이미 회원가입이 완료된 이메일 입니다"
+                        self.emailTextField.label.textColor = UIColor.red100
+                    }
+                } catch {
+                    print("catch :: \(error.localizedDescription)")
                 }
             case let .failure(error):
-                print("(err.localizedDescription)")
+                print("fail :: \(error.localizedDescription)")
             }
         }
     }
@@ -173,7 +185,7 @@ class SignUpViewController: UIViewController {
                     print("잘못된 이메일")
                 }
             case let .failure(error):
-                print("(err.localizedDescription)")
+                print("fail :: \(error.localizedDescription)")
             }
         }
     }
@@ -187,47 +199,42 @@ class SignUpViewController: UIViewController {
                     case 200:
                         if let responseString = String(data: response.data, encoding: .utf8) {
                             let fixedResponseString = responseString.replacingOccurrences(of: "isVerified = 1;", with: "{\"isVerified\": true}")
-                            print("변환된 응답 데이터: \(fixedResponseString)")
                             
                             if let data = fixedResponseString.data(using: .utf8) {
-                                let emailResponse = try JSONDecoder().decode(EmailResponse.self, from: data)
+                                let emailResponse = try JSONDecoder().decode(AuthCodeCheck.self, from: data)
                                 if emailResponse.isVerified {
-                                    self.authenticationTextField.label.text = "인증 코드가 일치합니다"
-                                    self.authenticationTextField.label.textColor = UIColor.mint300
-                                    self.authenticationTextField.textField.layer.borderColor = UIColor.mint300.cgColor
-                                    self.authenticationTextField.textField.layer.borderWidth = 1
+                                    self.textFieldAppearance(self.authenticationTextField.textField, color: "Mint300", message: nil)
                                 } else {
-                                    self.authenticationTextField.label.text = "인증 코드가 일치하지 않습니다"
-                                    self.authenticationTextField.label.textColor = UIColor.red100
-                                    self.authenticationTextField.textField.layer.borderColor = UIColor.red100.cgColor
-                                    self.authenticationTextField.textField.layer.borderWidth = 1
+                                    self.textFieldAppearance(self.authenticationTextField.textField, color: "Red100", message: "인증 코드가 일치하지 않습니다")
                                 }
                             }
                         }
                     default:
-                        print("잘못된 인증 코드")
+                        print("잘못된 인증 코드 :: \(response.statusCode)")
                     }
                 } catch {
-                    print("에러 발생: \(error.localizedDescription)")
+                    print("catch: \(error.localizedDescription)")
                 }
             case let .failure(error):
-                print("(err.localizedDescription)")
+                print("fail :: \(error.localizedDescription)")
             }
         }
     }
     
     @objc private func signUpButtonTapped() {
-        authPrvoider.request(.signup(password: pwdTextField.textField.text!, email: emailTextField.textField.text!)) { response in
-            switch response {
-            case let .success(response):
-                switch response.statusCode {
-                case 201:
-                    print("회원가입 성공")
-                default:
-                    print("회원가입 실패")
+        if emailTextField.textField.layer.borderColor == UIColor.mint300.cgColor && authenticationTextField.textField.layer.borderColor ==  UIColor.mint300.cgColor && pwdTextField.textField.layer.borderColor ==  UIColor.mint300.cgColor && pwdConfirmTextField.textField.layer.borderColor ==  UIColor.mint300.cgColor {
+            authPrvoider.request(.signup(password: pwdTextField.textField.text!, email: emailTextField.textField.text!)) { response in
+                switch response {
+                case let .success(response):
+                    switch response.statusCode {
+                    case 200:
+                        self.dismiss(animated: true)
+                    default:
+                        print("회원가입 실패 \(response.statusCode)")
+                    }
+                case let .failure(error):
+                    print("fail :: \(error.localizedDescription)")
                 }
-            case let .failure(error):
-                print("(err.localizedDescription)")
             }
         }
     }
@@ -243,65 +250,57 @@ class SignUpViewController: UIViewController {
         let passwordTest = NSPredicate(format: "SELF MATCHES %@", reGex)
         return passwordTest.evaluate(with: pwd)
     }
-
+    
+    private func textFieldAppearance(_ textField: UITextField, color: String, message: String?) {
+        textField.layer.borderColor = UIColor(named: color)?.cgColor
+        textField.layer.borderWidth = 1
+        if let messageLabel = (textField.superview as? AuthTextField)?.label {
+            messageLabel.text = message
+            messageLabel.textColor = UIColor(named: color)
+        }
+    }
 }
 
 extension SignUpViewController: UITextFieldDelegate {
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        if textField == emailTextField.textField {
-            guard let email = emailTextField.currentText(), email.count != 0 else {
-                print("이메일 입력 안함")
-                emailTextField.textField.layer.borderColor = UIColor(named: "Red100")?.cgColor
-                emailTextField.textField.layer.borderWidth = 1
-                emailTextField.label.text = "이메일을 입력해주세요"
-                return
-            }
-            if isValidEmail(email: email) {
+        guard let text = (textField.superview as? AuthTextField)?.currentText(), !text.isEmpty else {
+            print("\(textField.placeholder ?? "") 입력 안함")
+            textFieldAppearance(textField, color: "Red100", message: textField == emailTextField.textField ? "이메일을 입력해주세요" : "영어, 숫자, 특수기호를 모두 포함한 8~64 문자 사이의 비밀번호")
+            return
+        }
+        
+        switch textField {
+        case emailTextField.textField:
+            if isValidEmail(email: text) {
                 print("유효한 이메일")
-                emailTextField.textField.layer.borderColor = UIColor(named: "Mint300")?.cgColor
-                emailTextField.textField.layer.borderWidth = 1
-                emailTextField.label.text = .none
+                textFieldAppearance(textField, color: "Mint300", message: nil)
                 sendButton.isEnabled = true
-            }
-            else {
-                print("유효하지 않은 이메일")
-                emailTextField.textField.layer.borderColor = UIColor(named: "Red100")?.cgColor
-                emailTextField.textField.layer.borderWidth = 1
-                emailTextField.label.text = "이메일 형식이 일치하지 않습니다"
-            }
-        } else if textField == pwdTextField.textField {
-            guard let pwd = pwdTextField.currentText(), pwd.count != 0 else {
-                pwdTextField.textField.layer.borderColor = UIColor(named: "Red100")?.cgColor
-                pwdTextField.textField.layer.borderWidth = 1
-                pwdTextField.label.text = "영어, 숫자, 특수기호를 모두 한 개 이상 포함한 8~64 문자 사이의 비밀번호"
-                print("비밀번호 입력 안함")
-                return
-            }
-            if isValidPwd(pwd: pwd) {
-                pwdTextField.textField.layer.borderColor = UIColor(named: "Mint300")?.cgColor
-                pwdTextField.textField.layer.borderWidth = 1
-                pwdTextField.label.text = .none
-                print("유효한 비밀번호")
-            }
-            else {
-                pwdTextField.textField.layer.borderColor = UIColor(named: "Red100")?.cgColor
-                pwdTextField.textField.layer.borderWidth = 1
-                pwdTextField.label.text = "영어, 숫자, 특수기호를 모두 한 개 이상 포함한 8~64 문자 사이의 비밀번호"
-                print("유효하지 않은 비밀번호")
-            }
-        } else if textField == pwdConfirmTextField.textField {
-            if pwdTextField.currentText() == pwdConfirmTextField.currentText() {
-                pwdConfirmTextField.textField.layer.borderColor = UIColor(named: "Mint300")?.cgColor
-                pwdConfirmTextField.textField.layer.borderWidth = 1
-                pwdConfirmTextField.label.text = .none
-                print("비밀번호 일치")
             } else {
-                pwdConfirmTextField.textField.layer.borderColor = UIColor(named: "Red100")?.cgColor
-                pwdConfirmTextField.textField.layer.borderWidth = 1
-                pwdConfirmTextField.label.text = "비밀번호가 일치하지 않습니다"
-                print("비밀번호 일치하지 않음")
+                print("유효하지 않은 이메일")
+                textFieldAppearance(textField, color: "Red100", message: "이메일 형식이 일치하지 않습니다")
             }
+            
+        case pwdTextField.textField:
+            if isValidPwd(pwd: text) {
+                print("유효한 비밀번호")
+                textFieldAppearance(textField, color: "Mint300", message: nil)
+            } else {
+                print("유효하지 않은 비밀번호")
+                textFieldAppearance(textField, color: "Red100", message: "영어, 숫자, 특수기호를 모두 포함한 8~64 문자 사이의 비밀번호")
+            }
+            
+        case pwdConfirmTextField.textField:
+            if text == pwdTextField.currentText() {
+                print("비밀번호 일치")
+                textFieldAppearance(textField, color: "Mint300", message: nil)
+            } else {
+                print("비밀번호 일치하지 않음")
+                textFieldAppearance(textField, color: "Red100", message: "비밀번호가 일치하지 않습니다")
+            }
+            
+        default:
+            break
         }
     }
 }

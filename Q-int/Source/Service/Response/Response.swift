@@ -8,11 +8,11 @@ struct TokenResponse: Codable {
     let accessToken, refreshToken: String
 }
 
-struct EmailResponse: Codable {
+struct AuthCodeCheck: Codable {
     let isVerified: Bool
-    
-    enum CodingKeys: String, CodingKey {
-        case isVerified = "isVerified" 
-    }
+}
+
+struct EmailVerify: Codable {
+    let success: Bool
 }
 
