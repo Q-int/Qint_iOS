@@ -34,7 +34,7 @@ class QuestionCell: UICollectionViewCell {
         add()
         layout()
     }
-
+    
     private func attribute() {
         [
             button1.answerButton,
@@ -107,8 +107,20 @@ class QuestionCell: UICollectionViewCell {
         self.index = index
     }
     @objc private func buttonTapped(_ sender: UIButton) {
-        for i in buttonSelect {
-            i.backgroundColor = i == sender ? UIColor(named: "Mint200") : UIColor(named: "Mint100")
+        for button in buttonSelect {
+            if button != sender {
+                button.backgroundColor = UIColor(named: "Mint100")
+            }
+        }
+        if sender.backgroundColor == UIColor(named: "Mint100") {
+            sender.backgroundColor = UIColor(named: "Mint200")
+        } else {
+            check()
         }
     }
+    
+    private func check() {
+        print("현재 버튼이 이미 선택되었습니다.")
+    }
+    
 }

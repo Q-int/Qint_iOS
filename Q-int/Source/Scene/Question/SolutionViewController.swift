@@ -11,7 +11,7 @@ class SolutionViewController: UIViewController {
     private let questionView = UIView().then {
         $0.questionView()
     }
-    private let questionLabel = UILabel().then {
+    public let questionLabel = UILabel().then {
         $0.questionLabel()
     }
     lazy var indexLabel = UILabel().then {

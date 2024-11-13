@@ -243,6 +243,7 @@ class QuestionViewController: UIViewController, UICollectionViewDataSource, UICo
     @objc private func solutionButtonTap() {
         let vc = SolutionViewController()
         vc.solutionIndex = solIndex
+        vc.questionLabel.text = questionsArray[solIndex].contents
         self.present(vc, animated: true)
     }
     
