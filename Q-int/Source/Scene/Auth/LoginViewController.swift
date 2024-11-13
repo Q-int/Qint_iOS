@@ -112,12 +112,10 @@ class LoginViewController: UIViewController {
                     }
                     print("로그인 성공")
                     self.navigationController?.pushViewController(MainViewController(), animated: true)
-                case 400:
+                default:
                     print("이메일 또는 비밀번호 불일치")
                     self.errorLabel.text = "이메일 또는 비밀번호가 일치하지 않습니다"
                     self.errorLabel.isHidden = false
-                default:
-                    print("존재하지 않는 유저")
                 }
             case let .failure(errror):
                 print("(err.localizedDescription)")

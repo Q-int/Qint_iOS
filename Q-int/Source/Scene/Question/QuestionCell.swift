@@ -13,7 +13,7 @@ class QuestionCell: UICollectionViewCell {
         $0.questionView()
     }
     
-    private let questionLabel = UILabel().then {
+    public let questionLabel = UILabel().then {
         $0.questionLabel()
     }
     
@@ -22,10 +22,10 @@ class QuestionCell: UICollectionViewCell {
         $0.textColor = UIColor(named: "Gray400")
     }
     
-    private let button1 = AnswerButton(type: .question)
-    private let button2 = AnswerButton(type: .question)
-    private let button3 = AnswerButton(type: .question)
-    private let button4 = AnswerButton(type: .question)
+    public let button1 = AnswerButton(type: .question)
+    public let button2 = AnswerButton(type: .question)
+    public let button3 = AnswerButton(type: .question)
+    public let button4 = AnswerButton(type: .question)
     
     override init(frame: CGRect) {
         super.init(frame: frame)
