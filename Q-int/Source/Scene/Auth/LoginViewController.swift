@@ -18,6 +18,7 @@ class LoginViewController: UIViewController {
     private let errorLabel = UILabel().then {
         $0.font = .systemFont(ofSize: 10)
         $0.textColor = UIColor(named: "Red100")
+        $0.text = "이메일 또는 비밀번호가 일치하지 않습니다"
         $0.isHidden = true
     }
 
@@ -73,7 +74,7 @@ class LoginViewController: UIViewController {
             $0.height.equalTo(52)
         }
         errorLabel.snp.makeConstraints {
-            $0.bottom.equalTo(loginButton.snp.bottom).offset(10)
+            $0.bottom.equalTo(loginButton.snp.top).inset(-10)
             $0.centerX.equalToSuperview()
         }
         loginButton.snp.makeConstraints {
@@ -99,6 +100,7 @@ class LoginViewController: UIViewController {
             case let .success(response):
                 switch response.statusCode {
                 case 200:
+                    self.errorLabel.isHidden = true
                     if let data = try? JSONDecoder().decode(TokenResponse.self, from: response.data) {
                         DispatchQueue.main.async {
                             Token.accessToken = data.accessToken
@@ -114,8 +116,11 @@ class LoginViewController: UIViewController {
                     self.navigationController?.pushViewController(MainViewController(), animated: true)
                 default:
                     print("이메일 또는 비밀번호 불일치")
-                    self.errorLabel.text = "이메일 또는 비밀번호가 일치하지 않습니다"
                     self.errorLabel.isHidden = false
+                    self.emailTextField.textField.layer.borderColor = UIColor.red100.cgColor
+                    self.emailTextField.textField.layer.borderWidth = 1
+                    self.pwdTextField.textField.layer.borderColor = UIColor.red100.cgColor
+                    self.pwdTextField.textField.layer.borderWidth = 1
                 }
             case let .failure(errror):
                 print("(err.localizedDescription)")
