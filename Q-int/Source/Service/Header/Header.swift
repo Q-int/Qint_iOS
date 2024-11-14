@@ -50,7 +50,7 @@ enum Header {
         switch self {
         case .accessToken:
             print(token)
-            return ["Authorization": "Barrer " + token]
+            return ["Authorization": "Bearer " + token]
         case .refreshToken:
             return ["Authorization": "Bearer " + token,
                     "Refresh-Token": refreshToken, "Contect-Type": "application/json"]
