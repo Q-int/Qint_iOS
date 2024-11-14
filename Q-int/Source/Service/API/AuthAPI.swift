@@ -7,7 +7,7 @@ enum AuthAPI: TargetType {
 }
 
 extension AuthAPI {
-    var baseURL: URL { return URL(string: "https://qint.ijw.app")! }
+    var baseURL: URL { return URL(string: "http://192.168.1.88:8080")! }
     
     var path: String {
         switch self {

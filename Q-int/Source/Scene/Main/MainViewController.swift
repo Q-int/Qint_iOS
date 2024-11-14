@@ -1,8 +1,11 @@
 import UIKit
 import SnapKit
 import Then
+import Moya
 
 class MainViewController: UIViewController {
+    
+    private let questionPrvoider = MoyaProvider<QuestionAPI>(plugins: [NetworkLoggerPlugin()])
     
     private var categoryButtonNumber = 0
     private var request = [String]()
@@ -141,7 +144,34 @@ class MainViewController: UIViewController {
         }
     }
     @objc private func startButtonTapped() {
-        print(request)
-        self.navigationController?.pushViewController(QuestionViewController(), animated: true)
+        questionPrvoider.request(.getQuestions(categories: request, token: Token.accessToken ?? "")) { response in
+            switch response {
+            case let .success(response):
+                print("성공?")
+                switch response.statusCode {
+                case 200:
+                    do {
+                        let decoder = JSONDecoder()
+                        let questionsResponse = try decoder.decode(QuestionsResponse.self, from: response.data)
+                        let vc = QuestionViewController()
+                        self.navigationController?.pushViewController(vc, animated: true)
+                        vc.questionsArray = questionsResponse.questions
+                        
+                    } catch {
+                        print("Decoding or JSON parsing error: \(error)")
+                    }
+                default:
+                    if let errorMessage = String(data: response.data, encoding: .utf8) {
+                        print("실패 :: Error Message: \(errorMessage)")
+                    } else {
+                        print("실패 :: \(response.statusCode), Error Message: 데이터 변환 실패")
+                    }
+                }
+                
+            case let .failure(error):
+                print("에러 :: \(error.localizedDescription)")
+            }
+        }
     }
+    
 }

@@ -1,9 +1,11 @@
 import UIKit
 import SnapKit
 import Then
+import Moya
 
 class QuestionCell: UICollectionViewCell {
     
+    private let questionProvider = M
     static let identifier = "QuestionCell"
     
     private var index: Int = 0
@@ -121,6 +123,7 @@ class QuestionCell: UICollectionViewCell {
     
     private func check() {
         print("현재 버튼이 이미 선택되었습니다.")
+        
     }
     
 }
