@@ -5,33 +5,33 @@ import Then
 
 class LoginViewController: UIViewController {
     private let authPrvoider = MoyaProvider<AuthAPI>()
-
+    
     private let loginLabel = UILabel().then {
         $0.text = "로그인"
         $0.textColor = UIColor(named: "Mint300")
         $0.font = .systemFont(ofSize: 30, weight: .bold)
     }
-
+    
     private let emailTextField = AuthTextField(type: .email)
     private let pwdTextField = AuthTextField(type: .pwd)
-
+    
     private let errorLabel = UILabel().then {
         $0.font = .systemFont(ofSize: 10)
         $0.textColor = UIColor(named: "Red100")
         $0.text = "이메일 또는 비밀번호가 일치하지 않습니다"
         $0.isHidden = true
     }
-
+    
     private let loginButton = UIButton().then {
         $0.qintButton(setTitle: "로그인", setTitleColor: "White", buttonColor: "Mint300")
     }
-
+    
     private let goSignUpButton = UIButton().then {
         $0.qintButton(setTitle: "회원가입하러 가기", setTitleColor: "Mint300", buttonColor: "Mint100")
     }
-
+    
     private let tap = UITapGestureRecognizer(target: self, action: #selector(UIView.endEditing))
-
+    
     override internal func viewDidLoad() {
         super.viewDidLoad()
         
@@ -88,46 +88,45 @@ class LoginViewController: UIViewController {
             $0.height.equalTo(52)
         }
     }
-
+    
     override internal func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?){
         self.view.endEditing(true)
     }
-
+    
     @objc private func loginButtonTapped() {
         print("로그인")
         authPrvoider.request(.login(email: emailTextField.textField.text ?? "이메일이 입력되지 않음", password: pwdTextField.textField.text ?? "비밀번호가 입력되지 않음")) { response in
             switch response {
             case let .success(response):
-                switch response.statusCode {
-                case 200:
-                    self.errorLabel.isHidden = true
-                    if let data = try? JSONDecoder().decode(TokenResponse.self, from: response.data) {
-                        DispatchQueue.main.async {
-                            Token.accessToken = data.accessToken
-                            print(Token.accessToken)
-                            let mainViewController = MainViewController()
-                            let navigationController = self.navigationController
-                            navigationController?.setViewControllers([mainViewController], animated: true)
-                        }
-                    } else {
-                        print("auth json decode fail")
+                print("성공")
+                do {
+                    switch response.statusCode {
+                    case 200:
+                        let vc = MainViewController()
+                        let navigationController = self.navigationController
+                        navigationController?.setViewControllers([vc], animated: true)
+                        self.errorLabel.isHidden = true
+                        let decodeResponse = try JSONDecoder().decode(TokenResponse.self, from: response.data)
+                        Token.accessToken = decodeResponse.access
+                        print("로그인 성공")
+                    default:
+                        print("이메일 또는 비밀번호 불일치")
+                        self.errorLabel.isHidden = false
+                        self.emailTextField.textField.layer.borderColor = UIColor.red100.cgColor
+                        self.emailTextField.textField.layer.borderWidth = 1
+                        self.pwdTextField.textField.layer.borderColor = UIColor.red100.cgColor
+                        self.pwdTextField.textField.layer.borderWidth = 1
                     }
-                    print("로그인 성공")
-                    self.navigationController?.pushViewController(MainViewController(), animated: true)
-                default:
-                    print("이메일 또는 비밀번호 불일치")
-                    self.errorLabel.isHidden = false
-                    self.emailTextField.textField.layer.borderColor = UIColor.red100.cgColor
-                    self.emailTextField.textField.layer.borderWidth = 1
-                    self.pwdTextField.textField.layer.borderColor = UIColor.red100.cgColor
-                    self.pwdTextField.textField.layer.borderWidth = 1
+                } catch {
+                    guard let error = error as? MoyaError else { return }
+                    print(error.response?.statusCode)
                 }
             case let .failure(errror):
-                print("(err.localizedDescription)")
+                print("fail :: \(errror.localizedDescription)")
             }
         }
     }
-
+    
     @objc private func goSignUpButtonTapped() {
         let next = SignUpViewController()
         next.modalPresentationStyle = .fullScreen
