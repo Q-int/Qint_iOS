@@ -8,7 +8,7 @@ enum UserAPI {
 }
 
 extension UserAPI: TargetType {
-    var baseURL: URL { .init(string: "http://192.168.1.84:8080")! }
+    var baseURL: URL { .init(string: "http://192.168.143.87:8080")! }
     
     var path: String {
         switch self {
