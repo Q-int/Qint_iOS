@@ -8,7 +8,7 @@ enum EmailAPI: TargetType {
 }
 
 extension EmailAPI {
-    var baseURL: URL { return URL(string: "http://192.168.1.88:8080")! }
+    var baseURL: URL { return URL(string: "http://192.168.1.15:8080")! }
     
     var path: String {
         switch self {

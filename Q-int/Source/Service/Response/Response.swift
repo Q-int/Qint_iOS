@@ -26,3 +26,23 @@ struct Option: Codable {
     let answer_id: Int
     let text: String
 }
+
+struct Answer: Decodable {
+    let answerText: String
+    let commentary: String
+    let isCorrect: Bool
+    
+    enum CodingKeys: String, CodingKey {
+        case answerText = "answer_text"
+        case commentary
+        case isCorrect = "is_correct"
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        
+        answerText = try container.decode(String.self, forKey: .answerText)
+        commentary = try container.decode(String.self, forKey: .commentary)
+        isCorrect = try container.decode(Bool.self, forKey: .isCorrect)
+    }
+}
