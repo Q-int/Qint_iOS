@@ -5,11 +5,13 @@ import Moya
 
 class QuestionCell: UICollectionViewCell {
     
-    private let questionProvider = M
+    private let questionProvider = MoyaProvider<QuestionAPI>()
     static let identifier = "QuestionCell"
     
     private var index: Int = 0
-    private var buttonSelect = [UIButton]()
+    public var buttonSelect = [UIButton]()
+    public var buttonLabel = [UILabel]()
+    public var question: Question?
     
     private let questionView = UIView().then {
         $0.questionView()
@@ -52,6 +54,12 @@ class QuestionCell: UICollectionViewCell {
             button3.answerButton,
             button4.answerButton
         ].forEach{ buttonSelect.append($0) }
+        [
+            button1.answerLabel,
+            button2.answerLabel,
+            button3.answerLabel,
+            button4.answerLabel
+        ].forEach{ buttonLabel.append($0) }
     }
     
     private func add() {
@@ -123,7 +131,45 @@ class QuestionCell: UICollectionViewCell {
     
     private func check() {
         print("현재 버튼이 이미 선택되었습니다.")
-        
+        var answerId = 0
+        for i in 0..<4 {
+            buttonSelect[i].isEnabled = false
+            if buttonSelect[i].backgroundColor == UIColor.mint200 {
+                answerId = i
+                buttonSelect[i].backgroundColor = UIColor.mint100
+            }
+        }
+        questionProvider.request(.judge(question_id: question!.question_id, answer_id: question!.options[answerId].answer_id, token: Token.accessToken ?? "")) { response in
+            switch response {
+            case let .success(response):
+                do {
+                    switch response.statusCode {
+                    case 200:
+                        print(try response.mapJSON())
+                        let answer = try JSONDecoder().decode(Answer.self, from: response.data)
+                        if answer.isCorrect {
+                            self.buttonSelect[answerId].layer.borderColor = UIColor.green100.cgColor
+                            self.buttonSelect[answerId].layer.borderWidth = 3
+                        } else {
+                            self.buttonSelect[answerId].layer.borderColor = UIColor.red100.cgColor
+                            self.buttonSelect[answerId].layer.borderWidth = 3
+                            for i in 0..<4 {
+                                if self.buttonLabel[i].text == answer.answerText {
+                                    print("정답 \(answer.answerText)")
+                                    self.buttonSelect[i].layer.borderColor = UIColor.green100.cgColor
+                                    self.buttonSelect[i].layer.borderWidth = 3
+                                }
+                            }
+                        }
+                    default:
+                        print("error :: \(response.statusCode)")
+                    }
+                } catch {
+                    print("Decoding or JSON parsing error: \(error)")
+                }
+            case let .failure(error):
+                print("fail :: \(error.localizedDescription)")
+            }
+        }
     }
-    
 }

@@ -148,11 +148,18 @@ extension QuestionViewController {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: QuestionCell.identifier, for: indexPath) as? QuestionCell
         cell?.configure(index: indexPath.row)
         let question = questionsArray[indexPath.row]
+        cell?.question = question
         cell?.questionLabel.text = question.contents
         cell?.button1.answerLabel.text = question.options[0].text
         cell?.button2.answerLabel.text = question.options[1].text
         cell?.button3.answerLabel.text = question.options[2].text
         cell?.button4.answerLabel.text = question.options[3].text
+        for i in 0..<4 {
+            cell?.buttonSelect[i].backgroundColor = UIColor(named: "Mint100")
+            cell?.buttonSelect[i].layer.cornerRadius = 10
+            cell?.buttonSelect[i].layer.borderWidth = 0
+            cell?.buttonSelect[i].isEnabled = true
+        }
         return cell!
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
