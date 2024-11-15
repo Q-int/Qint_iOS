@@ -6,10 +6,18 @@ struct TokenResponse: Decodable {
 
 struct AuthCodeCheck: Codable {
     let isVerified: Bool
+    
+    enum CodingKeys: String, CodingKey {
+        case isVerified = "is_verified"
+    }
 }
 
 struct EmailVerify: Codable {
     let success: Bool
+    
+    enum CodingKeys: String, CodingKey {
+        case success = "success"
+    }
 }
 
 struct QuestionsResponse: Codable {

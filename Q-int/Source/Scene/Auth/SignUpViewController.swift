@@ -147,17 +147,11 @@ class SignUpViewController: UIViewController {
                 do {
                     switch response.statusCode {
                     case 200:
-                        if let responseString = String(data: response.data, encoding: .utf8) {
-                            let fixedResponseString = responseString.replacingOccurrences(of: "success = 1;", with: "{\"success\": true}")
-                            
-                            if let data = fixedResponseString.data(using: .utf8) {
-                                let emailResponse = try JSONDecoder().decode(EmailVerify.self, from: data)
-                                if emailResponse.success {
-                                    self.sendEmail()
-                                } else {
-                                    self.textFieldAppearance(self.emailTextField.textField, color: "Red100", message: "이미 가입된 이메일 입니다.")
-                                }
-                            }
+                        let email = try JSONDecoder().decode(EmailVerify.self, from: response.data)
+                        if email.success {
+                            self.sendEmail()
+                        } else {
+                            self.textFieldAppearance(self.emailTextField.textField, color: "Red100", message: "이미 가입된 이메일 입니다.")
                         }
                     default:
                         self.textFieldAppearance(self.emailTextField.textField, color: "Red100", message: "이메일 형식이 일치하지 않습니다.")
@@ -196,17 +190,11 @@ class SignUpViewController: UIViewController {
                 do {
                     switch response.statusCode {
                     case 200:
-                        if let responseString = String(data: response.data, encoding: .utf8) {
-                            let fixedResponseString = responseString.replacingOccurrences(of: "isVerified = 1;", with: "{\"isVerified\": true}")
-                            
-                            if let data = fixedResponseString.data(using: .utf8) {
-                                let emailResponse = try JSONDecoder().decode(AuthCodeCheck.self, from: data)
-                                if emailResponse.isVerified {
-                                    self.textFieldAppearance(self.authenticationTextField.textField, color: "Mint300", message: "인증 코드가 일치합니다.")
-                                } else {
-                                    self.textFieldAppearance(self.authenticationTextField.textField, color: "Red100", message: "인증 코드가 일치하지 않습니다.")
-                                }
-                            }
+                        let email = try JSONDecoder().decode(AuthCodeCheck.self, from: response.data)
+                        if email.isVerified {
+                            self.textFieldAppearance(self.authenticationTextField.textField, color: "Mint300", message: "인증 코드가 일치합니다.")
+                        } else {
+                            self.textFieldAppearance(self.authenticationTextField.textField, color: "Red100", message: "인증 코드가 일치하지 않습니다.")
                         }
                     default:
                         print("잘못된 인증 코드 :: \(response.statusCode)")
@@ -290,7 +278,6 @@ extension SignUpViewController: UITextFieldDelegate {
             } else {
                 textFieldAppearance(textField, color: "Red100", message: "비밀번호가 일치하지 않습니다")
             }
-            
         default:
             break
         }
