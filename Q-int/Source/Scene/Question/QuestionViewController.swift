@@ -7,7 +7,7 @@ class QuestionViewController: UIViewController, UICollectionViewDataSource, UICo
     private var darkBackground: UIView?
     public var solIndex: Int = 0
     public var questionsArray = [Question]()
-    private var correctLabel = ""
+    private var answerId = 0
     
     lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout().then {
         $0.scrollDirection = .horizontal
@@ -92,8 +92,9 @@ class QuestionViewController: UIViewController, UICollectionViewDataSource, UICo
     @objc private func solutionButtonTap() {
         let vc = SolutionViewController()
         vc.solutionIndex = solIndex
+        vc.questionId = questionsArray[solIndex].question_id
+        vc.answerId = answerId
         vc.questionLabel.text = questionsArray[solIndex].contents
-//        vc.correctButton.answerLabel.text = questionsArray[solIndex].answer
         self.present(vc, animated: true)
     }
     
@@ -155,6 +156,11 @@ extension QuestionViewController {
         cell?.button2.answerLabel.text = question.options[1].text
         cell?.button3.answerLabel.text = question.options[2].text
         cell?.button4.answerLabel.text = question.options[3].text
+        for i in 0..<4 {
+            if cell?.buttonSelect[i].layer.borderColor == UIColor.green100.cgColor {
+                answerId = question.options[i].answer_id
+            }
+        }
         for i in 0..<4 {
             cell?.buttonSelect[i].backgroundColor = UIColor(named: "Mint100")
             cell?.buttonSelect[i].layer.cornerRadius = 10

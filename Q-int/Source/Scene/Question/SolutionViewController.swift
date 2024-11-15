@@ -1,14 +1,14 @@
 import UIKit
 import SnapKit
 import Then
+import Moya
 
 class SolutionViewController: UIViewController {
+    
+    private let questionProvider = MoyaProvider<QuestionAPI>()
     public var solutionIndex: Int = 0
-    public var answerText = "" {
-        didSet {
-            solutionLabel.text = answerText
-        }
-    }
+    public var answerId = 0
+    public var questionId = 0
     
     private let cancelButton = UIButton().then {
         $0.setImage(UIImage(named: "X"), for: .normal)
@@ -34,23 +34,38 @@ class SolutionViewController: UIViewController {
         $0.solutionLabel()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        solutionLabel.text = answerText
-        print(answerText)
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        getLabel()
         attribute()
         add()
         layout()
-        print("solutionIndex: \(solutionIndex)")
+    }
+    
+    private func getLabel() {
+        print(questionId, answerId)
+        questionProvider.request(.judge(question_id: questionId, answer_id: answerId, token: Token.accessToken ?? "")) { response in
+            switch response {
+            case let .success(response):
+                do {
+                    switch response.statusCode {
+                    case 200:
+                        let answer = try JSONDecoder().decode(Answer.self, from: response.data)
+                        print(answer)
+                    default:
+                        print("error :: \(response.statusCode)")
+                    }
+                } catch {
+                    print("Decoding or JSON parsing error: \(error)")
+                }
+            case let .failure(error):
+                print("fail :: \(error.localizedDescription)")
+            }
+        }
     }
     
     private func attribute() {
-        solutionLabel.text = answerText
         view.backgroundColor = .white
         cancelButton.addTarget(self, action: #selector(cancelTapped), for: .touchUpInside)
     }

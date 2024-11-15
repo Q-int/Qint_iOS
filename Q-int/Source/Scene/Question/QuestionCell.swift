@@ -145,9 +145,8 @@ class QuestionCell: UICollectionViewCell {
                 do {
                     switch response.statusCode {
                     case 200:
-                        print(try response.mapJSON())
+                        
                         let answer = try JSONDecoder().decode(Answer.self, from: response.data)
-                        SolutionViewController().correctButton.answerLabel.text = answer.answerText
                         print("questionCell answerText :: \(self.correctLabel)")
                         if answer.isCorrect {
                             self.buttonSelect[answerId].layer.borderColor = UIColor.green100.cgColor
@@ -163,8 +162,6 @@ class QuestionCell: UICollectionViewCell {
                                 }
                             }
                         }
-                        let solutionVC = SolutionViewController()
-                        solutionVC.answerText = answer.answerText
                     default:
                         print("error :: \(response.statusCode)")
                     }
