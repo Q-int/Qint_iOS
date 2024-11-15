@@ -156,7 +156,6 @@ class MainViewController: UIViewController {
                         let vc = QuestionViewController()
                         self.navigationController?.pushViewController(vc, animated: true)
                         vc.questionsArray = questionsResponse.questions
-                        
                     } catch {
                         print("Decoding or JSON parsing error: \(error)")
                     }

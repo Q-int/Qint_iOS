@@ -2,8 +2,11 @@ import UIKit
 import SnapKit
 import Then
 import DGCharts
+import Moya
 
 class MyViewController: UIViewController {
+    
+    private let userProvider = MoyaProvider<UserAPI>()
     
     private let qintLabel = UILabel().then {
         $0.text = "Q-int"
@@ -57,12 +60,28 @@ class MyViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        getUserApi()
         attribute()
         chart()
         add()
         layout()
     }
     
+    private func getUserApi() {
+        userProvider.request(.info(token: Token.accessToken ?? "")) { response in
+            switch response {
+            case let .success(response):
+                switch response.statusCode {
+                case 200:
+                    print("성공")
+                default:
+                    print("실패 :: \(response.statusCode)")
+                }
+            case let .failure(error):
+                print("fail :: \(error.localizedDescription)")
+            }
+        }
+    }
     
     private func attribute() {
         view.backgroundColor = UIColor(named: "Mint100")

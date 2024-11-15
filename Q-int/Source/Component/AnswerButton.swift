@@ -10,7 +10,6 @@ enum AnswerBtType {
 
 class AnswerButton: UIView {
     let answerLabel = UILabel().then {
-        $0.text = "3.1416346535..."
         $0.font = UIFont.systemFont(ofSize: 25)
         $0.textAlignment = .center
         $0.numberOfLines = 0
