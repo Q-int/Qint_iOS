@@ -8,16 +8,16 @@ enum EmailAPI: TargetType {
 }
 
 extension EmailAPI {
-    var baseURL: URL { return URL(string: "http://192.168.143.87:8080")! }
+    var baseURL: URL { return URL(string: "http://192.168.143.87:8080/email")! }
     
     var path: String {
         switch self {
         case .verify:
-            return "/email/email-verify"
+            return "/email-verify"
         case .sendAuthCode:
-            return "/email/send-authcode"
+            return "/send-authcode"
         case .checkAuthCode:
-            return "/email/check-authcode"
+            return "/check-authcode"
         }
     }
     

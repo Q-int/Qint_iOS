@@ -5,15 +5,18 @@ import Moya
 
 enum UserAPI {
     case info(token: String)
+    case incorrect(token: String)
 }
 
 extension UserAPI: TargetType {
-    var baseURL: URL { .init(string: "http://192.168.143.87:8080")! }
+    var baseURL: URL { .init(string: "http://192.168.143.87:8080/users")! }
     
     var path: String {
         switch self {
         case .info: 
-            return "/users/info"
+            return "/info"
+        case .incorrect:
+            return "/info"
         }
     }
     var method: Moya.Method {
@@ -26,7 +29,7 @@ extension UserAPI: TargetType {
     
     var headers: [String : String]? {
         switch self {
-        case .info(token: let token):
+        case .info(token: let token), .incorrect(token: let token):
             return ["Authorization": "Bearer " + token]
         }
     }
