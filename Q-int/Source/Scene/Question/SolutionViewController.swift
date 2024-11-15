@@ -4,6 +4,11 @@ import Then
 
 class SolutionViewController: UIViewController {
     public var solutionIndex: Int = 0
+    public var answerText = "" {
+        didSet {
+            solutionLabel.text = answerText
+        }
+    }
     
     private let cancelButton = UIButton().then {
         $0.setImage(UIImage(named: "X"), for: .normal)
@@ -19,7 +24,7 @@ class SolutionViewController: UIViewController {
         $0.font = UIFont.systemFont(ofSize: 20)
         $0.textColor = UIColor(named: "Gray400")
     }
-    private let correctButton = AnswerButton(type: .correct)
+    public let correctButton = AnswerButton(type: .correct)
     private let solutionView = UIView().then {
         $0.backgroundColor = UIColor(named: "Mint100")
         $0.layer.cornerRadius = 20
@@ -29,7 +34,13 @@ class SolutionViewController: UIViewController {
         $0.solutionLabel()
     }
     
-    override internal func viewDidLoad() {
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        solutionLabel.text = answerText
+        print(answerText)
+    }
+    
+    override func viewDidLoad() {
         super.viewDidLoad()
         
         attribute()
@@ -39,6 +50,7 @@ class SolutionViewController: UIViewController {
     }
     
     private func attribute() {
+        solutionLabel.text = answerText
         view.backgroundColor = .white
         cancelButton.addTarget(self, action: #selector(cancelTapped), for: .touchUpInside)
     }

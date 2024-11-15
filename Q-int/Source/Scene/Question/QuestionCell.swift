@@ -12,6 +12,7 @@ class QuestionCell: UICollectionViewCell {
     public var buttonSelect = [UIButton]()
     public var buttonLabel = [UILabel]()
     public var question: Question?
+    public var correctLabel = "냠"
     
     private let questionView = UIView().then {
         $0.questionView()
@@ -130,7 +131,6 @@ class QuestionCell: UICollectionViewCell {
     }
     
     private func check() {
-        print("현재 버튼이 이미 선택되었습니다.")
         var answerId = 0
         for i in 0..<4 {
             buttonSelect[i].isEnabled = false
@@ -147,6 +147,8 @@ class QuestionCell: UICollectionViewCell {
                     case 200:
                         print(try response.mapJSON())
                         let answer = try JSONDecoder().decode(Answer.self, from: response.data)
+                        SolutionViewController().correctButton.answerLabel.text = answer.answerText
+                        print("questionCell answerText :: \(self.correctLabel)")
                         if answer.isCorrect {
                             self.buttonSelect[answerId].layer.borderColor = UIColor.green100.cgColor
                             self.buttonSelect[answerId].layer.borderWidth = 3
@@ -161,6 +163,8 @@ class QuestionCell: UICollectionViewCell {
                                 }
                             }
                         }
+                        let solutionVC = SolutionViewController()
+                        solutionVC.answerText = answer.answerText
                     default:
                         print("error :: \(response.statusCode)")
                     }

@@ -7,7 +7,7 @@ class QuestionViewController: UIViewController, UICollectionViewDataSource, UICo
     private var darkBackground: UIView?
     public var solIndex: Int = 0
     public var questionsArray = [Question]()
-
+    private var correctLabel = ""
     
     lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout().then {
         $0.scrollDirection = .horizontal
@@ -93,6 +93,7 @@ class QuestionViewController: UIViewController, UICollectionViewDataSource, UICo
         let vc = SolutionViewController()
         vc.solutionIndex = solIndex
         vc.questionLabel.text = questionsArray[solIndex].contents
+//        vc.correctButton.answerLabel.text = questionsArray[solIndex].answer
         self.present(vc, animated: true)
     }
     

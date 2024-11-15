@@ -27,7 +27,7 @@ struct Option: Codable {
     let text: String
 }
 
-struct Answer: Decodable {
+struct Answer: Codable {
     let answerText: String
     let commentary: String
     let isCorrect: Bool
