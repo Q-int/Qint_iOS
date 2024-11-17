@@ -7,7 +7,8 @@ import Moya
 class MyViewController: UIViewController {
     
     private let userProvider = MoyaProvider<UserAPI>()
-    private var correct = 10
+    private var correct = 0
+    private var incorrect = 0
     private var pieChartView = PieChartView()
     
     private let qintLabel = UILabel().then {
@@ -86,6 +87,7 @@ class MyViewController: UIViewController {
                             self.correct = Int((Double(score.correct_answers)/Double(15))*100)
                         }
                         print(score.correct_answers)
+                        print(score.incorrect_answers)
                         print(Double(score.correct_answers)/Double(15)*100)
                         print(self.correct)
                         DispatchQueue.main.async {
