@@ -4,6 +4,8 @@ import Moya
 enum QuestionAPI {
     case getQuestions(categories: [String], token: String)
     case judge(question_id: Int, answer_id: Int, token: String)
+    case next(move_to_next_problem: Bool, token: String)
+    case home(move_to_home: Bool, token: String)
 }
 
 extension QuestionAPI: TargetType {
@@ -15,6 +17,10 @@ extension QuestionAPI: TargetType {
             return "/categories"
         case .judge:
             return "/judge"
+        case .next:
+            return "/move-to-next-problem"
+        case .home:
+            return "/move-to-home"
         }
     }
     
@@ -43,13 +49,27 @@ extension QuestionAPI: TargetType {
                     "answer_id": answer_id
                 ], encoding: JSONEncoding.default
             )
+        case let .next(move_to_next_problem, _):
+            return .requestParameters(
+                parameters: [
+                    "move_to_next_problem": move_to_next_problem
+                ],
+                encoding: JSONEncoding.default
+            )
+        case let .home(move_to_home, _):
+            return .requestParameters(
+                parameters: [
+                    "move_to_home": move_to_home
+                ],
+                encoding: JSONEncoding.default
+            )
         }
     }
 
     
     var headers: [String : String]? {
         switch self {
-        case .getQuestions(_, token: let token), .judge(_, _, token: let token):
+        case .getQuestions(_, token: let token), .judge(_, _, token: let token), .next(_, token: let token), .home(_, token: let token):
             return ["Authorization": "Bearer " + token]
         }
     }

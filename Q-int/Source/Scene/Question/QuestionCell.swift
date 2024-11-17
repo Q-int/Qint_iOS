@@ -14,6 +14,7 @@ class QuestionCell: UICollectionViewCell {
     public var buttonLabel = [UILabel]()
     public var question: Question?
     private var answerId: Int = 0
+    public var correct: Int = 0
     
     public var solutionSelected: ((Bool) -> Void)?
     private var solution = true
@@ -132,10 +133,10 @@ class QuestionCell: UICollectionViewCell {
             check()
         }
         if let index = buttonSelect.firstIndex(of: sender),
-                   let question = question {
-                    let selectedAnswerId = question.options[index].answer_id
-                    delegate?.didSelectAnswer(answerId: selectedAnswerId)
-                }
+           let question = question {
+            let selectedAnswerId = question.options[index].answer_id
+            delegate?.didSelectAnswer(answerId: selectedAnswerId)
+        }
     }
     
     public func configure(index: Int) {
@@ -165,6 +166,7 @@ class QuestionCell: UICollectionViewCell {
                         if answer.isCorrect {
                             self.buttonSelect[self.answerId].layer.borderColor = UIColor.green100.cgColor
                             self.buttonSelect[self.answerId].layer.borderWidth = 3
+                            self.correct += 1
                         } else {
                             self.buttonSelect[self.answerId].layer.borderColor = UIColor.red100.cgColor
                             self.buttonSelect[self.answerId].layer.borderWidth = 3
@@ -175,6 +177,7 @@ class QuestionCell: UICollectionViewCell {
                                 }
                             }
                         }
+                        self.delegate?.didUpdateCorrectAnswer(correct: self.correct)
                     default:
                         print("error :: \(response.statusCode)")
                     }
@@ -189,4 +192,5 @@ class QuestionCell: UICollectionViewCell {
 }
 protocol QuestionCellDelegate: AnyObject {
     func didSelectAnswer(answerId: Int)
+    func didUpdateCorrectAnswer(correct: Int)
 }

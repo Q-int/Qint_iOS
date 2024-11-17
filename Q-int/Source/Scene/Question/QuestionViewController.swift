@@ -1,13 +1,16 @@
 import UIKit
 import SnapKit
 import Then
+import Moya
 
 class QuestionViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, PopupDelegate {
     
+    private let questionProvider = MoyaProvider<QuestionAPI>()
     private var darkBackground: UIView?
     public var solIndex: Int = 0
     public var questionsArray = [Question]()
     private var answerId = 0
+    public var correct = 0
     
     lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout().then {
         $0.scrollDirection = .horizontal
@@ -87,7 +90,19 @@ class QuestionViewController: UIViewController, UICollectionViewDataSource, UICo
     }
     
     @objc private func mainButtonTap() {
-        self.navigationController?.popToRootViewController(animated: true)
+        questionProvider.request(.home(move_to_home: true, token: Token.accessToken ?? "")) { response in
+            switch response {
+            case let .success(response):
+                switch response.statusCode {
+                case 200:
+                    self.navigationController?.popToRootViewController(animated: true)
+                default:
+                    print(response.statusCode)
+                }
+            case let .failure(error):
+                print("fail :: \(error.localizedDescription)")
+            }
+        }
     }
     
     @objc private func solutionButtonTap() {
@@ -101,12 +116,24 @@ class QuestionViewController: UIViewController, UICollectionViewDataSource, UICo
 
     
     @objc private func nextButtonTapped() {
-        if solIndex < 14 {
-            solIndex += 1
-            collectionView.isPagingEnabled = false
-            self.collectionView.scrollToItem(at: IndexPath(row: solIndex, section: 0), at: .left, animated: true)
-        } else {
-            buttonTapped()
+        questionProvider.request(.next(move_to_next_problem: true, token: Token.accessToken ?? "")) { response in
+            switch response {
+            case let .success(response):
+                switch response.statusCode {
+                case 200:
+                    if self.solIndex < 14 {
+                        self.solIndex += 1
+                        self.collectionView.isPagingEnabled = false
+                        self.collectionView.scrollToItem(at: IndexPath(row: self.solIndex, section: 0), at: .left, animated: true)
+                    } else {
+                        self.buttonTapped()
+                    }
+                default:
+                    print("실")
+                }
+            case let .failure(error):
+                print("fail :: \(error.localizedDescription)")
+            }
         }
     }
     private func buttonTapped() {
@@ -122,6 +149,7 @@ class QuestionViewController: UIViewController, UICollectionViewDataSource, UICo
         
         let popup = PopupView().then {
             $0.delegate = self
+            $0.correct = self.correct
             self.view.addSubview($0)
         }
         
@@ -130,6 +158,8 @@ class QuestionViewController: UIViewController, UICollectionViewDataSource, UICo
             $0.width.equalTo(270)
             $0.height.equalTo(297)
         }
+        
+        popup.updateResult(correctAnswers: correct)
     }
     
     func navigateToMainView() {
@@ -171,7 +201,6 @@ extension QuestionViewController {
             cell?.buttonSelect[i].layer.borderWidth = 0
             cell?.buttonSelect[i].isEnabled = true
         }
-        
         return cell!
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -185,5 +214,8 @@ extension QuestionViewController {
 extension QuestionViewController: QuestionCellDelegate {
     func didSelectAnswer(answerId: Int) {
         self.answerId = answerId
+    }
+    func didUpdateCorrectAnswer(correct: Int) {
+        self.correct = correct
     }
 }

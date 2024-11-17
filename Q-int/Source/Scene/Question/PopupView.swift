@@ -11,36 +11,36 @@ class PopupView: UIView {
     
     weak var delegate: PopupDelegate?
     
-    private var correct: Int = 10
-    private var wrong: Int = 5
+    public var correct = 0
+    private var wrong: Int {
+        return 15 - correct // 총 문제 수 15개에서 맞은 문제를 빼면 오답 수
+    }
+    
+    private let totalLabel = UILabel()
+    private let correctLabel = UILabel()
+    private let wrongLabel = UILabel()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         setup()
     }
-
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     private func setup() {
         self.backgroundColor = .white
         self.layer.cornerRadius = 20
         
-        let totalLabel = UILabel().then {
-            $0.text = "총 문제 수 : 15"
-            $0.font = .systemFont(ofSize: 20)
-        }
+        totalLabel.text = "총 문제 수 : 15"
+        totalLabel.font = .systemFont(ofSize: 20)
         
-        let correctLabel = UILabel().then {
-            $0.text = "정답 : \(correct)"
-            $0.font = .systemFont(ofSize: 20)
-        }
+        correctLabel.text = "정답 : \(correct)"
+        correctLabel.font = .systemFont(ofSize: 20)
         
-        let wrongLabel = UILabel().then {
-            $0.text = "오답 : \(wrong)"
-            $0.font = .systemFont(ofSize: 20)
-        }
+        wrongLabel.text = "오답 : \(wrong)"
+        wrongLabel.font = .systemFont(ofSize: 20)
         
         let mainButton = UIButton().then {
             $0.setTitle("메인 페이지로 이동", for: .normal)
@@ -58,13 +58,7 @@ class PopupView: UIView {
             $0.addTarget(self, action: #selector(myButtonTapped), for: .touchUpInside)
         }
         
-        [
-            totalLabel,
-            correctLabel,
-            wrongLabel,
-            mainButton,
-            myButton
-        ].forEach { self.addSubview($0) }
+        [totalLabel, correctLabel, wrongLabel, mainButton, myButton].forEach { self.addSubview($0) }
         
         totalLabel.snp.makeConstraints {
             $0.top.left.equalToSuperview().inset(24)
@@ -87,6 +81,12 @@ class PopupView: UIView {
             $0.left.right.equalToSuperview().inset(24)
             $0.height.equalTo(45)
         }
+    }
+    
+    func updateResult(correctAnswers: Int) {
+        self.correct = correctAnswers
+        correctLabel.text = "정답 : \(correct)"
+        wrongLabel.text = "오답 : \(15 - correct)"
     }
     
     @objc private func mainButtonTapped() {
