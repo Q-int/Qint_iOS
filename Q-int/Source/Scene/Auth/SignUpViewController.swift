@@ -10,7 +10,7 @@ class SignUpViewController: UIViewController {
     
     private let signUpLabel = UILabel().then {
         $0.text = "회원가입"
-        $0.textColor = UIColor(named: "Mint300")
+        $0.textColor = UIColor.mint300
         $0.font = .systemFont(ofSize: 30, weight: .bold)
     }
     
@@ -20,7 +20,7 @@ class SignUpViewController: UIViewController {
         $0.setTitle("Send", for: .normal)
         $0.titleLabel?.font = .systemFont(ofSize: 14)
         $0.setTitleColor(.white, for: .normal)
-        $0.backgroundColor = UIColor(named: "Mint300")
+        $0.backgroundColor = UIColor.mint300
         $0.layer.cornerRadius = 5
         $0.isEnabled = false
     }
@@ -29,7 +29,7 @@ class SignUpViewController: UIViewController {
         $0.setTitle("Check", for: .normal)
         $0.titleLabel?.font = .systemFont(ofSize: 14)
         $0.setTitleColor(.white, for: .normal)
-        $0.backgroundColor = UIColor(named: "Mint300")
+        $0.backgroundColor = UIColor.mint300
         $0.layer.cornerRadius = 5
         $0.isEnabled = false
     }

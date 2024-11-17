@@ -7,7 +7,7 @@ class ReviewIncorrectCell: UICollectionViewCell {
     static let identifier: String = "ReviewIncorrectCell"
 
     private let questionView = UIView().then {
-        $0.backgroundColor = UIColor(named: "Mint100")
+        $0.backgroundColor = UIColor.mint100
         $0.layer.cornerRadius = 20
         $0.clipsToBounds = false
         $0.layer.shadowOffset = CGSizeMake(0.4, 0.4)
@@ -26,7 +26,7 @@ class ReviewIncorrectCell: UICollectionViewCell {
     public let incorrectButton = AnswerButton(type: .wrong)
     
     private let solutionView = UIView().then {
-        $0.backgroundColor = UIColor(named: "Mint100")
+        $0.backgroundColor = UIColor.mint100
         $0.layer.cornerRadius = 20
         $0.clipsToBounds = false
     }

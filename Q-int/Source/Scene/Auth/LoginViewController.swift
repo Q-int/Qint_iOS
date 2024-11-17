@@ -8,7 +8,7 @@ class LoginViewController: UIViewController {
     
     private let loginLabel = UILabel().then {
         $0.text = "로그인"
-        $0.textColor = UIColor(named: "Mint300")
+        $0.textColor = UIColor.mint300
         $0.font = .systemFont(ofSize: 30, weight: .bold)
     }
     
@@ -17,7 +17,7 @@ class LoginViewController: UIViewController {
     
     private let errorLabel = UILabel().then {
         $0.font = .systemFont(ofSize: 10)
-        $0.textColor = UIColor(named: "Red100")
+        $0.textColor = UIColor.red100
         $0.text = "이메일 또는 비밀번호가 일치하지 않습니다"
         $0.isHidden = true
     }

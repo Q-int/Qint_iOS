@@ -14,12 +14,12 @@ class MyViewController: UIViewController {
     private let qintLabel = UILabel().then {
         $0.text = "Q-int"
         $0.font = UIFont(name: "ZenDots-Regular", size: 24)
-        $0.textColor = UIColor(named: "Gray400")
+        $0.textColor = UIColor.gray400
     }
     
     private let mainButton = UIButton().then {
         $0.setImage(UIImage(named: "Home2"), for: .normal)
-        $0.tintColor = UIColor(named: "Gray400")
+        $0.tintColor = UIColor.gray400
         $0.imageView?.contentMode = .scaleAspectFill
         $0.contentHorizontalAlignment = .fill
         $0.contentVerticalAlignment = .fill
@@ -33,7 +33,7 @@ class MyViewController: UIViewController {
     private let reviewIncorrectLabel = UILabel().then {
         $0.text = "나의 정답률"
         $0.font = .boldSystemFont(ofSize: 20)
-        $0.textColor = UIColor(named: "Gray400")
+        $0.textColor = UIColor.gray400
     }
     
     private let reviewIncorrectButton = UIButton().then {
@@ -48,12 +48,12 @@ class MyViewController: UIViewController {
     private let emailLabel = UILabel().then {
         $0.text = "오류 신고 이메일 : 1234@dsm.hs.kr"
         $0.font = .systemFont(ofSize: 10)
-        $0.textColor = UIColor(named: "Gray400")
+        $0.textColor = UIColor.gray400
     }
     
     private let logoutButton = UIButton().then {
         $0.setTitle("로그아웃", for: .normal)
-        $0.setTitleColor(UIColor(named: "Gray400"), for: .normal)
+        $0.setTitleColor(UIColor.gray400, for: .normal)
         $0.titleLabel?.font = .systemFont(ofSize: 10)
         $0.contentEdgeInsets = UIEdgeInsets(top: -1, left: 0, bottom: -1, right: 0)
     }

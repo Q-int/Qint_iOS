@@ -13,7 +13,7 @@ class MainViewController: UIViewController {
     private let qintLabel = UILabel().then {
         $0.text = "Q-int"
         $0.font = UIFont(name: "ZenDots-Regular", size: 24)
-        $0.textColor = UIColor(named: "Gray400")
+        $0.textColor = UIColor.gray400
     }
     
     private let myButton = UIButton().then {
@@ -32,7 +32,7 @@ class MainViewController: UIViewController {
     
     private let categoryLabel = UILabel().then {
         $0.text = "카테고리를 한 개 이상 선택해주세요!"
-        $0.textColor = UIColor(named: "Gray400")
+        $0.textColor = UIColor.gray400
     }
     
     private let startButton = UIButton().then {
@@ -123,9 +123,9 @@ class MainViewController: UIViewController {
         sender.isSelected.toggle()
         
         if sender.isSelected {
-            sender.layer.borderColor = UIColor(named: "Mint300")?.cgColor
+            sender.layer.borderColor = UIColor.mint300.cgColor
             sender.layer.borderWidth = 2
-            sender.backgroundColor = UIColor(named: "Mint200")
+            sender.backgroundColor = UIColor.mint200
             startButton.isHidden = false
             categoryButtonNumber += 1
             request.append(sender.titleLabel?.text ?? "")
@@ -133,7 +133,7 @@ class MainViewController: UIViewController {
         } else {
             sender.layer.borderColor = UIColor.clear.cgColor
             sender.layer.borderWidth = 0
-            sender.backgroundColor = UIColor(named: "Mint100")
+            sender.backgroundColor = UIColor.mint100
             categoryButtonNumber -= 1
             let index = request.firstIndex(of: sender.titleLabel?.text ?? "")
             request.remove(at: index ?? 0)
