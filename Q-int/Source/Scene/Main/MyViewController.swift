@@ -211,10 +211,15 @@ class MyViewController: UIViewController {
                     switch response.statusCode {
                     case 200:
                         let incorrectAnswer = try JSONDecoder().decode(Incorrect.self, from: response.data)
-                        let vc = ReviewIncorrectViewController()
-                        vc.questionArray = incorrectAnswer.user_incorrect_answers_element_list
-                        print(incorrectAnswer.user_incorrect_answers_element_list)
-                        self.navigationController?.pushViewController(vc, animated: true)
+                        if incorrectAnswer.user_incorrect_answers_element_list.isEmpty {
+                            self.showAlert()
+                        } else {
+                            let vc = ReviewIncorrectViewController()
+                            vc.questionArray = incorrectAnswer.user_incorrect_answers_element_list
+                            print(incorrectAnswer.user_incorrect_answers_element_list)
+                            self.navigationController?.pushViewController(vc, animated: true)
+                        }
+                        
                     default:
                         print("error :: \(response.statusCode)")
                     }
@@ -235,5 +240,12 @@ class MyViewController: UIViewController {
         Token.removeToken()
         self.navigationController?.pushViewController(LoginViewController(), animated: true)
     }
-    
+    private func showAlert() {
+        let title = "틀린 문제가 없습니다!"
+        let alertStyle: UIAlertController.Style = .alert
+        let alert = UIAlertController(title: title, message: nil, preferredStyle: alertStyle)
+        let cancelAction = UIAlertAction(title: "취소", style: .cancel)
+        alert.addAction(cancelAction)
+        present(alert, animated: true)
+    }
 }
