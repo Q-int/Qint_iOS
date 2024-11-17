@@ -33,7 +33,7 @@ class AuthTextField: UIView {
         $0.leftViewMode = .always
         $0.font = .systemFont(ofSize: 16)
         $0.isSecureTextEntry = false
-        $0.backgroundColor = UIColor(named: "Gray100")
+        $0.backgroundColor = UIColor.gray100
         $0.layer.cornerRadius = 5
         $0.addTarget(self, action: #selector(didSetectTextField), for: .editingDidBegin)
         $0.addTarget(self, action: #selector(didEndSetectTextField), for: .editingDidEnd)
@@ -41,17 +41,17 @@ class AuthTextField: UIView {
     
     public let label = UILabel().then {
         $0.font = .systemFont(ofSize: 10)
-        $0.textColor = UIColor(named: "Red100")
+        $0.textColor = UIColor.red100
     }
     
     @objc private func didSetectTextField() {
         textField.backgroundColor = .white
         textField.layer.borderWidth = 1
-        textField.layer.borderColor = UIColor(named: "Gray200")?.cgColor
+        textField.layer.borderColor = UIColor.gray400.cgColor
     }
     
     @objc private func didEndSetectTextField() {
-        textField.backgroundColor = UIColor(named: "Gray100")
+        textField.backgroundColor = UIColor.gray100
         textField.layer.borderWidth = 0
     }
     

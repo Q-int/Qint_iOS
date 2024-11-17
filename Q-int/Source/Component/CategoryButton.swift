@@ -75,13 +75,13 @@ enum BtType {
 
 class CategoryButton: UIView {
     public let button = UIButton().then {
-        $0.backgroundColor = UIColor(named: "Mint100")
+        $0.backgroundColor = UIColor.mint100
         $0.layer.cornerRadius = 10
         $0.adjustsImageWhenHighlighted = false
     }
     
     public let label = UILabel().then {
-        $0.textColor = UIColor(named: "Mint300")
+        $0.textColor = UIColor.mint300
         $0.font = .boldSystemFont(ofSize: 20)
     }
     

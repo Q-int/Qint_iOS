@@ -17,17 +17,17 @@ class AnswerButton: UIView {
         $0.minimumScaleFactor = 0.1
     }
     let answerButton = UIButton().then {
-        $0.backgroundColor = UIColor(named: "Mint100")
+        $0.backgroundColor = UIColor.mint100
         $0.layer.cornerRadius = 10
     }
     init(type: AnswerBtType){
         super.init(frame: .zero)
         
         if type == .correct {
-            answerButton.layer.borderColor = UIColor(named: "Green100")?.cgColor
+            answerButton.layer.borderColor = UIColor.gray100.cgColor
             answerButton.layer.borderWidth = 3
         } else if type == .wrong {
-            answerButton.layer.borderColor = UIColor(named: "Red100")?.cgColor
+            answerButton.layer.borderColor = UIColor.red100.cgColor
             answerButton.layer.borderWidth = 3
         }
         

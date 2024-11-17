@@ -13,13 +13,13 @@ extension UIButton {
         self.setTitle("다음 문제", for: .normal)
         self.titleLabel?.font = .systemFont(ofSize: 20)
         self.setTitleColor(.white , for: .normal)
-        self.backgroundColor = UIColor(named: "Blue100")
+        self.backgroundColor = UIColor.blue100
         self.layer.cornerRadius = 10
     }
     
     func iconButton() {
         self.setImage(UIImage(named: "Home2"), for: .normal)
-        self.tintColor = UIColor(named: "Gray400")
+        self.tintColor = UIColor.gray400
         self.imageView?.contentMode = .scaleAspectFill
         self.contentHorizontalAlignment = .fill
         self.contentVerticalAlignment = .fill
