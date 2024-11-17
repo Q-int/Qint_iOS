@@ -7,7 +7,7 @@ enum AuthAPI: TargetType {
 }
 
 extension AuthAPI {
-    var baseURL: URL { return URL(string: "http://192.168.143.87:8080/auth")! }
+    var baseURL: URL { return URL(string: "http://192.168.1.15:8080/auth")! }
     
     var path: String {
         switch self {
