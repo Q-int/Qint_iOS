@@ -7,7 +7,7 @@ import Moya
 class MyViewController: UIViewController {
     
     private let userProvider = MoyaProvider<UserAPI>()
-    private var correct = 30
+    private var correct = 10
     private var pieChartView = PieChartView()
     
     private let qintLabel = UILabel().then {
@@ -57,14 +57,17 @@ class MyViewController: UIViewController {
         $0.contentEdgeInsets = UIEdgeInsets(top: -1, left: 0, bottom: -1, right: 0)
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        getUserApi()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        chart()
         attribute()
         add()
         layout()
-        getUserApi()
     }
     
     private func getUserApi() {
@@ -75,10 +78,16 @@ class MyViewController: UIViewController {
                     switch response.statusCode {
                     case 200:
                         let score = try JSONDecoder().decode(Score.self, from: response.data)
-                        self.correct = (score.correct_answers/15)*100
-                        if (score.correct_answers/15)*100 < 1 {
+                        print(score)
+                        
+                        if (Double(score.correct_answers)/Double(15))*100 < 1 {
                             self.correct = 100
+                        } else {
+                            self.correct = Int((Double(score.correct_answers)/Double(15))*100)
                         }
+                        print(score.correct_answers)
+                        print(Double(score.correct_answers)/Double(15)*100)
+                        print(self.correct)
                         DispatchQueue.main.async {
                             self.chart()
                         }
@@ -103,11 +112,11 @@ class MyViewController: UIViewController {
     }
     
     private func chart() {
-        pieChartView = PieChartView()
+        pieChartView.clear()
         
         var entries = [
             PieChartDataEntry(value: Double(correct), label: "정답"),
-            PieChartDataEntry(value: Double(100-correct), label: "오답"),
+            PieChartDataEntry(value: Double(100 - correct), label: "오답")
         ]
         
         let dataSet = PieChartDataSet(entries: entries, label: "")
@@ -118,7 +127,6 @@ class MyViewController: UIViewController {
         ]
         
         let data = PieChartData(dataSet: dataSet)
-        pieChartView.data = data
         
         let formatter = NumberFormatter()
         formatter.numberStyle = .percent
@@ -131,6 +139,8 @@ class MyViewController: UIViewController {
         pieChartView.legend.verticalAlignment = .top
         pieChartView.legend.orientation = .vertical
         pieChartView.legend.xOffset = 20
+        
+        pieChartView.data = data
         
         pieChartView.animate(xAxisDuration: 1.0, yAxisDuration: 1.0, easingOption: .easeInOutQuad)
     }
@@ -192,7 +202,27 @@ class MyViewController: UIViewController {
     }
     
     @objc private func reviewIncorrectButtonTapped() {
-        self.navigationController?.pushViewController(ReviewIncorrectViewController(), animated: true)
+        userProvider.request(.incorrect(token: Token.accessToken ?? "")) { response in
+            switch response {
+            case let .success(response):
+                do {
+                    switch response.statusCode {
+                    case 200:
+                        let incorrectAnswer = try JSONDecoder().decode(Incorrect.self, from: response.data)
+                        let vc = ReviewIncorrectViewController()
+                        vc.questionArray = incorrectAnswer.userIncorrectAnswerElementList
+                        print(incorrectAnswer.userIncorrectAnswerElementList)
+                        self.navigationController?.pushViewController(vc, animated: true)
+                    default:
+                        print("error :: \(response.statusCode)")
+                    }
+                } catch {
+                    print("catch :: \(error.localizedDescription)")
+                }
+            case let .failure(error):
+                print("fail :: \(error.localizedDescription)")
+            }
+        }
     }
     @objc private func mainButtonTapped() {
         self.navigationController?.popToRootViewController(animated: true)

@@ -14,7 +14,7 @@ class ReviewIncorrectCell: UICollectionViewCell {
         $0.layer.shadowOpacity = 0.2
     }
     
-    private let questionLabel = UILabel().then {
+    public let questionLabel = UILabel().then {
         $0.text = "π를 제대로 기술한 것은?"
         $0.font = UIFont.systemFont(ofSize: 25)
         $0.numberOfLines = 0
@@ -22,8 +22,8 @@ class ReviewIncorrectCell: UICollectionViewCell {
         $0.minimumScaleFactor = 0.7
     }
     
-    private let correctButton = AnswerButton(type: .correct)
-    private let wrongButton = AnswerButton(type: .wrong)
+    public let correctButton = AnswerButton(type: .correct)
+    public let incorrectButton = AnswerButton(type: .wrong)
     
     private let solutionView = UIView().then {
         $0.backgroundColor = UIColor(named: "Mint100")
@@ -31,7 +31,7 @@ class ReviewIncorrectCell: UICollectionViewCell {
         $0.clipsToBounds = false
     }
     
-    private let solutionLabel = UILabel().then {
+    public let solutionLabel = UILabel().then {
         $0.solutionLabel()
     }
     
@@ -49,7 +49,7 @@ class ReviewIncorrectCell: UICollectionViewCell {
         [
             questionView,
             correctButton,
-            wrongButton,
+            incorrectButton,
             solutionView
         ].forEach{ contentView.addSubview($0) }
         questionView.addSubview(questionLabel)
@@ -69,13 +69,13 @@ class ReviewIncorrectCell: UICollectionViewCell {
             $0.left.right.equalToSuperview().inset(24)
             $0.height.equalTo(75)
         }
-        wrongButton.snp.makeConstraints {
+        incorrectButton.snp.makeConstraints {
             $0.top.equalTo(correctButton.snp.bottom).offset(11)
             $0.left.right.equalToSuperview().inset(24)
             $0.height.equalTo(75)
         }
         solutionView.snp.makeConstraints {
-            $0.top.equalTo(wrongButton.snp.bottom).offset(11)
+            $0.top.equalTo(incorrectButton.snp.bottom).offset(11)
             $0.left.right.equalToSuperview().inset(24)
             $0.height.equalTo(220)
         }

@@ -6,6 +6,7 @@ class ReviewIncorrectViewController: UIViewController, UICollectionViewDataSourc
     
     private var viewIndex: Int = 15
     private var cellIndex: Int = 0
+    public var questionArray = [Answers]()
     
     lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout().then {
         $0.scrollDirection = .horizontal
@@ -67,7 +68,7 @@ class ReviewIncorrectViewController: UIViewController, UICollectionViewDataSourc
     @objc private func nextButtonTapped() {
         let indexPath = IndexPath(item: cellIndex, section: 0)
         
-        if cellIndex < viewIndex {
+        if cellIndex < questionArray.count {
             cellIndex += 1
             collectionView.isPagingEnabled = false
             collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
@@ -96,11 +97,17 @@ extension ReviewIncorrectViewController {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ReviewIncorrectCell.identifier, for: indexPath) as? ReviewIncorrectCell
         
+        let question = questionArray[indexPath.row]
+        cell?.questionLabel.text = question.contents
+        cell?.correctButton.answerLabel.text = question.correct_answer
+        cell?.incorrectButton.answerLabel.text = question.incorrect_answer
+        cell?.solutionLabel.text = question.commentary
+        
         return cell ?? ReviewIncorrectCell()
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewIndex
+        return questionArray.count
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
