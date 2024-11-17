@@ -64,3 +64,21 @@ struct Score: Codable {
         case incorrect_answers = "incorrect_answers"
     }
 }
+
+struct Incorrect: Codable {
+    let userIncorrectAnswerElementList: [Answers]
+}
+
+struct Answers: Codable {
+    let contents: String
+    let commentary: String
+    let incorrect_answer: String
+    let correct_answer: String
+    
+    enum CodingKeys: String, CodingKey {
+        case contents = "contents"
+        case commentary = "commentary"
+        case incorrect_answer = "incorrect_answer"
+        case correct_answer = "correct_answer"
+    }
+}

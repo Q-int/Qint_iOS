@@ -16,7 +16,7 @@ extension UserAPI: TargetType {
         case .info: 
             return "/info"
         case .incorrect:
-            return "/info"
+            return "/incorrect-problems"
         }
     }
     var method: Moya.Method {
