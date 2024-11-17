@@ -32,7 +32,17 @@ class LoginViewController: UIViewController {
     
     private let tap = UITapGestureRecognizer(target: self, action: #selector(UIView.endEditing))
     
-    override internal func viewDidLoad() {
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if Token.accessToken != nil {
+            self.navigationController?.pushViewController(MainViewController(), animated: false)
+        } else {
+            print("로그아웃 상태입니다.")
+        }
+    }
+
+    
+    override func viewDidLoad() {
         super.viewDidLoad()
         
         attribute()
@@ -89,7 +99,7 @@ class LoginViewController: UIViewController {
         }
     }
     
-    override internal func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?){
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?){
         self.view.endEditing(true)
     }
     
@@ -98,17 +108,16 @@ class LoginViewController: UIViewController {
         authPrvoider.request(.login(email: emailTextField.textField.text ?? "이메일이 입력되지 않음", password: pwdTextField.textField.text ?? "비밀번호가 입력되지 않음")) { response in
             switch response {
             case let .success(response):
-                print("성공")
                 do {
                     switch response.statusCode {
                     case 200:
+                        print("로그인 성공")
+                        let decodeResponse = try JSONDecoder().decode(TokenResponse.self, from: response.data)
+                        Token.accessToken = decodeResponse.access_token
                         let vc = MainViewController()
                         let navigationController = self.navigationController
                         navigationController?.setViewControllers([vc], animated: true)
                         self.errorLabel.isHidden = true
-                        let decodeResponse = try JSONDecoder().decode(TokenResponse.self, from: response.data)
-                        Token.accessToken = decodeResponse.access
-                        print("로그인 성공")
                     default:
                         print("이메일 또는 비밀번호 불일치")
                         self.errorLabel.isHidden = false

@@ -1,7 +1,13 @@
 import Foundation
 
-struct TokenResponse: Decodable {
-    let access: String
+struct TokenResponse: Codable {
+    let access_token: String
+    let refresh_token: String
+    
+    enum CodingKeys: String, CodingKey {
+        case access_token = "access_token"
+        case refresh_token = "refresh_token"
+    }
 }
 
 struct AuthCodeCheck: Codable {
@@ -66,7 +72,7 @@ struct Score: Codable {
 }
 
 struct Incorrect: Codable {
-    let userIncorrectAnswerElementList: [Answers]
+    let user_incorrect_answers_element_list: [Answers]
 }
 
 struct Answers: Codable {

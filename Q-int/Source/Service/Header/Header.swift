@@ -4,28 +4,28 @@ struct Token {
     static var saveAccessToken: String?
     static var accessToken: String? {
         get {
-           saveAccessToken = UserDefaults.standard.string(forKey: "accessToken")
+           saveAccessToken = UserDefaults.standard.string(forKey: "access_token")
            return saveAccessToken
         }
 
         set(newToken) {
-            UserDefaults.standard.set(newToken, forKey: "accessToken")
+            UserDefaults.standard.set(newToken, forKey: "access_token")
             UserDefaults.standard.synchronize()
-            saveAccessToken = UserDefaults.standard.string(forKey: "accessToken")
+            saveAccessToken = UserDefaults.standard.string(forKey: "access_token")
         }
     }
 
     static var saveRefreshToken: String?
     static var refreshToken: String? {
         get {
-            saveRefreshToken = UserDefaults.standard.string(forKey: "refreshToken")
+            saveRefreshToken = UserDefaults.standard.string(forKey: "refresh_token")
             return saveRefreshToken
         }
 
         set(newRefreshToken) {
-            UserDefaults.standard.set(newRefreshToken, forKey: "refreshToken")
+            UserDefaults.standard.set(newRefreshToken, forKey: "refresh_token")
             UserDefaults.standard.synchronize()
-            saveRefreshToken = UserDefaults.standard.string(forKey: "refreshToken")
+            saveRefreshToken = UserDefaults.standard.string(forKey: "refresh_token")
         }
     }
 
@@ -40,11 +40,11 @@ enum Header {
 
     func header() -> [String: String]? {
         guard let token = Token.accessToken else {
-            return ["Contect-Type": "application/json"]
+            return ["Content-Type": "application/json"]
         }
 
         guard let refreshToken = Token.refreshToken else {
-            return ["Contect-Type": "application/json"]
+            return ["Content-Type": "application/json"]
         }
 
         switch self {
@@ -53,9 +53,9 @@ enum Header {
             return ["Authorization": "Bearer " + token]
         case .refreshToken:
             return ["Authorization": "Bearer " + token,
-                    "Refresh-Token": refreshToken, "Contect-Type": "application/json"]
+                    "Refresh-Token": refreshToken, "Content-Type": "application/json"]
         case .tokenIsEmpty:
-            return ["Contect-Type": "application/json"]
+            return ["Content-Type": "application/json"]
         case .uploadImage:
             return ["Authorization": "Bearer " + token, "Content-Type": "multipart/form-data"]
         }
