@@ -4,6 +4,7 @@ import Moya
 enum AuthAPI: TargetType {
     case login(email: String, password: String)
     case signup(password: String, email: String)
+    case refresh(refreshToken: String)
 }
 
 extension AuthAPI {
@@ -15,6 +16,8 @@ extension AuthAPI {
             return "/login"
         case .signup:
             return "/signup"
+        case .refresh:
+            return "/refresh"
         }
     }
     
@@ -40,6 +43,13 @@ extension AuthAPI {
                 parameters: [
                     "password": password,
                     "email": email
+                ],
+                encoding: JSONEncoding.default
+            )
+        case let .refresh(refreshToken: refreshToken):
+            return .requestParameters(
+                parameters: [
+                    "refreshToken": refreshToken
                 ],
                 encoding: JSONEncoding.default
             )
