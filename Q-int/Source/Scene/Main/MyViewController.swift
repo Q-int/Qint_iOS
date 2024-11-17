@@ -81,7 +81,7 @@ class MyViewController: UIViewController {
                         let score = try JSONDecoder().decode(Score.self, from: response.data)
                         print(score)
                         
-                        if (Double(score.correct_answers)/Double(15))*100 < 1 {
+                        if (Double(score.correct_answers)/Double(15))*100 < 1 &&  (Double(score.incorrect_answers)/Double(15))*100 < 1{
                             self.correct = 100
                         } else {
                             self.correct = Int((Double(score.correct_answers)/Double(15))*100)
@@ -212,8 +212,8 @@ class MyViewController: UIViewController {
                     case 200:
                         let incorrectAnswer = try JSONDecoder().decode(Incorrect.self, from: response.data)
                         let vc = ReviewIncorrectViewController()
-                        vc.questionArray = incorrectAnswer.userIncorrectAnswerElementList
-                        print(incorrectAnswer.userIncorrectAnswerElementList)
+                        vc.questionArray = incorrectAnswer.user_incorrect_answers_element_list
+                        print(incorrectAnswer.user_incorrect_answers_element_list)
                         self.navigationController?.pushViewController(vc, animated: true)
                     default:
                         print("error :: \(response.statusCode)")
@@ -227,7 +227,9 @@ class MyViewController: UIViewController {
         }
     }
     @objc private func mainButtonTapped() {
-        self.navigationController?.popToRootViewController(animated: true)
+        if let vc = navigationController?.viewControllers.first(where: { $0 is MainViewController }) {
+            self.navigationController?.popToViewController(vc, animated: true)
+        }
     }
     @objc private func logoutButtonTapped() {
         Token.removeToken()

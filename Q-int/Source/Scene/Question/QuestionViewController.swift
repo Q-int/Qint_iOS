@@ -90,18 +90,8 @@ class QuestionViewController: UIViewController, UICollectionViewDataSource, UICo
     }
     
     @objc private func mainButtonTap() {
-        questionProvider.request(.home(move_to_home: true, token: Token.accessToken ?? "")) { response in
-            switch response {
-            case let .success(response):
-                switch response.statusCode {
-                case 200:
-                    self.navigationController?.popToRootViewController(animated: true)
-                default:
-                    print(response.statusCode)
-                }
-            case let .failure(error):
-                print("fail :: \(error.localizedDescription)")
-            }
+        if let vc = navigationController?.viewControllers.first(where: { $0 is MainViewController }) {
+            self.navigationController?.popToViewController(vc, animated: true)
         }
     }
     
