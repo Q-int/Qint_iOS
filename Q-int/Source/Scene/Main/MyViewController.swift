@@ -230,6 +230,7 @@ class MyViewController: UIViewController {
         self.navigationController?.popToRootViewController(animated: true)
     }
     @objc private func logoutButtonTapped() {
+        Token.removeToken()
         self.navigationController?.pushViewController(LoginViewController(), animated: true)
     }
     
