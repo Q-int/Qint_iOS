@@ -7,6 +7,8 @@ import Moya
 class MyViewController: UIViewController {
     
     private let userProvider = MoyaProvider<UserAPI>()
+    private var correct = 30
+    private var pieChartView = PieChartView()
     
     private let qintLabel = UILabel().then {
         $0.text = "Q-int"
@@ -33,8 +35,6 @@ class MyViewController: UIViewController {
         $0.textColor = UIColor(named: "Gray400")
     }
     
-    var pieChartView: PieChartView!
-    
     private let reviewIncorrectButton = UIButton().then {
         $0.backgroundColor = .white
         $0.layer.cornerRadius = 10
@@ -60,22 +60,33 @@ class MyViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        getUserApi()
-        attribute()
         chart()
+        attribute()
         add()
         layout()
+        getUserApi()
     }
     
     private func getUserApi() {
         userProvider.request(.info(token: Token.accessToken ?? "")) { response in
             switch response {
             case let .success(response):
-                switch response.statusCode {
-                case 200:
-                    print("성공")
-                default:
-                    print("실패 :: \(response.statusCode)")
+                do {
+                    switch response.statusCode {
+                    case 200:
+                        let score = try JSONDecoder().decode(Score.self, from: response.data)
+                        self.correct = (score.correct_answers/15)*100
+                        if (score.correct_answers/15)*100 < 1 {
+                            self.correct = 100
+                        }
+                        DispatchQueue.main.async {
+                            self.chart()
+                        }
+                    default:
+                        print("실패 :: \(response.statusCode)")
+                    }
+                } catch {
+                    print("catch :: \(error.localizedDescription)")
                 }
             case let .failure(error):
                 print("fail :: \(error.localizedDescription)")
@@ -95,8 +106,8 @@ class MyViewController: UIViewController {
         pieChartView = PieChartView()
         
         var entries = [
-            PieChartDataEntry(value: 75, label: "정답"),
-            PieChartDataEntry(value: 25, label: "오답"),
+            PieChartDataEntry(value: Double(correct), label: "정답"),
+            PieChartDataEntry(value: Double(100-correct), label: "오답"),
         ]
         
         let dataSet = PieChartDataSet(entries: entries, label: "")

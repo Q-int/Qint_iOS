@@ -157,7 +157,6 @@ class SignUpViewController: UIViewController {
                         self.textFieldAppearance(self.emailTextField.textField, color: "Red100", message: "이메일 형식이 일치하지 않습니다.")
                     }
                 } catch {
-                    
                     print("catch :: \(error.localizedDescription)")
                 }
             case let .failure(error):
