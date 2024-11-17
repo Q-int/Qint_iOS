@@ -104,22 +104,20 @@ class LoginViewController: UIViewController {
     }
     
     @objc private func loginButtonTapped() {
-        print("로그인")
         authPrvoider.request(.login(email: emailTextField.textField.text ?? "이메일이 입력되지 않음", password: pwdTextField.textField.text ?? "비밀번호가 입력되지 않음")) { response in
             switch response {
             case let .success(response):
                 do {
                     switch response.statusCode {
                     case 200:
-                        print("로그인 성공")
                         let decodeResponse = try JSONDecoder().decode(TokenResponse.self, from: response.data)
                         Token.accessToken = decodeResponse.access_token
+                        Token.refreshToken = decodeResponse.refresh_token
                         let vc = MainViewController()
                         let navigationController = self.navigationController
                         navigationController?.setViewControllers([vc], animated: true)
                         self.errorLabel.isHidden = true
                     default:
-                        print("이메일 또는 비밀번호 불일치")
                         self.errorLabel.isHidden = false
                         self.emailTextField.textField.layer.borderColor = UIColor.red100.cgColor
                         self.emailTextField.textField.layer.borderWidth = 1
@@ -127,8 +125,7 @@ class LoginViewController: UIViewController {
                         self.pwdTextField.textField.layer.borderWidth = 1
                     }
                 } catch {
-                    guard let error = error as? MoyaError else { return }
-                    print(error.response?.statusCode)
+                    print("catch :: \(error.localizedDescription)")
                 }
             case let .failure(errror):
                 print("fail :: \(errror.localizedDescription)")

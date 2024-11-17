@@ -147,7 +147,6 @@ class MainViewController: UIViewController {
         questionPrvoider.request(.getQuestions(categories: request, token: Token.accessToken ?? "")) { response in
             switch response {
             case let .success(response):
-                print("성공?")
                 switch response.statusCode {
                 case 200:
                     do {

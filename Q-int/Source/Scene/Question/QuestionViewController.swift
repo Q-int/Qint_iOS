@@ -120,9 +120,8 @@ class QuestionViewController: UIViewController, UICollectionViewDataSource, UICo
                         } else {
                             self.buttonTapped()
                         }
-                        print("true 보냄")
                     default:
-                        print("실")
+                        print("error :: \(response.statusCode)")
                     }
                 case let .failure(error):
                     print("fail :: \(error.localizedDescription)")
