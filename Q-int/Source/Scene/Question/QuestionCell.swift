@@ -29,7 +29,7 @@ class QuestionCell: UICollectionViewCell {
     
     private let indexLabel = UILabel().then {
         $0.font = UIFont.systemFont(ofSize: 20)
-        $0.textColor = UIColor(named: "Gray400")
+        $0.textColor = UIColor.gray400
     }
     
     public let button1 = AnswerButton(type: .question)
@@ -121,11 +121,11 @@ class QuestionCell: UICollectionViewCell {
     @objc private func buttonTapped(_ sender: UIButton) {
         for button in buttonSelect {
             if button != sender {
-                button.backgroundColor = UIColor(named: "Mint100")
+                button.backgroundColor = UIColor.mint100
             }
         }
-        if sender.backgroundColor == UIColor(named: "Mint100") {
-            sender.backgroundColor = UIColor(named: "Mint200")
+        if sender.backgroundColor == UIColor.mint100 {
+            sender.backgroundColor = UIColor.mint200
             if let index = buttonSelect.firstIndex(of: sender) {
                 answerId = index
             }

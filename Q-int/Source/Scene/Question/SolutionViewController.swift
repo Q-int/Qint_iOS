@@ -22,11 +22,11 @@ class SolutionViewController: UIViewController {
     lazy var indexLabel = UILabel().then {
         $0.text = "\(solutionIndex+1)/15"
         $0.font = UIFont.systemFont(ofSize: 20)
-        $0.textColor = UIColor(named: "Gray400")
+        $0.textColor = UIColor.gray400
     }
     public let correctButton = AnswerButton(type: .correct)
     private let solutionView = UIView().then {
-        $0.backgroundColor = UIColor(named: "Mint100")
+        $0.backgroundColor = UIColor.mint100
         $0.layer.cornerRadius = 20
         $0.clipsToBounds = false
     }

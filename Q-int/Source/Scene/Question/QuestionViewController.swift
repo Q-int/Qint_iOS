@@ -32,7 +32,7 @@ class QuestionViewController: UIViewController, UICollectionViewDataSource, UICo
         $0.setTitle("해설", for: .normal)
         $0.setTitleColor(.white, for: .normal)
         $0.titleLabel?.font = .systemFont(ofSize: 20)
-        $0.backgroundColor = UIColor(named: "Mint300")
+        $0.backgroundColor = UIColor.mint300
         $0.layer.cornerRadius = 10
         $0.isHidden = true
     }
@@ -198,7 +198,7 @@ extension QuestionViewController {
         }
         
         for i in 0..<4 {
-            cell?.buttonSelect[i].backgroundColor = UIColor(named: "Mint100")
+            cell?.buttonSelect[i].backgroundColor = UIColor.mint100
             cell?.buttonSelect[i].layer.cornerRadius = 10
             cell?.buttonSelect[i].layer.borderWidth = 0
             cell?.buttonSelect[i].isEnabled = true
