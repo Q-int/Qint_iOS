@@ -123,6 +123,7 @@ class QuestionViewController: UIViewController, UICollectionViewDataSource, UICo
                 case 200:
                     if self.solIndex < 14 {
                         self.solIndex += 1
+                        self.solutionButton.isHidden = true
                         self.collectionView.isPagingEnabled = false
                         self.collectionView.scrollToItem(at: IndexPath(row: self.solIndex, section: 0), at: .left, animated: true)
                     } else {

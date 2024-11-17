@@ -5,7 +5,7 @@ import Moya
 
 class MainViewController: UIViewController {
     
-    private let questionPrvoider = MoyaProvider<QuestionAPI>(plugins: [NetworkLoggerPlugin()])
+    private let questionPrvoider = MoyaProvider<QuestionAPI>()
     
     private var categoryButtonNumber = 0
     private var request = [String]()
