@@ -25,19 +25,20 @@ class QuestionViewController: UIViewController, UICollectionViewDataSource, UICo
         $0.iconButton()
     }
     
-    private let solutionButton = UIButton().then {
+    public let solutionButton = UIButton().then {
         $0.setTitle("해설", for: .normal)
         $0.setTitleColor(.white, for: .normal)
         $0.titleLabel?.font = .systemFont(ofSize: 20)
         $0.backgroundColor = UIColor(named: "Mint300")
         $0.layer.cornerRadius = 10
+        $0.isHidden = true
     }
     
     private let nextButton = UIButton().then {
         $0.nextButton()
     }
     
-    override internal func viewDidLoad() {
+    override func viewDidLoad() {
         super.viewDidLoad()
         
         attribute()
@@ -97,11 +98,11 @@ class QuestionViewController: UIViewController, UICollectionViewDataSource, UICo
         vc.questionLabel.text = questionsArray[solIndex].contents
         self.present(vc, animated: true)
     }
+
     
     @objc private func nextButtonTapped() {
         if solIndex < 14 {
             solIndex += 1
-            print(solIndex)
             collectionView.isPagingEnabled = false
             self.collectionView.scrollToItem(at: IndexPath(row: solIndex, section: 0), at: .left, animated: true)
         } else {
@@ -149,6 +150,7 @@ extension QuestionViewController {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: QuestionCell.identifier, for: indexPath) as? QuestionCell
         cell?.configure(index: indexPath.row)
+        
         let question = questionsArray[indexPath.row]
         cell?.question = question
         cell?.questionLabel.text = question.contents
@@ -156,24 +158,32 @@ extension QuestionViewController {
         cell?.button2.answerLabel.text = question.options[1].text
         cell?.button3.answerLabel.text = question.options[2].text
         cell?.button4.answerLabel.text = question.options[3].text
-        for i in 0..<4 {
-            if cell?.buttonSelect[i].layer.borderColor == UIColor.green100.cgColor {
-                answerId = question.options[i].answer_id
-            }
+        cell?.delegate = self
+        
+        cell?.solutionSelected = { [weak self] solution in
+            guard let self = self else { return }
+            self.solutionButton.isHidden = solution
         }
+        
         for i in 0..<4 {
             cell?.buttonSelect[i].backgroundColor = UIColor(named: "Mint100")
             cell?.buttonSelect[i].layer.cornerRadius = 10
             cell?.buttonSelect[i].layer.borderWidth = 0
             cell?.buttonSelect[i].isEnabled = true
         }
+        
         return cell!
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 15
+        return questionsArray.count
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: collectionView.frame.width, height: collectionView.frame.height)
+    }
+}
+extension QuestionViewController: QuestionCellDelegate {
+    func didSelectAnswer(answerId: Int) {
+        self.answerId = answerId
     }
 }

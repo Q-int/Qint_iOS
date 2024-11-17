@@ -4,6 +4,7 @@ import Then
 import Moya
 
 class QuestionCell: UICollectionViewCell {
+    weak var delegate: QuestionCellDelegate?
     
     private let questionProvider = MoyaProvider<QuestionAPI>()
     static let identifier = "QuestionCell"
@@ -12,7 +13,10 @@ class QuestionCell: UICollectionViewCell {
     public var buttonSelect = [UIButton]()
     public var buttonLabel = [UILabel]()
     public var question: Question?
-    public var correctLabel = "냠"
+    private var answerId: Int = 0
+    
+    public var solutionSelected: ((Bool) -> Void)?
+    private var solution = true
     
     private let questionView = UIView().then {
         $0.questionView()
@@ -113,10 +117,6 @@ class QuestionCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    public func configure(index: Int) {
-        indexLabel.text = "\(index+1)/15"
-        self.index = index
-    }
     @objc private func buttonTapped(_ sender: UIButton) {
         for button in buttonSelect {
             if button != sender {
@@ -125,17 +125,31 @@ class QuestionCell: UICollectionViewCell {
         }
         if sender.backgroundColor == UIColor(named: "Mint100") {
             sender.backgroundColor = UIColor(named: "Mint200")
+            if let index = buttonSelect.firstIndex(of: sender) {
+                answerId = index
+            }
         } else {
             check()
+        }
+        if let index = buttonSelect.firstIndex(of: sender),
+                   let question = question {
+                    let selectedAnswerId = question.options[index].answer_id
+                    delegate?.didSelectAnswer(answerId: selectedAnswerId)
+                }
+    }
+    
+    public func configure(index: Int) {
+        indexLabel.text = "\(index+1)/15"
+        self.index = index
+        for button in buttonSelect {
+            button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
         }
     }
     
     private func check() {
-        var answerId = 0
         for i in 0..<4 {
             buttonSelect[i].isEnabled = false
             if buttonSelect[i].backgroundColor == UIColor.mint200 {
-                answerId = i
                 buttonSelect[i].backgroundColor = UIColor.mint100
             }
         }
@@ -145,18 +159,17 @@ class QuestionCell: UICollectionViewCell {
                 do {
                     switch response.statusCode {
                     case 200:
-                        
+                        self.solution = false
+                        self.solutionSelected?(self.solution)
                         let answer = try JSONDecoder().decode(Answer.self, from: response.data)
-                        print("questionCell answerText :: \(self.correctLabel)")
                         if answer.isCorrect {
-                            self.buttonSelect[answerId].layer.borderColor = UIColor.green100.cgColor
-                            self.buttonSelect[answerId].layer.borderWidth = 3
+                            self.buttonSelect[self.answerId].layer.borderColor = UIColor.green100.cgColor
+                            self.buttonSelect[self.answerId].layer.borderWidth = 3
                         } else {
-                            self.buttonSelect[answerId].layer.borderColor = UIColor.red100.cgColor
-                            self.buttonSelect[answerId].layer.borderWidth = 3
+                            self.buttonSelect[self.answerId].layer.borderColor = UIColor.red100.cgColor
+                            self.buttonSelect[self.answerId].layer.borderWidth = 3
                             for i in 0..<4 {
                                 if self.buttonLabel[i].text == answer.answerText {
-                                    print("정답 \(answer.answerText)")
                                     self.buttonSelect[i].layer.borderColor = UIColor.green100.cgColor
                                     self.buttonSelect[i].layer.borderWidth = 3
                                 }
@@ -173,4 +186,7 @@ class QuestionCell: UICollectionViewCell {
             }
         }
     }
+}
+protocol QuestionCellDelegate: AnyObject {
+    func didSelectAnswer(answerId: Int)
 }

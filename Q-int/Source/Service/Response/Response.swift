@@ -54,3 +54,13 @@ struct Answer: Codable {
         isCorrect = try container.decode(Bool.self, forKey: .isCorrect)
     }
 }
+
+struct Score: Codable {
+    let correct_answers: Int
+    let incorrect_answers: Int
+    
+    enum CodingKeys: String, CodingKey {
+        case correct_answers = "correct_answers"
+        case incorrect_answers = "incorrect_answers"
+    }
+}

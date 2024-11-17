@@ -44,7 +44,6 @@ class SolutionViewController: UIViewController {
     }
     
     private func getLabel() {
-        print(questionId, answerId)
         questionProvider.request(.judge(question_id: questionId, answer_id: answerId, token: Token.accessToken ?? "")) { response in
             switch response {
             case let .success(response):
@@ -52,7 +51,8 @@ class SolutionViewController: UIViewController {
                     switch response.statusCode {
                     case 200:
                         let answer = try JSONDecoder().decode(Answer.self, from: response.data)
-                        print(answer)
+                        self.correctButton.answerLabel.text = answer.answerText
+                        self.solutionLabel.text = answer.commentary
                     default:
                         print("error :: \(response.statusCode)")
                     }
