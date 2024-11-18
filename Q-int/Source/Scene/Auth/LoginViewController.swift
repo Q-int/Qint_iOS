@@ -4,7 +4,7 @@ import SnapKit
 import Then
 
 class LoginViewController: UIViewController {
-    private let authPrvoider = MoyaProvider<AuthAPI>()
+    private let authPrvoider = MoyaProvider<AuthAPI>(session: Session(interceptor: AuthInterceptor()))
     
     private let loginLabel = UILabel().then {
         $0.text = "로그인"
