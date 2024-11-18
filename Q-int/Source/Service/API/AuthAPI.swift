@@ -8,7 +8,7 @@ enum AuthAPI: TargetType {
 }
 
 extension AuthAPI {
-    var baseURL: URL { return URL(string: "http://192.168.1.15:8080/auth")! }
+    var baseURL: URL { return URL(string: "https://qint-server.xquare.app/auth")! }
     
     var path: String {
         switch self {

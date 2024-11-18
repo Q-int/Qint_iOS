@@ -9,7 +9,7 @@ enum UserAPI {
 }
 
 extension UserAPI: TargetType {
-    var baseURL: URL { .init(string: "http://192.168.1.15:8080/users")! }
+    var baseURL: URL { .init(string: "https://qint-server.xquare.app/users")! }
     
     var path: String {
         switch self {

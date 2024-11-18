@@ -9,7 +9,7 @@ class AuthInterceptor: RequestInterceptor {
     private init() { }
     
     func adapt(_ urlRequest: URLRequest, for session: Session, completion: @escaping (Result<URLRequest, Error>) -> Void) {
-        guard urlRequest.url?.absoluteString.hasPrefix("http://192.168.1.15:8080") == true,
+        guard urlRequest.url?.absoluteString.hasPrefix("https://qint-server.xquare.app") == true,
               let refreshToken = Token.refreshToken
         else {
             completion(.success(urlRequest))
