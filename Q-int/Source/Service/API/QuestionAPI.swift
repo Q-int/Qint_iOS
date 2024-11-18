@@ -9,7 +9,7 @@ enum QuestionAPI {
 }
 
 extension QuestionAPI: TargetType {
-    var baseURL: URL { return URL(string: "http://192.168.1.15:8080/questions")! }
+    var baseURL: URL { return URL(string: "http://192.168.1.30:8080/questions")! }
     
     var path: String {
         switch self {
