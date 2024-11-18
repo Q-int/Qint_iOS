@@ -5,8 +5,8 @@ import Moya
 
 class SignUpViewController: UIViewController {
     
-    private let authPrvoider = MoyaProvider<AuthAPI>()
-    private let emailProvoider = MoyaProvider<EmailAPI>()
+    private let authProvider = MoyaProvider<AuthAPI>()
+    private let emailProvider = MoyaProvider<EmailAPI>()
     
     private let signUpLabel = UILabel().then {
         $0.text = "회원가입"
@@ -141,7 +141,7 @@ class SignUpViewController: UIViewController {
     }
     
     @objc private func sendButtonTapped() {
-        emailProvoider.request(.verify(email: emailTextField.textField.text!)) { response in
+        emailProvider.request(.verify(email: emailTextField.textField.text!)) { response in
             switch response {
             case let .success(response):
                 do {
@@ -166,7 +166,7 @@ class SignUpViewController: UIViewController {
     }
     
     private func sendEmail() {
-        emailProvoider.request(.sendAuthCode(email: emailTextField.textField.text!)) { response in
+        emailProvider.request(.sendAuthCode(email: emailTextField.textField.text!)) { response in
             switch response {
             case let .success(response):
                 switch response.statusCode {
@@ -183,7 +183,7 @@ class SignUpViewController: UIViewController {
     }
     
     @objc private func checkButtonTapped() {
-        emailProvoider.request(.checkAuthCode(email: emailTextField.textField.text!, auth_code: authenticationTextField.textField.text!)) { response in
+        emailProvider.request(.checkAuthCode(email: emailTextField.textField.text!, auth_code: authenticationTextField.textField.text!)) { response in
             switch response {
             case let .success(response):
                 do {
@@ -209,7 +209,7 @@ class SignUpViewController: UIViewController {
     
     @objc private func signUpButtonTapped() {
         if emailTextField.textField.layer.borderColor == UIColor.mint300.cgColor && authenticationTextField.textField.layer.borderColor ==  UIColor.mint300.cgColor && pwdTextField.textField.layer.borderColor ==  UIColor.mint300.cgColor && pwdConfirmTextField.textField.layer.borderColor ==  UIColor.mint300.cgColor {
-            authPrvoider.request(.signup(password: pwdTextField.textField.text!, email: emailTextField.textField.text!)) { response in
+            authProvider.request(.signup(password: pwdTextField.textField.text!, email: emailTextField.textField.text!)) { response in
                 switch response {
                 case let .success(response):
                     switch response.statusCode {

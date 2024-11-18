@@ -5,7 +5,7 @@ import Moya
 
 class QuestionViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, PopupDelegate {
     
-    private let questionProvider = MoyaProvider<QuestionAPI>()
+    private let questionProvider = MoyaProvider<QuestionAPI>(session: Session(interceptor: AuthInterceptor.shared))
     private var darkBackground: UIView?
     public var solIndex: Int = 0
     public var questionsArray = [Question]()

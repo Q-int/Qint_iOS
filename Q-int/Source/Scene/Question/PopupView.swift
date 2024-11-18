@@ -13,7 +13,7 @@ class PopupView: UIView {
     
     public var correct = 0
     private var wrong: Int {
-        return 15 - correct // 총 문제 수 15개에서 맞은 문제를 빼면 오답 수
+        return 15 - correct 
     }
     
     private let totalLabel = UILabel()

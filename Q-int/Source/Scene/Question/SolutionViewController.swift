@@ -5,7 +5,7 @@ import Moya
 
 class SolutionViewController: UIViewController {
     
-    private let questionProvider = MoyaProvider<QuestionAPI>()
+    private let questionProvider = MoyaProvider<QuestionAPI>(session: Session(interceptor: AuthInterceptor.shared))
     public var solutionIndex: Int = 0
     public var answerId = 0
     public var questionId = 0

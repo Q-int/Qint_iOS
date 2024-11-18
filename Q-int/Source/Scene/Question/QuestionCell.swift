@@ -6,7 +6,7 @@ import Moya
 class QuestionCell: UICollectionViewCell {
     weak var delegate: QuestionCellDelegate?
     
-    private let questionProvider = MoyaProvider<QuestionAPI>()
+    private let questionProvider = MoyaProvider<QuestionAPI>(session: Session(interceptor: AuthInterceptor.shared))
     static let identifier = "QuestionCell"
     
     private var index: Int = 0

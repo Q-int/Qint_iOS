@@ -6,7 +6,7 @@ import Moya
 
 class MyViewController: UIViewController {
     
-    private let userProvider = MoyaProvider<UserAPI>()
+    private let userProvider = MoyaProvider<UserAPI>(session: Session(interceptor: AuthInterceptor.shared), plugins: [MoyaLoggingPlugin()])
     private var correct = 0
     private var incorrect = 0
     private var pieChartView = PieChartView()
@@ -80,10 +80,10 @@ class MyViewController: UIViewController {
                     case 200:
                         let score = try JSONDecoder().decode(Score.self, from: response.data)
                         
-                        if (Double(score.correct_answers)/Double(15))*100 < 1 &&  (Double(score.incorrect_answers)/Double(15))*100 < 1{
+                        if (Double(score.correctAnswers)/Double(15))*100 < 1 &&  (Double(score.incorrectAnswers)/Double(15))*100 < 1{
                             self.correct = 100
                         } else {
-                            self.correct = Int((Double(score.correct_answers)/Double(15))*100)
+                            self.correct = Int((Double(score.correctAnswers)/Double(15))*100)
                         }
                         DispatchQueue.main.async {
                             self.chart()
@@ -206,12 +206,12 @@ class MyViewController: UIViewController {
                     switch response.statusCode {
                     case 200:
                         let incorrectAnswer = try JSONDecoder().decode(Incorrect.self, from: response.data)
-                        if incorrectAnswer.user_incorrect_answers_element_list.isEmpty {
+                        if incorrectAnswer.answerList.isEmpty {
                             self.showAlert()
                         } else {
                             let vc = ReviewIncorrectViewController()
-                            vc.questionArray = incorrectAnswer.user_incorrect_answers_element_list
-                            print(incorrectAnswer.user_incorrect_answers_element_list)
+                            vc.questionArray = incorrectAnswer.answerList
+                            print(incorrectAnswer.answerList)
                             self.navigationController?.pushViewController(vc, animated: true)
                         }
                         

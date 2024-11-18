@@ -5,7 +5,8 @@ import Moya
 
 class MainViewController: UIViewController {
     
-    private let questionPrvoider = MoyaProvider<QuestionAPI>()
+    private let questionProvider = MoyaProvider<QuestionAPI>(session: Session(interceptor: AuthInterceptor.shared))
+    private let authProvider = MoyaProvider<AuthAPI>(session: Session(interceptor: AuthInterceptor.shared))
     
     private var categoryButtonNumber = 0
     private var request = [String]()
@@ -144,7 +145,7 @@ class MainViewController: UIViewController {
         }
     }
     @objc private func startButtonTapped() {
-        questionPrvoider.request(.getQuestions(categories: request, token: Token.accessToken ?? "")) { response in
+        questionProvider.request(.getQuestions(categories: request, token: Token.accessToken ?? "")) { response in
             switch response {
             case let .success(response):
                 switch response.statusCode {
@@ -157,6 +158,29 @@ class MainViewController: UIViewController {
                         vc.questionsArray = questionsResponse.questions
                     } catch {
                         print("Decoding or JSON parsing error: \(error)")
+                    }
+                case 401:
+                    self.authProvider.request(.refresh(refreshToken: Token.refreshToken ?? "")) { response in
+                        switch response {
+                        case let .success(response):
+                            do {
+                                switch response.statusCode {
+                                case 200:
+                                    print("재발급됨")
+                                    let decoder = JSONDecoder()
+                                    let tokenResponse = try decoder.decode(TokenResponse.self, from: response.data)
+                                    Token.accessToken = tokenResponse.access_token
+                                    Token.refreshToken = tokenResponse.refresh_token
+                                    self.startButtonTapped()
+                                default:
+                                    print("실패 :: \(response.statusCode)")
+                                }
+                            } catch {
+                                
+                            }
+                        case let .failure(error):
+                            print(error.localizedDescription)
+                        }
                     }
                 default:
                     if let errorMessage = String(data: response.data, encoding: .utf8) {

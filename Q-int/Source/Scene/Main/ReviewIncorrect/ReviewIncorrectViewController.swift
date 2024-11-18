@@ -99,8 +99,8 @@ extension ReviewIncorrectViewController {
         
         let question = questionArray[indexPath.row]
         cell?.questionLabel.text = question.contents
-        cell?.correctButton.answerLabel.text = question.correct_answer
-        cell?.incorrectButton.answerLabel.text = question.incorrect_answer
+        cell?.correctButton.answerLabel.text = question.correctAnswer
+        cell?.incorrectButton.answerLabel.text = question.incorrectAnswer
         cell?.solutionLabel.text = question.commentary
         
         return cell ?? ReviewIncorrectCell()

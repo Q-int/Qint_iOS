@@ -4,7 +4,7 @@ import SnapKit
 import Then
 
 class LoginViewController: UIViewController {
-    private let authPrvoider = MoyaProvider<AuthAPI>(session: Session(interceptor: AuthInterceptor()))
+    private let authProvider = MoyaProvider<AuthAPI>()
     
     private let loginLabel = UILabel().then {
         $0.text = "로그인"
@@ -104,7 +104,7 @@ class LoginViewController: UIViewController {
     }
     
     @objc private func loginButtonTapped() {
-        authPrvoider.request(.login(email: emailTextField.textField.text ?? "이메일이 입력되지 않음", password: pwdTextField.textField.text ?? "비밀번호가 입력되지 않음")) { response in
+        authProvider.request(.login(email: emailTextField.textField.text ?? "이메일이 입력되지 않음", password: pwdTextField.textField.text ?? "비밀번호가 입력되지 않음")) { response in
             switch response {
             case let .success(response):
                 do {
