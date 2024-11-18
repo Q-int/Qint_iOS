@@ -111,8 +111,8 @@ class LoginViewController: UIViewController {
                     switch response.statusCode {
                     case 200:
                         let decodeResponse = try JSONDecoder().decode(TokenResponse.self, from: response.data)
-                        Token.accessToken = decodeResponse.access_token
-                        Token.refreshToken = decodeResponse.refresh_token
+                        Token.accessToken = decodeResponse.accessToken
+                        Token.refreshToken = decodeResponse.refreshToken
                         let vc = MainViewController()
                         let navigationController = self.navigationController
                         navigationController?.setViewControllers([vc], animated: true)

@@ -35,8 +35,8 @@ class AuthInterceptor: RequestInterceptor {
                 case 200...299:
                     if let data = try? JSONDecoder().decode(TokenResponse.self, from: result.data) {
                         print("Success To refresh")
-                        Token.accessToken = data.access_token
-                        Token.refreshToken = data.refresh_token
+                        Token.accessToken = data.accessToken
+                        Token.refreshToken = data.refreshToken
                         DispatchQueue.main.async {
                             completion(.retry)
                         }

@@ -1,12 +1,12 @@
 import Foundation
 
 struct TokenResponse: Codable {
-    let access_token: String
-    let refresh_token: String
+    let accessToken: String
+    let refreshToken: String
     
     enum CodingKeys: String, CodingKey {
-        case access_token = "access_token"
-        case refresh_token = "refresh_token"
+        case accessToken = "access_token"
+        case refreshToken = "refresh_token"
     }
 }
 

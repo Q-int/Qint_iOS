@@ -169,8 +169,8 @@ class MainViewController: UIViewController {
                                     print("재발급됨")
                                     let decoder = JSONDecoder()
                                     let tokenResponse = try decoder.decode(TokenResponse.self, from: response.data)
-                                    Token.accessToken = tokenResponse.access_token
-                                    Token.refreshToken = tokenResponse.refresh_token
+                                    Token.accessToken = tokenResponse.accessToken
+                                    Token.refreshToken = tokenResponse.refreshToken
                                     self.startButtonTapped()
                                 default:
                                     print("실패 :: \(response.statusCode)")
