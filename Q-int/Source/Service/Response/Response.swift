@@ -62,29 +62,33 @@ struct Answer: Codable {
 }
 
 struct Score: Codable {
-    let correct_answers: Int
-    let incorrect_answers: Int
+    let correctAnswers: Int
+    let incorrectAnswers: Int
     
     enum CodingKeys: String, CodingKey {
-        case correct_answers = "correct_answers"
-        case incorrect_answers = "incorrect_answers"
+        case correctAnswers = "correct_answers"
+        case incorrectAnswers = "incorrect_answers"
     }
 }
 
 struct Incorrect: Codable {
-    let user_incorrect_answers_element_list: [Answers]
+    let answerList: [Answers]
+    
+    enum CodingKeys: String, CodingKey {
+        case answerList = "user_incorrect_answers_element_list"
+    }
 }
 
 struct Answers: Codable {
     let contents: String
     let commentary: String
-    let incorrect_answer: String
-    let correct_answer: String
+    let incorrectAnswer: String
+    let correctAnswer: String
     
     enum CodingKeys: String, CodingKey {
         case contents = "contents"
         case commentary = "commentary"
-        case incorrect_answer = "incorrect_answer"
-        case correct_answer = "correct_answer"
+        case incorrectAnswer = "incorrect_answer"
+        case correctAnswer = "correct_answer"
     }
 }

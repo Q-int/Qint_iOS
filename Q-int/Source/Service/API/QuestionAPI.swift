@@ -9,7 +9,7 @@ enum QuestionAPI {
 }
 
 extension QuestionAPI: TargetType {
-    var baseURL: URL { return URL(string: "http://192.168.1.30:8080/questions")! }
+    var baseURL: URL { return URL(string: "http://192.168.1.15:8080/questions")! }
     
     var path: String {
         switch self {
@@ -72,5 +72,9 @@ extension QuestionAPI: TargetType {
         case .getQuestions(_, token: let token), .judge(_, _, token: let token), .next(_, token: let token), .home(_, token: let token):
             return ["Authorization": "Bearer " + token]
         }
+    }
+    
+    var validationType: ValidationType {
+        return .successCodes
     }
 }
