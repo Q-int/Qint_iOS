@@ -8,7 +8,7 @@ enum AuthAPI: TargetType {
 }
 
 extension AuthAPI {
-    var baseURL: URL { return URL(string: "http://192.168.1.30:8080/auth")! }
+    var baseURL: URL { return URL(string: "http://192.168.1.15:8080/auth")! }
     
     var path: String {
         switch self {
@@ -58,8 +58,14 @@ extension AuthAPI {
     
     var headers: [String: String]? {
         switch self {
+        case .refresh:
+            return Header.refreshToken.header()
         default:
             return Header.tokenIsEmpty.header()
         }
+    }
+    
+    var validationType: ValidationType {
+        return .successCodes
     }
 }

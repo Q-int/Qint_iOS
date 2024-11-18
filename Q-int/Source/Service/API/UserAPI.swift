@@ -9,7 +9,7 @@ enum UserAPI {
 }
 
 extension UserAPI: TargetType {
-    var baseURL: URL { .init(string: "http://192.168.1.30:8080/users")! }
+    var baseURL: URL { .init(string: "http://192.168.1.15:8080/users")! }
     
     var path: String {
         switch self {
@@ -32,5 +32,9 @@ extension UserAPI: TargetType {
         case .info(token: let token), .incorrect(token: let token):
             return ["Authorization": "Bearer " + token]
         }
+    }
+    
+    var validationType: ValidationType {
+        return .successCodes
     }
 }

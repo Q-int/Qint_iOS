@@ -52,8 +52,10 @@ enum Header {
             print(token)
             return ["Authorization": "Bearer " + token]
         case .refreshToken:
-            return ["Authorization": "Bearer " + token,
-                    "Refresh-Token": refreshToken, "Content-Type": "application/json"]
+            return [
+                "X-Refresh-Token": refreshToken,
+                "Content-Type": "application/json"
+            ]
         case .tokenIsEmpty:
             return ["Content-Type": "application/json"]
         case .uploadImage:
