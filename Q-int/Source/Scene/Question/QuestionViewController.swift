@@ -112,7 +112,7 @@ class QuestionViewController: UIViewController, UICollectionViewDataSource, UICo
                 case let .success(response):
                     switch response.statusCode {
                     case 200:
-                        if self.solIndex < 14 {
+                        if self.solIndex < self.questionsArray.count-1 {
                             self.solIndex += 1
                             self.solutionButton.isHidden = true
                             self.collectionView.isPagingEnabled = false
@@ -128,7 +128,7 @@ class QuestionViewController: UIViewController, UICollectionViewDataSource, UICo
                 }
             }
         } else {
-            if self.solIndex < 14 {
+            if self.solIndex < questionsArray.count-1 {
                 self.solIndex += 1
                 self.solutionButton.isHidden = true
                 self.collectionView.isPagingEnabled = false
@@ -151,7 +151,7 @@ class QuestionViewController: UIViewController, UICollectionViewDataSource, UICo
         
         let popup = PopupView().then {
             $0.delegate = self
-            $0.correct = self.correct
+            $0.configure(correctAnswers: correct)
             self.view.addSubview($0)
         }
         
@@ -160,8 +160,6 @@ class QuestionViewController: UIViewController, UICollectionViewDataSource, UICo
             $0.width.equalTo(270)
             $0.height.equalTo(297)
         }
-        
-        popup.updateResult(correctAnswers: correct)
     }
     
     func navigateToMainView() {

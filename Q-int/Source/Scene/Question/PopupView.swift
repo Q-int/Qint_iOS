@@ -45,7 +45,7 @@ class PopupView: UIView {
         let mainButton = UIButton().then {
             $0.setTitle("메인 페이지로 이동", for: .normal)
             $0.setTitleColor(.white, for: .normal)
-            $0.backgroundColor = UIColor.mint300 ?? .systemTeal
+            $0.backgroundColor = UIColor.mint300
             $0.layer.cornerRadius = 8
             $0.addTarget(self, action: #selector(mainButtonTapped), for: .touchUpInside)
         }
@@ -53,7 +53,7 @@ class PopupView: UIView {
         let myButton = UIButton().then {
             $0.setTitle("마이 페이지로 이동", for: .normal)
             $0.setTitleColor(.white, for: .normal)
-            $0.backgroundColor = UIColor.blue100 ?? .systemBlue
+            $0.backgroundColor = UIColor.blue100
             $0.layer.cornerRadius = 8
             $0.addTarget(self, action: #selector(myButtonTapped), for: .touchUpInside)
         }
@@ -83,10 +83,14 @@ class PopupView: UIView {
         }
     }
     
-    func updateResult(correctAnswers: Int) {
-        self.correct = correctAnswers
+    private func updateLabels() {
+        totalLabel.text = "총 문제 수 : 15"
         correctLabel.text = "정답 : \(correct)"
-        wrongLabel.text = "오답 : \(15 - correct)"
+        wrongLabel.text = "오답 : \(wrong)"
+    }
+        
+    public func configure(correctAnswers: Int) {
+        self.correct = correctAnswers
     }
     
     @objc private func mainButtonTapped() {
