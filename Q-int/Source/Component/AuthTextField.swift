@@ -47,7 +47,7 @@ class AuthTextField: UIView {
     @objc private func didSetectTextField() {
         textField.backgroundColor = .white
         textField.layer.borderWidth = 1
-        textField.layer.borderColor = UIColor.gray400.cgColor
+        textField.layer.borderColor = UIColor.gray200.cgColor
     }
     
     @objc private func didEndSetectTextField() {
