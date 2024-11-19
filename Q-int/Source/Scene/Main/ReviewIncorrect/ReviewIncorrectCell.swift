@@ -7,19 +7,11 @@ class ReviewIncorrectCell: UICollectionViewCell {
     static let identifier: String = "ReviewIncorrectCell"
 
     private let questionView = UIView().then {
-        $0.backgroundColor = UIColor.mint100
-        $0.layer.cornerRadius = 20
-        $0.clipsToBounds = false
-        $0.layer.shadowOffset = CGSizeMake(0.4, 0.4)
-        $0.layer.shadowOpacity = 0.2
+        $0.questionView()
     }
     
     public let questionLabel = UILabel().then {
-        $0.text = "π를 제대로 기술한 것은?"
-        $0.font = UIFont.systemFont(ofSize: 25)
-        $0.numberOfLines = 0
-        $0.adjustsFontSizeToFitWidth = true
-        $0.minimumScaleFactor = 0.7
+        $0.questionLabel()
     }
     
     public let correctButton = AnswerButton(type: .correct)
@@ -62,7 +54,7 @@ class ReviewIncorrectCell: UICollectionViewCell {
             $0.height.equalTo(230)
         }
         questionLabel.snp.makeConstraints {
-            $0.center.equalToSuperview()
+            $0.top.bottom.left.right.equalToSuperview().inset(15)
         }
         correctButton.snp.makeConstraints {
             $0.top.equalTo(questionView.snp.bottom).offset(11)
