@@ -151,7 +151,7 @@ class QuestionViewController: UIViewController, UICollectionViewDataSource, UICo
         
         let popup = PopupView().then {
             $0.delegate = self
-            $0.configure(correctAnswers: correct)
+            $0.configure(correctAnswers: self.correct)
             self.view.addSubview($0)
         }
         
@@ -215,7 +215,10 @@ extension QuestionViewController: QuestionCellDelegate {
     func didSelectAnswer(answerId: Int) {
         self.answerId = answerId
     }
-    func didUpdateCorrectAnswer(correct: Int) {
-        self.correct = correct
+    func didUpdateCorrectAnswer(correct: Bool) {
+        print("correct \(correct)")
+        if correct {
+            self.correct += 1
+        }
     }
 }

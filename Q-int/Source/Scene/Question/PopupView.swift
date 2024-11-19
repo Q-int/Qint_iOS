@@ -22,11 +22,15 @@ class PopupView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setup()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    public func configure(correctAnswers: Int) {
+        self.correct = correctAnswers
+        setup()
     }
     
     private func setup() {
@@ -81,16 +85,6 @@ class PopupView: UIView {
             $0.left.right.equalToSuperview().inset(24)
             $0.height.equalTo(45)
         }
-    }
-    
-    private func updateLabels() {
-        totalLabel.text = "총 문제 수 : 15"
-        correctLabel.text = "정답 : \(correct)"
-        wrongLabel.text = "오답 : \(wrong)"
-    }
-        
-    public func configure(correctAnswers: Int) {
-        self.correct = correctAnswers
     }
     
     @objc private func mainButtonTapped() {

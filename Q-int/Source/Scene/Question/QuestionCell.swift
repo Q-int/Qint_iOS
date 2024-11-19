@@ -14,7 +14,7 @@ class QuestionCell: UICollectionViewCell {
     public var buttonLabel = [UILabel]()
     public var question: Question?
     private var answerId: Int = 0
-    public var correct: Int = 0
+    public var correct = false
     
     public var solutionSelected: ((Bool) -> Void)?
     private var solution = true
@@ -166,7 +166,6 @@ class QuestionCell: UICollectionViewCell {
                         if answer.isCorrect {
                             self.buttonSelect[self.answerId].layer.borderColor = UIColor.green100.cgColor
                             self.buttonSelect[self.answerId].layer.borderWidth = 3
-                            self.correct += 1
                         } else {
                             self.buttonSelect[self.answerId].layer.borderColor = UIColor.red100.cgColor
                             self.buttonSelect[self.answerId].layer.borderWidth = 3
@@ -177,7 +176,7 @@ class QuestionCell: UICollectionViewCell {
                                 }
                             }
                         }
-                        self.delegate?.didUpdateCorrectAnswer(correct: self.correct)
+                        self.delegate?.didUpdateCorrectAnswer(correct: answer.isCorrect)
                     default:
                         print("error :: \(response.statusCode)")
                     }
@@ -192,5 +191,5 @@ class QuestionCell: UICollectionViewCell {
 }
 protocol QuestionCellDelegate: AnyObject {
     func didSelectAnswer(answerId: Int)
-    func didUpdateCorrectAnswer(correct: Int)
+    func didUpdateCorrectAnswer(correct: Bool)
 }
