@@ -46,7 +46,10 @@ class AnswerButton: UIView {
             $0.edges.equalToSuperview()
         }
         answerLabel.snp.makeConstraints {
-            $0.center.equalToSuperview()
+            $0.left.equalTo(answerButton.snp.left).inset(2)
+            $0.right.equalTo(answerButton.snp.right).inset(2)
+            $0.top.equalTo(answerButton.snp.top).inset(2)
+            $0.bottom.equalTo(answerButton.snp.bottom).inset(2)
         }
     }
 }
